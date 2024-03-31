@@ -5,10 +5,10 @@ namespace vniu_api.Repositories
 {
     public interface IUserRepo
     {
-        Task<IEnumerable<UserVM>> GetAll();
-        Task<UserVM> GetUserById(string id);
-        Task<UserVM> AddUser(UserVM user);
-        Task<UserVM> UpdateUser(UserVM user);
-        Task<UserVM> DeleteUser(string id);
+        Task<ICollection<UserVM>> GetUsersAsync();
+        Task<UserVM> GetUserByIdAsync(string id);
+        Task<UserVM> CreateUserAsync(UserVM user);
+        Task<UserVM> UpdateUserAsync(UserVM user);
+        Task<UserVM> DeleteUserAsync(string id);
     }
 }

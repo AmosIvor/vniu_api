@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using vniu_api.Models.EF;
+using vniu_api.Models.EF.Profiles;
+using vniu_api.Models.EF.Promotions;
 using vniu_api.ViewModels;
 
 namespace vniu_api.Helpers
@@ -8,7 +9,11 @@ namespace vniu_api.Helpers
     {
         public MappingProfiles()
         {
+            // profiles
             CreateMap<User, UserVM>().ReverseMap();
+
+            // promotions
+            CreateMap<Promotion, PromotionVM>().ReverseMap();
         }
     }
 }

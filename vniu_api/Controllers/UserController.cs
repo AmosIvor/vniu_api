@@ -16,10 +16,10 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("get-all")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<UserVM>))]
+        [ProducesResponseType(200, Type = typeof(ICollection<UserVM>))]
         public async Task<ActionResult> GetUsers()
         {
-            return Ok(await _userRepo.GetAll());
+            return Ok(await _userRepo.GetUsersAsync());
         }
     }
 }

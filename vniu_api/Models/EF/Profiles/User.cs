@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace vniu_api.Models.EF
+namespace vniu_api.Models.EF.Profiles
 {
     public class User : IdentityUser
     {

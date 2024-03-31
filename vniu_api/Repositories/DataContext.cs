@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using vniu_api.Models.EF;
+using vniu_api.Models.EF.Profiles;
+using vniu_api.Models.EF.Promotions;
 
 namespace vniu_api.Repositories
 {
@@ -14,7 +15,11 @@ namespace vniu_api.Repositories
 
         #region Init DbSet
 
+        // profiles
         public DbSet<User> Users { get; set; }
+
+        // promtions
+        public DbSet<Promotion> Promotions { get; set; }
 
         #endregion
 

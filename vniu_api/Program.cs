@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using vniu_api.Models.EF;
+using vniu_api.Models.EF.Profiles;
 using vniu_api.Repositories;
 using vniu_api.Services;
 
@@ -82,9 +82,16 @@ builder.Services
         };
     });
 
-// Repo
-builder.Services.AddScoped<IUserRepo, UserRepo>();
+// ADD REPOSITORIES
+
+// repo-auths
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
+
+// repo-profiles
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+
+// repo-promotions
+builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
 
 
 // Build app

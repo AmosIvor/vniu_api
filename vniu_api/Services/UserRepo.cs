@@ -17,29 +17,29 @@ namespace vniu_api.Services
             _mapper = mapper;
         }
 
-        public Task<UserVM> AddUser(UserVM user)
+        public Task<UserVM> CreateUserAsync(UserVM user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserVM> DeleteUser(string id)
+        public Task<UserVM> DeleteUserAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<UserVM>> GetAll()
+        public async Task<ICollection<UserVM>> GetUsersAsync()
         {
             var users =  await _context.Users.ToListAsync();
 
-            return _mapper.Map<IEnumerable<UserVM>>(users);
+            return _mapper.Map<ICollection<UserVM>>(users);
         }
 
-        public Task<UserVM> GetUserById(string id)
+        public Task<UserVM> GetUserByIdAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserVM> UpdateUser(UserVM user)
+        public Task<UserVM> UpdateUserAsync(UserVM user)
         {
             throw new NotImplementedException();
         }
