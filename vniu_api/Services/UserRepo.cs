@@ -6,40 +6,40 @@ using System;
 
 namespace vniu_api.Services
 {
-    public class CustomerRepo : ICustomerRepo
+    public class UserRepo : IUserRepo
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public CustomerRepo(DataContext context, IMapper mapper)
+        public UserRepo(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public Task<CustomerVM> AddCustomer(CustomerVM customer)
+        public Task<UserVM> AddUser(UserVM user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CustomerVM> DeleteCustomer(string id)
+        public Task<UserVM> DeleteUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<CustomerVM>> GetAll()
+        public async Task<IEnumerable<UserVM>> GetAll()
         {
-            var customers =  await _context.Customers.ToListAsync();
+            var users =  await _context.Users.ToListAsync();
 
-            return _mapper.Map<IEnumerable<CustomerVM>>(customers);
+            return _mapper.Map<IEnumerable<UserVM>>(users);
         }
 
-        public Task<CustomerVM> GetCustomerById(string id)
+        public Task<UserVM> GetUserById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CustomerVM> UpdateCustomer(CustomerVM customer)
+        public Task<UserVM> UpdateUser(UserVM user)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using vniu_api.Models;
+using vniu_api.Models.EF;
 using vniu_api.ViewModels;
 
 namespace vniu_api.Helpers
@@ -8,7 +8,7 @@ namespace vniu_api.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<Customer, CustomerVM>().ReverseMap();
+            CreateMap<User, UserVM>().ReverseMap();
         }
     }
 }
