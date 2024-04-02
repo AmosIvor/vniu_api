@@ -15,6 +15,8 @@ namespace vniu_api.Models.EF.Reviews
         [MaxLength(300)]
         public string? ReviewComment { get; set; }
 
+        public int OrderLineId { get; set; }
+
         public OrderLine OrderLine { get; set; }
 
         public ICollection<ReviewImage> ReviewImages { get; set; }

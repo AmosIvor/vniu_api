@@ -69,6 +69,21 @@ namespace vniu_api.Repositories
                 .HasOne(a => a.Address)
                 .WithMany(ua => ua.UserAddresses)
                 .HasForeignKey(ua => ua.AddressId);
+
+            // Review_OrderLine
+            modelBuilder.Entity<OrderLine>()
+                .HasOne(ol => ol.Review)
+                .WithOne(r => r.OrderLine)
+                .HasForeignKey<Review>(r => r.OrderLineId);
+
+            // Decimal Precision
+            modelBuilder.Entity<Order>()
+                .Property(o => o.OrderTotal)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderLine>()
+                .Property(ol => ol.Price)
+                .HasPrecision(18, 2);
         }
 
     }

@@ -2,7 +2,8 @@
 {
     public class UserAddress
     {
-        public int UserId { get; set; }
+        // UserId
+        public string UserId { get; set; }
 
         public int AddressId { get; set; }
 
