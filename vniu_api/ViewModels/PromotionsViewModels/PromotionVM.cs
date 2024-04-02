@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace vniu_api.ViewModels
+﻿namespace vniu_api.ViewModels.PromotionsViewModels
 {
     public class PromotionVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -16,6 +14,6 @@ namespace vniu_api.ViewModels
 
         public string? Description { get; set; }
 
-        public Boolean IsUsed { get; set; } = false;
+        public bool IsUsed { get; set; } = false;
     }
 }

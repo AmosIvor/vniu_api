@@ -1,0 +1,30 @@
+﻿using System.ComponentModel.DataAnnotations;
+using vniu_api.Models.EF.Orders;
+
+namespace vniu_api.Models.EF.Profiles
+{
+    public class Address
+    {
+        [Key]
+        public int AddressID {  get; set; }
+
+        [MaxLength(255)]
+        public string? UnitName {  get; set; }
+
+        [MaxLength(50)]
+        public string? StreetNumber { get; set; }
+
+        [MaxLength(255)]
+        public string? AddressLine1 { get; set; }
+
+        [MaxLength(255)]
+        public string? AddressLine2 { get; set; }
+
+        [Required, MaxLength(100)]
+        public string City { get; set; }
+
+        public ICollection<UserAddress> UserAddresses { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
+    }
+}

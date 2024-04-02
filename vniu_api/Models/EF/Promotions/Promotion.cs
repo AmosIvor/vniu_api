@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using vniu_api.Models.EF.Orders;
 
 namespace vniu_api.Models.EF.Promotions
 {
@@ -23,5 +24,7 @@ namespace vniu_api.Models.EF.Promotions
         public string? Description { get; set; }
 
         public Boolean IsUsed { get; set; } = false;
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

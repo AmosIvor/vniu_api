@@ -1,6 +1,6 @@
-﻿using vniu_api.ViewModels;
+﻿using vniu_api.ViewModels.PromotionsViewModels;
 
-namespace vniu_api.Repositories
+namespace vniu_api.Repositories.Promotions
 {
     public interface IPromotionRepo
     {

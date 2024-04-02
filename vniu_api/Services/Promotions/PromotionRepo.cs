@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Repositories;
-using vniu_api.ViewModels;
+using vniu_api.Repositories.Promotions;
+using vniu_api.ViewModels.PromotionsViewModels;
 
-namespace vniu_api.Services
+namespace vniu_api.Services.Promotions
 {
     public class PromotionRepo : IPromotionRepo
     {

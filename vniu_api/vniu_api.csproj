@@ -27,8 +27,6 @@
     <Folder Include="Models\EF\Carts\" />
     <Folder Include="Models\EF\Products\" />
     <Folder Include="Models\EF\Reviews\" />
-    <Folder Include="Models\EF\Orders\" />
-    <Folder Include="Models\EF\Payments\" />
   </ItemGroup>
 
 </Project>
