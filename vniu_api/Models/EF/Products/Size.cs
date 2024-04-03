@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Products
 {
-    public class Sizes
+    [Table("Size")]
+    public class Size
     {
         [Key]
-        public int Id { get; set; }
+        public int SizeId { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; }
+        public string SizeName { get; set; }
 
         public Boolean SortOrder { get; set; } = false;
     }

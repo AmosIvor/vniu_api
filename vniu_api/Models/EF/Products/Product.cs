@@ -1,25 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Products
 {
-    public class Products
+    [Table("Product")]
+    public class Product
     {
         [Key]
-        public int Id { get; set; }
+        public int ProductId { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; }
+        public string ProductName { get; set; }
 
         [MaxLength(300)]
-        public string? Description { get; set; }
+        public string? ProductDescription { get; set; }
         [Required, Range(0, 5)]
-        public double Rating { get; set; }
+        public double ProductRating { get; set; }
         //optional
         public string? ProductImage { get; set; }
         public string? ProductImage1 { get; set; }
         public string? ProductImage2 { get; set; }
         public string? ProductImage3 { get; set; }
 
-        public Categories ParentCategories { get; set; } = new Categories();
+        public Category ParentCategories { get; set; } = new Category();
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Products
 {
-    public class ProductOptions
+    [Table("ProductOption")]
+    public class ProductOption
     {
         [Key]
-        public int Id { get; set; }
+        public int ProductOptionId { get; set; }
 
-        public Products Products { get; set; } = new Products();
-        public Colours Colours { get; set; } = new Colours();
-        public Sizes Sizes { get; set; } = new Sizes();
+        public Product Products { get; set; } = new Product();
+        public Colour Colours { get; set; } = new Colour();
+        public Size Sizes { get; set; } = new Size();
         [Required]
         public int OriginalPrice { get; set; }
         public int SalePrice { get; set; }

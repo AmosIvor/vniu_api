@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Hubs\" />
-    <Folder Include="Models\EF\Products\" />
     <Folder Include="Models\EF\Carts\" />
     <Folder Include="Models\EF\Reviews\" />
     <Folder Include="Models\EF\Orders\" />
