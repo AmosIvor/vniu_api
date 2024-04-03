@@ -1,7 +1,7 @@
 ﻿using vniu_api.Models;
-using vniu_api.ViewModels;
+using vniu_api.ViewModels.ProfilesViewModels;
 
-namespace vniu_api.Repositories
+namespace vniu_api.Repositories.Profiles
 {
     public interface IUserRepo
     {

@@ -2,9 +2,9 @@
 using vniu_api.Models.EF;
 using vniu_api.Models.EF.Auths;
 using vniu_api.Models.Responses;
-using vniu_api.ViewModels;
+using vniu_api.ViewModels.ProfilesViewModels;
 
-namespace vniu_api.Repositories
+namespace vniu_api.Repositories.Auths
 {
     public interface IAuthRepo
     {

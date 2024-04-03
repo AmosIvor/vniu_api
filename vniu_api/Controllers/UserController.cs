@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using vniu_api.Repositories;
-using vniu_api.ViewModels;
+using vniu_api.Repositories.Profiles;
+using vniu_api.ViewModels.ProfilesViewModels;
 
 namespace vniu_api.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace vniu_api.ViewModels
+﻿namespace vniu_api.ViewModels.ProfilesViewModels
 {
     public class UserVM
     {
@@ -10,9 +10,9 @@
 
         public string? PhoneNumber { get; set; }
 
-        public bool? Male {  get; set; }
+        public bool? Male { get; set; }
 
-        public DateTime? DateBirth {  get; set; }
+        public DateTime? DateBirth { get; set; }
 
         public string? Avatar { get; set; }
     }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using vniu_api.Repositories;
-using vniu_api.ViewModels;
 using System;
+using vniu_api.ViewModels.ProfilesViewModels;
+using vniu_api.Repositories.Profiles;
 
-namespace vniu_api.Services
+namespace vniu_api.Services.Profiles
 {
     public class UserRepo : IUserRepo
     {
@@ -29,7 +30,7 @@ namespace vniu_api.Services
 
         public async Task<ICollection<UserVM>> GetUsersAsync()
         {
-            var users =  await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
 
             return _mapper.Map<ICollection<UserVM>>(users);
         }

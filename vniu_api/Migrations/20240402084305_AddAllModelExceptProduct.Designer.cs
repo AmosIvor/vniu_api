@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vniu_api.Repositories;
 
@@ -11,9 +12,10 @@ using vniu_api.Repositories;
 namespace vniu_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240402084305_AddAllModelExceptProduct")]
+    partial class AddAllModelExceptProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Carts.CartItem", b =>
@@ -262,7 +264,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.Order", b =>
@@ -273,7 +275,7 @@ namespace vniu_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int>("AddressID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -304,7 +306,7 @@ namespace vniu_api.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressID");
 
                     b.HasIndex("OrderStatusId");
 
@@ -316,7 +318,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.OrderLine", b =>
@@ -341,7 +343,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderLine");
+                    b.ToTable("OrderLines");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.OrderStatus", b =>
@@ -359,7 +361,7 @@ namespace vniu_api.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatus");
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Payments.PaymentMethod", b =>
@@ -396,7 +398,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PaymentMethod");
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Payments.PaymentType", b =>
@@ -414,16 +416,16 @@ namespace vniu_api.Migrations
 
                     b.HasKey("PaymentTypeId");
 
-                    b.ToTable("PaymentType");
+                    b.ToTable("PaymentTypes");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.Address", b =>
                 {
-                    b.Property<int>("AddressId")
+                    b.Property<int>("AddressID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressID"), 1L, 1);
 
                     b.Property<string>("AddressLine1")
                         .HasMaxLength(255)
@@ -446,9 +448,9 @@ namespace vniu_api.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("AddressId");
+                    b.HasKey("AddressID");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.UserAddress", b =>
@@ -466,41 +468,41 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("User_Address");
+                    b.ToTable("UserAddresses");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Promotions.Promotion", b =>
                 {
-                    b.Property<int>("PromotionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PromotionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("PromotionDescription")
+                    b.Property<string>("Description")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("PromotionDiscountRate")
+                    b.Property<int>("DiscountRate")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PromotionEndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("PromotionIsUsed")
+                    b.Property<bool>("IsUsed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PromotionName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("PromotionStartDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("PromotionId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Promotion");
+                    b.ToTable("Promotions");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Reviews.Review", b =>
@@ -531,7 +533,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Reviews.ReviewImage", b =>
@@ -553,7 +555,7 @@ namespace vniu_api.Migrations
 
                     b.HasIndex("ReviewId");
 
-                    b.ToTable("ReviewImage");
+                    b.ToTable("ReviewImages");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Shippings.ShippingMethod", b =>
@@ -575,7 +577,7 @@ namespace vniu_api.Migrations
 
                     b.HasKey("ShippingMethodId");
 
-                    b.ToTable("ShippingMethod");
+                    b.ToTable("ShippingMethods");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.User", b =>
@@ -669,7 +671,7 @@ namespace vniu_api.Migrations
                 {
                     b.HasOne("vniu_api.Models.EF.Profiles.Address", "Address")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressId")
+                        .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
