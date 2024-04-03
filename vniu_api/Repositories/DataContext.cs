@@ -84,6 +84,12 @@ namespace vniu_api.Repositories
             modelBuilder.Entity<OrderLine>()
                 .Property(ol => ol.Price)
                 .HasPrecision(18, 2);
+
+            // User_Cart
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<Cart>(c => c.UserId);
         }
 
     }

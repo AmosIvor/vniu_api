@@ -20,6 +20,13 @@ namespace vniu_api.Services.Promotions
 
         public async Task<PromotionVM> CreatePromotionAsync(PromotionVM promotionVM)
         {
+            var isExistName = await IsPromotionExistNameAsync(promotionVM.PromotionName);
+
+            if (isExistName == true)
+            {
+                throw new Exception("Promotion exists");
+            }
+
             var promotionMap = _mapper.Map<Promotion>(promotionVM);
 
             _context.Promotions.Add(promotionMap);

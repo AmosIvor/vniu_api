@@ -21,7 +21,7 @@ namespace vniu_api.Models.EF.Profiles
 
         public ICollection<Order> Orders { get; set; }
 
-        public ICollection<Cart> Carts { get; set; }
+        public Cart Cart { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
     }
