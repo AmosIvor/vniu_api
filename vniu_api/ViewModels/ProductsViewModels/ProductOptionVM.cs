@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using vniu_api.Models.EF.Products;
-
-namespace vniu_api.ViewModels
+﻿namespace vniu_api.ViewModels.ProductsViewModels
 {
     public class ProductOptionVM
     {
         public int Id { get; set; }
-        public Colours Colours { get; set; } = new Colours();
+        public ColourVM Colours { get; set; } = new ColourVM();
+        public SizeVM size { get; set; } = new SizeVM();
         public int OriginalPrice { get; set; }
         public int SalePrice { get; set; }
         public int Sold { get; set; }

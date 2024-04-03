@@ -11,7 +11,7 @@ using vniu_api.Repositories.Carts;
 using vniu_api.Repositories.Orders;
 using vniu_api.Repositories.Payments;
 using vniu_api.Repositories.Profiles;
-using vniu_api.Repositories.Promotions;
+using vniu_api.Repositories.sizes;
 using vniu_api.Repositories.Reviews;
 using vniu_api.Repositories.Shippings;
 using vniu_api.Services.Auths;
@@ -19,7 +19,7 @@ using vniu_api.Services.Carts;
 using vniu_api.Services.Orders;
 using vniu_api.Services.Payments;
 using vniu_api.Services.Profiles;
-using vniu_api.Services.Promotions;
+using vniu_api.Services.sizes;
 using vniu_api.Services.Reviews;
 using vniu_api.Services.Shippings;
 
@@ -121,8 +121,8 @@ builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
-// repo-promotions
-builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
+// repo-sizes
+builder.Services.AddScoped<IsizeRepo, sizeRepo>();
 
 // repo-reviews
 builder.Services.AddScoped<IReviewRepo, ReviewRepo>();

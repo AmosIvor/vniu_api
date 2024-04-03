@@ -5,7 +5,7 @@ using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
 using vniu_api.Models.EF.Profiles;
-using vniu_api.Models.EF.Promotions;
+using vniu_api.Models.EF.sizes;
 using vniu_api.Models.EF.Reviews;
 using vniu_api.Models.EF.Shippings;
 
@@ -40,8 +40,8 @@ namespace vniu_api.Repositories
         public DbSet<Address> Addresses { get; set; }
         public DbSet<UserAddress> UserAddresses {  get; set; }
 
-        // promotions
-        public DbSet<Promotion> Promotions {  get; set; }
+        // sizes
+        public DbSet<size> sizes {  get; set; }
 
         // reviews
         public DbSet<Review> Reviews { get; set; }

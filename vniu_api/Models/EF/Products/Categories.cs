@@ -11,6 +11,6 @@ namespace vniu_api.Models.EF.Products
         public string Name { get; set; }
 
         // Optional
-        public Categories ParentCategories { get; set; } = new Categories();
+        public Categories? ParentCategories { get; set; } = new Categories();
     }
 }
