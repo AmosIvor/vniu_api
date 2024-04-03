@@ -28,6 +28,10 @@
     <Folder Include="Repositories\Products\" />
     <Folder Include="Services\Products\" />
     <Folder Include="ViewModels\ProductsViewModels\" />
+    <Folder Include="Models\EF\Carts\" />
+    <Folder Include="Models\EF\Reviews\" />
+    <Folder Include="Models\EF\Orders\" />
+    <Folder Include="Models\EF\Payments\" />
   </ItemGroup>
 
 </Project>
