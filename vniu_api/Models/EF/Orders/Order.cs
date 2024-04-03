@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using vniu_api.Models.EF.Payments;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
@@ -6,6 +7,7 @@ using vniu_api.Models.EF.Shippings;
 
 namespace vniu_api.Models.EF.Orders
 {
+    [Table("Order")]
     public class Order
     {
         [Key]

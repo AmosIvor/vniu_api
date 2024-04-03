@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using vniu_api.Models.EF.Orders;
 
 namespace vniu_api.Models.EF.Shippings
 {
+    [Table("ShippingMethod")]
     public class ShippingMethod
     {
         [Key]

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Payments
 {
+    [Table("PaymentType")]
     public class PaymentType
     {
         [Key]

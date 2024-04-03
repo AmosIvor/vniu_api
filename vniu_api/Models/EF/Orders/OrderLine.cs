@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using vniu_api.Models.EF.Reviews;
 
 namespace vniu_api.Models.EF.Orders
 {
+    [Table("OrderLine")]
     public class OrderLine
     {
         [Key]

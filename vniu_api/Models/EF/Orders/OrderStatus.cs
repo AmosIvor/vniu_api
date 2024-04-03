@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Orders
 {
+    [Table("OrderStatus")]
     public class OrderStatus
     {
         [Key]

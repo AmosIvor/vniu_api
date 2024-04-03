@@ -2,18 +2,18 @@
 {
     public class PromotionVM
     {
-        public int Id { get; set; }
+        public int PromotionId { get; set; }
 
-        public string Name { get; set; }
+        public string PromotionName { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime PromotionStartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime PromotionEndDate { get; set; }
 
-        public int DiscountRate { get; set; }
+        public int PromotionDiscountRate { get; set; }
 
-        public string? Description { get; set; }
+        public string? PromotionDescription { get; set; }
 
-        public bool IsUsed { get; set; } = false;
+        public bool PromotionIsUsed { get; set; } = false;
     }
 }

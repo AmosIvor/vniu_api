@@ -33,26 +33,26 @@ namespace vniu_api.Services.Promotions
 
         public async Task<PromotionVM> GetPromotionByIdAsync(int promotionId)
         {
-            var promotion = await _context.Promotions.SingleOrDefaultAsync(p => p.Id == promotionId);
+            var promotion = await _context.Promotions.SingleOrDefaultAsync(p => p.PromotionId == promotionId);
 
             return _mapper.Map<PromotionVM>(promotion);
         }
 
         public async Task<ICollection<PromotionVM>> GetPromotionsAsync()
         {
-            var promotions = await _context.Promotions.OrderBy(p => p.Id).ToListAsync();
+            var promotions = await _context.Promotions.OrderBy(p => p.PromotionId).ToListAsync();
 
             return _mapper.Map<ICollection<PromotionVM>>(promotions);
         }
 
         public async Task<bool> IsPromotionExistIdAsync(int promotionId)
         {
-            return await _context.Promotions.AnyAsync(p => p.Id == promotionId);
+            return await _context.Promotions.AnyAsync(p => p.PromotionId == promotionId);
         }
 
         public async Task<bool> IsPromotionExistNameAsync(string promotionName)
         {
-            var promotion = await _context.Promotions.Where(p => p.Name.Trim().ToUpper() == promotionName.TrimEnd().ToUpper())
+            var promotion = await _context.Promotions.Where(p => p.PromotionName.Trim().ToUpper() == promotionName.TrimEnd().ToUpper())
                 .FirstOrDefaultAsync();
 
             return promotion != null;

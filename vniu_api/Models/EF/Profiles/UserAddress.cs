@@ -1,5 +1,8 @@
-﻿namespace vniu_api.Models.EF.Profiles
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace vniu_api.Models.EF.Profiles
 {
+    [Table("User_Address")]
     public class UserAddress
     {
         // UserId

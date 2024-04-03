@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using vniu_api.Models.EF.Profiles;
 
 namespace vniu_api.Models.EF.Carts
 {
+    [Table("Cart")]
     public class Cart
     {
         [Key]

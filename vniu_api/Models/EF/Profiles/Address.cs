@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using vniu_api.Models.EF.Orders;
 
 namespace vniu_api.Models.EF.Profiles
 {
+    [Table("Address")]
     public class Address
     {
         [Key]
-        public int AddressID {  get; set; }
+        public int AddressId {  get; set; }
 
         [MaxLength(255)]
         public string? UnitName {  get; set; }
