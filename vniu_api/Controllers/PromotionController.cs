@@ -21,7 +21,6 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("get-all")]
-        [Authorize]
         public async Task<IActionResult> GetPromotions()
         {
             try
@@ -80,6 +79,54 @@ namespace vniu_api.Controllers
                 {
                     Message = "Create promotion successfully",
                     Data = newPromotion
+                });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new ErrorResponse()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = e.Message
+                });
+            }
+        }
+
+        [HttpPut("{promotionId}")]
+        public async Task<IActionResult> UpdatePromotion(int promotionId, PromotionVM promotionVM)
+        {
+            try
+            {
+                var promotionUpdate = await _promotionRepo.UpdatePromotionAsync(promotionId, promotionVM);
+
+                return Ok(new SuccessResponse<PromotionVM>()
+                {
+                    Message = "Update promotion successfully",
+                    Data = promotionUpdate
+                });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new ErrorResponse()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = e.Message
+                });
+            }
+        }
+
+        [HttpDelete("{promotionId}")]
+        public async Task<IActionResult> DeletePromotion(int promotionId)
+        {
+            try
+            {
+                var promotionDelete = await _promotionRepo.DeletePromotionAsync(promotionId);
+
+                return Ok(new SuccessResponse<PromotionVM>()
+                {
+                    Message = "Delete promotion successfully",
+                    Data = promotionDelete
                 });
             }
             catch (Exception e)

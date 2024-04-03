@@ -12,7 +12,7 @@
 
         public int PromotionDiscountRate { get; set; }
 
-        public string? PromotionDescription { get; set; }
+        public string PromotionDescription { get; set; }
 
         public bool PromotionIsUsed { get; set; } = false;
     }

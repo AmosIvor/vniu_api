@@ -31,18 +31,45 @@ namespace vniu_api.Services.Promotions
             return newPromotionVM;
         }
 
+        public async Task<PromotionVM> DeletePromotionAsync(int promotionId)
+        {
+            var promotionDelete = _context.Promotions.SingleOrDefault(p => p.PromotionId == promotionId);
+
+            if (promotionDelete == null)
+            {
+                throw new Exception("Promotion not found");
+            }
+
+            _context.Promotions.Remove(promotionDelete);
+
+            await _context.SaveChangesAsync();
+
+            var promotionDeleteVM = _mapper.Map<PromotionVM>(promotionDelete);
+            
+            return promotionDeleteVM;
+        }
+
         public async Task<PromotionVM> GetPromotionByIdAsync(int promotionId)
         {
             var promotion = await _context.Promotions.SingleOrDefaultAsync(p => p.PromotionId == promotionId);
 
-            return _mapper.Map<PromotionVM>(promotion);
+            if (promotion == null)
+            {
+                throw new Exception("Promotion not found");
+            }
+
+            var promotionVM = _mapper.Map<PromotionVM>(promotion);
+
+            return promotionVM;
         }
 
         public async Task<ICollection<PromotionVM>> GetPromotionsAsync()
         {
             var promotions = await _context.Promotions.OrderBy(p => p.PromotionId).ToListAsync();
 
-            return _mapper.Map<ICollection<PromotionVM>>(promotions);
+            var promotionsVM = _mapper.Map<ICollection<PromotionVM>>(promotions);
+
+            return promotionsVM;
         }
 
         public async Task<bool> IsPromotionExistIdAsync(int promotionId)
@@ -56,6 +83,31 @@ namespace vniu_api.Services.Promotions
                 .FirstOrDefaultAsync();
 
             return promotion != null;
+        }
+
+        public async Task<PromotionVM> UpdatePromotionAsync(int promotionId, PromotionVM promotionVM)
+        {
+            if (promotionId != promotionVM.PromotionId)
+            {
+                throw new Exception("Promotion Id is different");
+            }
+
+            var isExist = await IsPromotionExistIdAsync(promotionId);
+
+            if (isExist == false)
+            {
+                throw new Exception("Promotion not found");
+            }
+
+            var promotionUpdate = _mapper.Map<Promotion>(promotionVM);
+
+            _context.Promotions.Update(promotionUpdate);
+
+            await _context.SaveChangesAsync();
+
+            var promotionUpdateVM = _mapper.Map<PromotionVM>(promotionUpdate);
+
+            return promotionUpdateVM;
         }
     }
 }
