@@ -6,7 +6,22 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Repositories;
-using vniu_api.Services;
+using vniu_api.Repositories.Auths;
+using vniu_api.Repositories.Carts;
+using vniu_api.Repositories.Orders;
+using vniu_api.Repositories.Payments;
+using vniu_api.Repositories.Profiles;
+using vniu_api.Repositories.Promotions;
+using vniu_api.Repositories.Reviews;
+using vniu_api.Repositories.Shippings;
+using vniu_api.Services.Auths;
+using vniu_api.Services.Carts;
+using vniu_api.Services.Orders;
+using vniu_api.Services.Payments;
+using vniu_api.Services.Profiles;
+using vniu_api.Services.Promotions;
+using vniu_api.Services.Reviews;
+using vniu_api.Services.Shippings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,16 +97,39 @@ builder.Services
         };
     });
 
-// ADD REPOSITORIES
+// ADD SCOPED REPOSITORIES
 
 // repo-auths
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 
+// repo-carts
+builder.Services.AddScoped<ICartRepo, CartRepo>();
+builder.Services.AddScoped<ICartItemRepo,  CartItemRepo>();
+
+// repo-orders
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+builder.Services.AddScoped<IOrderLineRepo, OrderLineRepo>();
+builder.Services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
+
+// repo-payments
+builder.Services.AddScoped<IPaymentMethodRepo, PaymentMethodRepo>();
+builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
+
+// repo-products
+
 // repo-profiles
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
 // repo-promotions
 builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
+
+// repo-reviews
+builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+builder.Services.AddScoped<IReviewImageRepo, ReviewImageRepo>();
+
+// repo-shippings
+builder.Services.AddScoped<IShippingMethodRepo, ShippingMethodRepo>();
 
 
 // Build app

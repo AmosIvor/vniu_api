@@ -1,27 +1,32 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using vniu_api.Models.EF.Orders;
 
 namespace vniu_api.Models.EF.Promotions
 {
+    [Table("Promotion")]
     public class Promotion
     {
         [Key]
-        public int Id { get; set; }
+        public int PromotionId { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; }
+        public string PromotionName { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime PromotionStartDate { get; set; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTime PromotionEndDate { get; set; }
 
         [Required, Range(0, 100)]
-        public int DiscountRate { get; set; }
+        public int PromotionDiscountRate { get; set; }
 
         [MaxLength(300)]
-        public string? Description { get; set; }
+        public string? PromotionDescription { get; set; }
 
-        public Boolean IsUsed { get; set; } = false;
+        public Boolean PromotionIsUsed { get; set; } = false;
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

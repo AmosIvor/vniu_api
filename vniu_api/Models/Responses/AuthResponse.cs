@@ -1,4 +1,4 @@
-﻿using vniu_api.ViewModels;
+﻿using vniu_api.ViewModels.ProfilesViewModels;
 
 namespace vniu_api.Models.Responses
 {

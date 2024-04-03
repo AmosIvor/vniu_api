@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using vniu_api.Models.EF.Auths;
 using vniu_api.Models.Responses;
-using vniu_api.Repositories;
-using vniu_api.ViewModels;
+using vniu_api.Repositories.Auths;
+using vniu_api.ViewModels.ProfilesViewModels;
 
 namespace vniu_api.Controllers
 {

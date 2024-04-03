@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using vniu_api.Constants;
 using vniu_api.Models.Responses;
-using vniu_api.Repositories;
-using vniu_api.ViewModels;
+using vniu_api.Repositories.Promotions;
+using vniu_api.ViewModels.PromotionsViewModels;
 
 namespace vniu_api.Controllers
 {

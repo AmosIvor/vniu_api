@@ -9,9 +9,10 @@ using vniu_api.Models.EF.Auths;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories;
-using vniu_api.ViewModels;
+using vniu_api.Repositories.Auths;
+using vniu_api.ViewModels.ProfilesViewModels;
 
-namespace vniu_api.Services
+namespace vniu_api.Services.Auths
 {
     public class AuthRepo : IAuthRepo
     {
@@ -21,7 +22,7 @@ namespace vniu_api.Services
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public AuthRepo(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, 
+        public AuthRepo(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, IMapper mapper)
         {
             _context = context;
