@@ -16,8 +16,11 @@ namespace vniu_api.Models.EF.Orders
         [Required]
         public decimal Price { get; set; }
 
-        public Order Order { get; set; }
+        public int OrderId { get; set; }
 
-        public Review Review { get; set; }
+        [ForeignKey("OrderId")]
+        public virtual Order Order { get; set; }
+
+        public virtual Review Review { get; set; }
     }
 }

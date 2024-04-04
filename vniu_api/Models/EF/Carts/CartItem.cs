@@ -12,6 +12,9 @@ namespace vniu_api.Models.EF.Carts
         [Required]
         public int Quantity { get; set; }
 
+        public int CartId { get; set; }
+
+        [ForeignKey("CartId")]
         public Cart Cart { get; set; }
     }
 }

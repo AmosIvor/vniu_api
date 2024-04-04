@@ -12,6 +12,6 @@ namespace vniu_api.Models.EF.Orders
         [Required, MaxLength(50)]
         public string OrderStatusName { get; set;}
 
-        public ICollection<Order> Orderes {  get; set; }
+        public virtual ICollection<Order> Orderes {  get; set; }
     }
 }

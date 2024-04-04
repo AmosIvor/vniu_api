@@ -5,5 +5,7 @@
         public int ReviewImageId { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public int ReviewId { get; set; }
     }
 }
