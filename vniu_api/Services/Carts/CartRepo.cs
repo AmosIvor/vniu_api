@@ -20,6 +20,11 @@ namespace vniu_api.Services.Carts
         {
             var cart = await _context.Carts.SingleOrDefaultAsync(c => c.CartId == cartId);
 
+            if (cart == null)
+            {
+                throw new Exception("Cart not found");
+            }
+
             var cartVM = _mapper.Map<CartVM>(cart);
 
             return cartVM;

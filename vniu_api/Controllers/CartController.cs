@@ -41,30 +41,6 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpGet("{cartId}")]
-        public async Task<IActionResult> GetCartById(int cartId)
-        {
-            try
-            {
-                var cart = await _cartRepo.GetCartByIdAsync(cartId);
-
-                return Ok(new SuccessResponse<CartVM>()
-                {
-                    Message = "Get cart successfully",
-                    Data = cart
-                });
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
-        }
-
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetCartByUserId(string userId)
         {
