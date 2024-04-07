@@ -2,11 +2,11 @@
 
 namespace vniu_api.ViewModels.ProductsViewModels
 {
-    public class SizeVM
+    public class SizeOptionVM
     {
-        public int Id { get; set; }
+        public int SizeId { get; set; }
 
-        public string Name { get; set; }
+        public string SizeName { get; set; }
 
         public bool SortOrder { get; set; }
     }

@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vniu_api.Models.EF.Products
 {
-    [Table("Size")]
-    public class Size
+    [Table("SizeOption")]
+    public class SizeOption
     {
         [Key]
         public int SizeId { get; set; }

@@ -9,11 +9,11 @@ namespace vniu_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class ProductCategoryController : ControllerBase
     {
-        private readonly ICategoryRepo _CategoryRepo;
+        private readonly IProductCategoryRepo _CategoryRepo;
 
-        public CategoryController(ICategoryRepo CategoryRepo)
+        public ProductCategoryController(IProductCategoryRepo CategoryRepo)
         {
             _CategoryRepo = CategoryRepo;
         }
@@ -26,7 +26,7 @@ namespace vniu_api.Controllers
             {
                 var result = await _CategoryRepo.GetCategorysAsync();
 
-                return Ok(new SuccessResponse<ICollection<CategoryVM>>()
+                return Ok(new SuccessResponse<ICollection<ProductCategoryVM>>()
                 {
                     Message = "Get list Categorys successfully",
                     Data = result
@@ -50,7 +50,7 @@ namespace vniu_api.Controllers
             {
                 var result = await _CategoryRepo.GetCategoryByIdAsync(CategoryId);
 
-                return Ok(new SuccessResponse<CategoryVM>()
+                return Ok(new SuccessResponse<ProductCategoryVM>()
                 {
                     Message = "Get Category successfully",
                     Data = result
@@ -68,13 +68,13 @@ namespace vniu_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CategoryVM CategoryVM)
+        public async Task<IActionResult> CreateCategory(ProductCategoryVM CategoryVM)
         {
             try
             {
                 var newCategory = await _CategoryRepo.CreateCategoryAsync(CategoryVM);
 
-                return Ok(new SuccessResponse<CategoryVM>()
+                return Ok(new SuccessResponse<ProductCategoryVM>()
                 {
                     Message = "Create Category successfully",
                     Data = newCategory

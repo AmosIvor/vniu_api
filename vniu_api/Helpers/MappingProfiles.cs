@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.VisualBasic;
 using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
@@ -53,11 +54,12 @@ namespace vniu_api.Helpers
             CreateMap<ShippingMethod, ShippingMethodVM>().ReverseMap();
 
             //Products
-            CreateMap<Size, SizeVM>().ReverseMap();
+            CreateMap<SizeOption, SizeOptionVM>().ReverseMap();
             CreateMap<Colour, ColourVM>().ReverseMap();
-            CreateMap<Category, CategoryVM>().ReverseMap();
-            CreateMap<ProductOption, ProductOptionVM>().ReverseMap();
+            CreateMap<ProductCategory, ProductCategoryVM>().ReverseMap();
+            CreateMap<ProductItem, ProductItemVM>().ReverseMap();
             CreateMap<Product, ProductVM>().ReverseMap();
+            CreateMap<Variation, VariationVM>().ReverseMap();
 
         }
     }

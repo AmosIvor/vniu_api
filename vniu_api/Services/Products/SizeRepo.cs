@@ -18,31 +18,31 @@ namespace vniu_api.Services.Products
                 _mapper = mapper;
             }
 
-            public async Task<SizeVM> CreateSizeAsync(SizeVM sizeVM)
+            public async Task<SizeOptionVM> CreateSizeAsync(SizeOptionVM sizeVM)
             {
-                var sizeMap = _mapper.Map<Size>(sizeVM);
+                var sizeMap = _mapper.Map<SizeOption>(sizeVM);
 
                 _context.Sizes.Add(sizeMap);
 
                 await _context.SaveChangesAsync();
 
-                var newsizeVM = _mapper.Map<SizeVM>(sizeMap);
+                var newsizeVM = _mapper.Map<SizeOptionVM>(sizeMap);
 
                 return newsizeVM;
             }
 
-            public async Task<SizeVM> GetSizeByIdAsync(int sizeId)
+            public async Task<SizeOptionVM> GetSizeByIdAsync(int sizeId)
             {
                 var size = await _context.Sizes.SingleOrDefaultAsync(p => p.SizeId == sizeId);
 
-                return _mapper.Map<SizeVM>(size);
+                return _mapper.Map<SizeOptionVM>(size);
             }
 
-            public async Task<ICollection<SizeVM>> GetSizesAsync()
+            public async Task<ICollection<SizeOptionVM>> GetSizesAsync()
             {
                 var sizes = await _context.Sizes.OrderBy(p => p.SizeId).ToListAsync();
 
-                return _mapper.Map<ICollection<SizeVM>>(sizes);
+                return _mapper.Map<ICollection<SizeOptionVM>>(sizes);
             }
 
             public async Task<bool> IsSizeExistIdAsync(int sizeId)

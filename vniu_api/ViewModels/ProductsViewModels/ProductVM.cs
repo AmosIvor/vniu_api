@@ -1,17 +1,15 @@
-﻿namespace vniu_api.ViewModels.ProductsViewModels
+﻿using vniu_api.ViewModels.ReviewsViewModels;
+
+namespace vniu_api.ViewModels.ProductsViewModels
 {
     public class ProductVM
     {
-        public int? Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string? Description { get; set; }
-        public int Rating { get; set; }
-        public string? ProductImage { get; set; }
-        public string? ProductImage1 { get; set; }
-        public string? ProductImage2 { get; set; }
-        public string? ProductImage3 { get; set; }
-        public CategoryVM category { get; set; } = new CategoryVM();
+        public int? ProductId { get; set; }
+        public string ProductName { get; set; } = string.Empty;
+        public string? ProductDescription { get; set; }        
+        public ProductCategoryVM ProductCategory { get; set; } = new ProductCategoryVM();
 
-        public ICollection<ProductOptionVM> Products { get; set; }
+        public ICollection<ProductItemVM>? ProductItemVMs { get; set; }
+        public ICollection<ReviewVM>? ReviewVMs { get; set; }
     }
 }

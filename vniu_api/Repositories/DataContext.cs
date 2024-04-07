@@ -52,10 +52,10 @@ namespace vniu_api.Repositories
         public DbSet<ShippingMethod> ShippingMethods { get; set; }
 
         //
-        public DbSet<Size> Sizes { get; set; }
+        public DbSet<SizeOption> Sizes { get; set; }
         public DbSet<Colour> Colours { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ProductOption> ProductOptions { get; set; }
+        public DbSet<ProductCategory> Categories { get; set; }
+        public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Product> Products { get; set; }
 
 

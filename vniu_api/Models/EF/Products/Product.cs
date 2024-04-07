@@ -14,14 +14,7 @@ namespace vniu_api.Models.EF.Products
 
         [MaxLength(300)]
         public string? ProductDescription { get; set; }
-        [Required, Range(0, 5)]
-        public double ProductRating { get; set; }
-        //optional
-        public string? ProductImage { get; set; }
-        public string? ProductImage1 { get; set; }
-        public string? ProductImage2 { get; set; }
-        public string? ProductImage3 { get; set; }
 
-        public Category ParentCategories { get; set; } = new Category();
+        public ProductCategory Category { get; set; } = new ProductCategory();
     }
 }

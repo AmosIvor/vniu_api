@@ -26,7 +26,7 @@ namespace vniu_api.Controllers
             {
                 var result = await _SizeRepo.GetSizesAsync();
 
-                return Ok(new SuccessResponse<ICollection<SizeVM>>()
+                return Ok(new SuccessResponse<ICollection<SizeOptionVM>>()
                 {
                     Message = "Get list Sizes successfully",
                     Data = result
@@ -50,7 +50,7 @@ namespace vniu_api.Controllers
             {
                 var result = await _SizeRepo.GetSizeByIdAsync(SizeId);
 
-                return Ok(new SuccessResponse<SizeVM>()
+                return Ok(new SuccessResponse<SizeOptionVM>()
                 {
                     Message = "Get Size successfully",
                     Data = result
@@ -68,13 +68,13 @@ namespace vniu_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSize(SizeVM SizeVM)
+        public async Task<IActionResult> CreateSize(SizeOptionVM SizeVM)
         {
             try
             {
                 var newSize = await _SizeRepo.CreateSizeAsync(SizeVM);
 
-                return Ok(new SuccessResponse<SizeVM>()
+                return Ok(new SuccessResponse<SizeOptionVM>()
                 {
                     Message = "Create Size successfully",
                     Data = newSize
