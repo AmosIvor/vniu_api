@@ -11,5 +11,9 @@
         public DateTime? ExpiryDate { get; set; }
 
         public Boolean? IsDefault { get; set; } = false;
+
+        public int PaymentTypeId { get; set; }
+
+        public string UserId { get; set; }
     }
 }

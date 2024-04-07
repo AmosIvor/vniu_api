@@ -10,8 +10,11 @@ namespace vniu_api.Models.EF.Carts
         [Key]
         public int CartId { get; set; }
 
-        public ICollection<CartItem> CartItems { get; set;  }
+        // Foreign Key
+        public string UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
+
+        public virtual ICollection<CartItem> CartItems { get; set;  }
     }
 }
