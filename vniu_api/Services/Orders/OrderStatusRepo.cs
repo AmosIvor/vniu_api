@@ -20,7 +20,7 @@ namespace vniu_api.Services.Orders
 
         public async Task<OrderStatusVM> CreateOrderStatusAsync(OrderStatusVM orderStatusVM)
         {
-            // check exist value
+            // check exist name
             var isExistName = await IsOrderStatusExistNameAsync(orderStatusVM.OrderStatusName);
 
             if (isExistName == true)
@@ -123,7 +123,7 @@ namespace vniu_api.Services.Orders
 
             if (isExistName == true)
             {
-                throw new Exception("Order Status value exists");
+                throw new Exception("Order Status name exists");
             }
 
             var updateOrderStatus = _mapper.Map<OrderStatus>(orderStatusVM);
