@@ -123,7 +123,7 @@ builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
-// repo-sizes
+// repo-Variations
 builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
 
 // repo-reviews
@@ -136,8 +136,11 @@ builder.Services.AddScoped<IShippingMethodRepo, ShippingMethodRepo>();
 // repo-Products
 builder.Services.AddScoped<ISizeRepo, SizeRepo>();
 builder.Services.AddScoped<IColourRepo, ColourRepo>();
+builder.Services.AddScoped<IVariationRepo, VariationRepo>();
 builder.Services.AddScoped<IProductCategoryRepo, ProductCategoryRepo>();
-
+builder.Services.AddScoped<IProductImageRepo, ProductImageRepo>();
+builder.Services.AddScoped<IProductItemRepo, ProductItemRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 // Build app
 var app = builder.Build();
 

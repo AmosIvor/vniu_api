@@ -60,7 +60,7 @@ namespace vniu_api.Helpers
             CreateMap<ProductItem, ProductItemVM>().ReverseMap();
             CreateMap<Product, ProductVM>().ReverseMap();
             CreateMap<Variation, VariationVM>().ReverseMap();
-
+            CreateMap<ProductImage, ProductImageVM>().ReverseMap();
         }
     }
 }

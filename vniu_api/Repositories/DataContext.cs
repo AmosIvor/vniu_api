@@ -57,6 +57,8 @@ namespace vniu_api.Repositories
         public DbSet<ProductCategory> Categories { get; set; }
         public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Variation> Variations { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
 
         #endregion
@@ -93,6 +95,8 @@ namespace vniu_api.Repositories
             modelBuilder.Entity<OrderLine>()
                 .Property(ol => ol.Price)
                 .HasPrecision(18, 2);
+
+
         }
 
     }
