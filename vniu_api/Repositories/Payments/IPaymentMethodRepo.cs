@@ -1,6 +1,8 @@
-﻿namespace vniu_api.Repositories.Payments
+﻿
+namespace vniu_api.Repositories.Payments
 {
     public interface IPaymentMethodRepo
     {
+        
     }
 }

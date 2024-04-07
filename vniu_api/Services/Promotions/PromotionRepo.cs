@@ -106,6 +106,13 @@ namespace vniu_api.Services.Promotions
                 throw new Exception("Promotion not found");
             }
 
+            var isExistName = await IsPromotionExistNameAsync(promotionVM.PromotionName);
+
+            if (isExistName == true)
+            {
+                throw new Exception("Promotion Name exists");
+            }
+
             var promotionUpdate = _mapper.Map<Promotion>(promotionVM);
 
             _context.Promotions.Update(promotionUpdate);
