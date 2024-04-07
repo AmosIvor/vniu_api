@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
+using vniu_api.Models.EF.Products;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Models.EF.Reviews;
@@ -40,7 +41,7 @@ namespace vniu_api.Repositories
         public DbSet<Address> Addresses { get; set; }
         public DbSet<UserAddress> UserAddresses {  get; set; }
 
-        // promotions
+        // Promotions
         public DbSet<Promotion> Promotions {  get; set; }
 
         // reviews
@@ -49,6 +50,16 @@ namespace vniu_api.Repositories
 
         // shippings
         public DbSet<ShippingMethod> ShippingMethods { get; set; }
+
+        //
+        public DbSet<SizeOption> Sizes { get; set; }
+        public DbSet<Colour> Colours { get; set; }
+        public DbSet<ProductCategory> Categories { get; set; }
+        public DbSet<ProductItem> ProductItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Variation> Variations { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+
 
         #endregion
 

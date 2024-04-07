@@ -10,6 +10,7 @@ using vniu_api.Repositories.Auths;
 using vniu_api.Repositories.Carts;
 using vniu_api.Repositories.Orders;
 using vniu_api.Repositories.Payments;
+using vniu_api.Repositories.Products;
 using vniu_api.Repositories.Profiles;
 using vniu_api.Repositories.Promotions;
 using vniu_api.Repositories.Reviews;
@@ -18,6 +19,7 @@ using vniu_api.Services.Auths;
 using vniu_api.Services.Carts;
 using vniu_api.Services.Orders;
 using vniu_api.Services.Payments;
+using vniu_api.Services.Products;
 using vniu_api.Services.Profiles;
 using vniu_api.Services.Promotions;
 using vniu_api.Services.Reviews;
@@ -121,7 +123,7 @@ builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
-// repo-promotions
+// repo-Variations
 builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
 
 // repo-reviews
@@ -131,7 +133,14 @@ builder.Services.AddScoped<IReviewImageRepo, ReviewImageRepo>();
 // repo-shippings
 builder.Services.AddScoped<IShippingMethodRepo, ShippingMethodRepo>();
 
-
+// repo-Products
+builder.Services.AddScoped<ISizeRepo, SizeRepo>();
+builder.Services.AddScoped<IColourRepo, ColourRepo>();
+builder.Services.AddScoped<IVariationRepo, VariationRepo>();
+builder.Services.AddScoped<IProductCategoryRepo, ProductCategoryRepo>();
+builder.Services.AddScoped<IProductImageRepo, ProductImageRepo>();
+builder.Services.AddScoped<IProductItemRepo, ProductItemRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 // Build app
 var app = builder.Build();
 
