@@ -24,6 +24,8 @@ namespace vniu_api.Services.Carts
 
             // mindset: if product exists => will increase quantity
 
+            // You don't need to check cart exist => because you register new account <=> you create new cart
+
             var cartItem = _mapper.Map<CartItem>(cartItemVM);
 
             _context.CartItems.Add(cartItem);
