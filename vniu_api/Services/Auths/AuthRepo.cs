@@ -67,7 +67,7 @@ namespace vniu_api.Services.Auths
             }
 
             // get token
-            var jwtToken = Utils.GetToken(authClaims, _configuration);
+            var jwtToken = AppUtils.GetToken(authClaims, _configuration);
 
             // auth response
             var authResponse = new AuthResponse
@@ -105,7 +105,7 @@ namespace vniu_api.Services.Auths
             var user = new User()
             {
                 // default field
-                Id = await Utils.GenerateUserID(_context),
+                Id = await AppUtils.GenerateUserID(_context),
                 UserName = userRegister.UserName,
                 Email = userRegister.Email,
                 PhoneNumber = userRegister.Phone,

@@ -6,6 +6,7 @@ using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Models.EF.Reviews;
 using vniu_api.Models.EF.Shippings;
+using vniu_api.Models.EF.Utils;
 using vniu_api.ViewModels.CartsViewModels;
 using vniu_api.ViewModels.OrdersViewModels;
 using vniu_api.ViewModels.PaymentsViewModels;
@@ -13,6 +14,7 @@ using vniu_api.ViewModels.ProfilesViewModels;
 using vniu_api.ViewModels.PromotionsViewModels;
 using vniu_api.ViewModels.ReviewsViewModels;
 using vniu_api.ViewModels.ShippingViewModels;
+using vniu_api.ViewModels.UtilsViewModels;
 
 namespace vniu_api.Helpers
 {
@@ -49,6 +51,9 @@ namespace vniu_api.Helpers
 
             // shippings
             CreateMap<ShippingMethod, ShippingMethodVM>().ReverseMap();
+
+            // utils
+            CreateMap<Photo, PhotoVM>().ReverseMap();
         }
     }
 }

@@ -8,6 +8,7 @@ using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Models.EF.Reviews;
 using vniu_api.Models.EF.Shippings;
+using vniu_api.Models.EF.Utils;
 
 namespace vniu_api.Repositories
 {
@@ -49,6 +50,9 @@ namespace vniu_api.Repositories
 
         // shippings
         public DbSet<ShippingMethod> ShippingMethods { get; set; }
+
+        // utils
+        public DbSet<Photo> Photos { get; set; }
 
         #endregion
 
