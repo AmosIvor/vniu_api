@@ -122,6 +122,26 @@ namespace vniu_api.Repositories
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+
+            //ProductItems
+            modelBuilder.Entity<ProductItem>()
+                .HasOne(pi => pi.Product)
+                .WithMany(p => p.ProductItems)
+                .HasForeignKey(pi => pi.ProductId);
+
+            modelBuilder.Entity<ProductItem>()
+                .HasOne(pi => pi.Colour)
+                .WithMany(c => c.ProductItems)
+                .HasForeignKey(pi => pi.ColourId);
+
+            // Product
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
+
+
         }
 
     }

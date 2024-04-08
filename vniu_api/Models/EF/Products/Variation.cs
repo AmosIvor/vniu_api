@@ -15,5 +15,7 @@ namespace vniu_api.Models.EF.Products
         public string SizeId { get; set; }
         [Required]
         public int QuantityInStock { get; set; }
+        public ICollection<ProductItem> ProductItems { get; set; }
+
     }
 }
