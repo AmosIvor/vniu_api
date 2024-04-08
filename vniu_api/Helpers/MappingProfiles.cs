@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.VisualBasic;
 using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
+using vniu_api.Models.EF.Products;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Models.EF.Reviews;
@@ -10,6 +12,7 @@ using vniu_api.Models.EF.Utils;
 using vniu_api.ViewModels.CartsViewModels;
 using vniu_api.ViewModels.OrdersViewModels;
 using vniu_api.ViewModels.PaymentsViewModels;
+using vniu_api.ViewModels.ProductsViewModels;
 using vniu_api.ViewModels.ProfilesViewModels;
 using vniu_api.ViewModels.PromotionsViewModels;
 using vniu_api.ViewModels.ReviewsViewModels;
@@ -36,6 +39,13 @@ namespace vniu_api.Helpers
             CreateMap<PaymentType, PaymentTypeVM>().ReverseMap();
 
             // products
+            CreateMap<SizeOption, SizeOptionVM>().ReverseMap();
+            CreateMap<Colour, ColourVM>().ReverseMap();
+            CreateMap<ProductCategory, ProductCategoryVM>().ReverseMap();
+            CreateMap<ProductItem, ProductItemVM>().ReverseMap();
+            CreateMap<Product, ProductVM>().ReverseMap();
+            CreateMap<Variation, VariationVM>().ReverseMap();
+            CreateMap<ProductImage, ProductImageVM>().ReverseMap();
 
             // profiles
             CreateMap<User, UserVM>().ReverseMap();
