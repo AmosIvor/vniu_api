@@ -5,5 +5,9 @@
         public int CartItemId { get; set; }
 
         public int Quantity { get; set; }
+
+        public int CartId { get; set; }
+
+        public int ProductItemId { get; set; }
     }
 }

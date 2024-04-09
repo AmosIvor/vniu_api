@@ -19,10 +19,13 @@ namespace vniu_api.Models.EF.Reviews
 
         public int OrderLineId { get; set; }
 
-        public OrderLine OrderLine { get; set; }
+        public virtual OrderLine OrderLine { get; set; } = new OrderLine();
 
-        public ICollection<ReviewImage> ReviewImages { get; set; }
+        public string UserId { get; set; }
 
-        public User User {  get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; } = new User();
+
+        public virtual ICollection<ReviewImage> ReviewImages { get; set; } = new List<ReviewImage>();
     }
 }

@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
+using vniu_api.Models.EF.Products;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.EF.Promotions;
 using vniu_api.Models.EF.Reviews;
 using vniu_api.Models.EF.Shippings;
+using vniu_api.Models.EF.Utils;
 
 namespace vniu_api.Repositories
 {
@@ -34,6 +36,13 @@ namespace vniu_api.Repositories
         public DbSet<PaymentType> PaymentTypes { get; set; }
 
         // products
+        public DbSet<SizeOption> SizeOptions { get; set; }
+        public DbSet<Colour> Colours { get; set; }
+        public DbSet<ProductCategory> Categories { get; set; }
+        public DbSet<ProductItem> ProductItems { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Variation> Variations { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         // profiles
         public DbSet<User> Users {  get; set; }
@@ -43,12 +52,17 @@ namespace vniu_api.Repositories
         // promotions
         public DbSet<Promotion> Promotions {  get; set; }
 
+        public DbSet<PromotionCategory> PromotionCategories { get; set; }
+
         // reviews
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ReviewImage> ReviewImages { get; set; }
 
         // shippings
         public DbSet<ShippingMethod> ShippingMethods { get; set; }
+
+        // utils
+        public DbSet<Photo> Photos { get; set; }
 
         #endregion
 
@@ -84,6 +98,65 @@ namespace vniu_api.Repositories
             modelBuilder.Entity<OrderLine>()
                 .Property(ol => ol.Price)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.OriginalPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.SalePrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.ProductItemRating)
+                .HasPrecision(18, 2);
+
+            // User_Cart
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Cart)
+                .WithOne(c => c.User)
+                .HasForeignKey<Cart>(c => c.UserId);
+
+            // PaymentMethod
+            modelBuilder.Entity<PaymentMethod>()
+                .HasOne(pm => pm.User)
+                .WithMany(u => u.PaymentMethods)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Review
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Order
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // ProductCategory
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(pc => pc.ParentCategory)
+                .WithMany(pc => pc.ChildProductCategories)
+                .HasForeignKey(pc => pc.ParentCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Promotion_Category
+            modelBuilder.Entity<PromotionCategory>()
+                .HasKey(pc => new { pc.PromotionId, pc.ProductCategoryId });
+
+            modelBuilder.Entity<PromotionCategory>()
+                .HasOne(pc => pc.Promotion)
+                .WithMany(p => p.PromotionCategories)
+                .HasForeignKey(pc => pc.PromotionId);
+            modelBuilder.Entity<PromotionCategory>()
+                .HasOne(pc => pc.ProductCategory)
+                .WithMany(c => c.PromotionCategories)
+                .HasForeignKey(pc => pc.ProductCategoryId);
         }
 
     }

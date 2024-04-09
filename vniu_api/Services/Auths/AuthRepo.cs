@@ -6,6 +6,7 @@ using System.Security.Claims;
 using vniu_api.Constants;
 using vniu_api.Helpers;
 using vniu_api.Models.EF.Auths;
+using vniu_api.Models.EF.Carts;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories;
@@ -66,7 +67,7 @@ namespace vniu_api.Services.Auths
             }
 
             // get token
-            var jwtToken = Utils.GetToken(authClaims, _configuration);
+            var jwtToken = AppUtils.GetToken(authClaims, _configuration);
 
             // auth response
             var authResponse = new AuthResponse
@@ -104,7 +105,7 @@ namespace vniu_api.Services.Auths
             var user = new User()
             {
                 // default field
-                Id = await Utils.GenerateUserID(_context),
+                Id = await AppUtils.GenerateUserID(_context),
                 UserName = userRegister.UserName,
                 Email = userRegister.Email,
                 PhoneNumber = userRegister.Phone,
@@ -140,6 +141,16 @@ namespace vniu_api.Services.Auths
 
             await _userManager.AddToRoleAsync(user, AppRoles.CUSTOMER);
 
+            // Create cart each user register succeeded
+            var cart = new Cart()
+            {
+                UserId = user.Id,
+            };
+
+            _context.Carts.Add(cart);
+
+
+            // Save changes
             await _context.SaveChangesAsync();
 
             // Map user to userVM

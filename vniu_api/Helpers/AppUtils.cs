@@ -8,7 +8,7 @@ using vniu_api.Repositories;
 
 namespace vniu_api.Helpers
 {
-    public static class Utils
+    public static class AppUtils
     {
         public static JwtSecurityToken GetToken(List<Claim> authClaims, IConfiguration configuration)
         {

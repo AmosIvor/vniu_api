@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using vniu_api.Models.EF.Products;
 using vniu_api.Models.EF.Reviews;
 
 namespace vniu_api.Models.EF.Orders
@@ -16,8 +17,16 @@ namespace vniu_api.Models.EF.Orders
         [Required]
         public decimal Price { get; set; }
 
-        public Order Order { get; set; }
+        public int OrderId { get; set; }
 
-        public Review Review { get; set; }
+        [ForeignKey("OrderId")]
+        public virtual Order Order { get; set; } = new Order();
+
+        public virtual Review Review { get; set; } = new Review();
+
+        public int ProductItemId { get; set; }
+
+        [ForeignKey("ProductItemId")]
+        public virtual ProductItem ProductItem { get; set; } = new ProductItem();
     }
 }

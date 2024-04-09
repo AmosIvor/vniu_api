@@ -12,6 +12,9 @@ namespace vniu_api.Models.EF.Reviews
         [Required]
         public string ImageUrl { get; set; }
 
-        public Review Review { get; set; }
+        public int ReviewId { get; set; }
+
+        [ForeignKey("ReviewId")]
+        public virtual Review Review { get; set; } = new Review();
     }
 }

@@ -5,23 +5,28 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using vniu_api.Models.EF.Profiles;
+using vniu_api.Models.EF.Utils;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Auths;
 using vniu_api.Repositories.Carts;
 using vniu_api.Repositories.Orders;
 using vniu_api.Repositories.Payments;
+using vniu_api.Repositories.Products;
 using vniu_api.Repositories.Profiles;
 using vniu_api.Repositories.Promotions;
 using vniu_api.Repositories.Reviews;
 using vniu_api.Repositories.Shippings;
+using vniu_api.Repositories.Utils;
 using vniu_api.Services.Auths;
 using vniu_api.Services.Carts;
 using vniu_api.Services.Orders;
 using vniu_api.Services.Payments;
+using vniu_api.Services.Products;
 using vniu_api.Services.Profiles;
 using vniu_api.Services.Promotions;
 using vniu_api.Services.Reviews;
 using vniu_api.Services.Shippings;
+using vniu_api.Services.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,11 +63,16 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+// ADD SERVICES 
+
 // Cors
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Cloudinary
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 // Identity
 builder.Services.AddIdentity<User, IdentityRole>()
@@ -116,12 +126,19 @@ builder.Services.AddScoped<IPaymentMethodRepo, PaymentMethodRepo>();
 builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
 
 // repo-products
+builder.Services.AddScoped<ISizeOptionRepo, SizeOptionRepo>();
+builder.Services.AddScoped<IColourRepo, ColourRepo>();
+builder.Services.AddScoped<IVariationRepo, VariationRepo>();
+builder.Services.AddScoped<IProductCategoryRepo, ProductCategoryRepo>();
+builder.Services.AddScoped<IProductImageRepo, ProductImageRepo>();
+builder.Services.AddScoped<IProductItemRepo, ProductItemRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 
 // repo-profiles
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
-// repo-promotions
+// repo-Variations
 builder.Services.AddScoped<IPromotionRepo, PromotionRepo>();
 
 // repo-reviews
@@ -131,6 +148,8 @@ builder.Services.AddScoped<IReviewImageRepo, ReviewImageRepo>();
 // repo-shippings
 builder.Services.AddScoped<IShippingMethodRepo, ShippingMethodRepo>();
 
+// repo-utils
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 // Build app
 var app = builder.Build();

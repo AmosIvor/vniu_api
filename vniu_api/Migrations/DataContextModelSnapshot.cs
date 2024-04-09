@@ -235,11 +235,13 @@ namespace vniu_api.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CartId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Cart");
                 });
@@ -255,12 +257,17 @@ namespace vniu_api.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductItemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("CartItemId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("ProductItemId");
 
                     b.ToTable("CartItem");
                 });
@@ -300,6 +307,7 @@ namespace vniu_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("OrderId");
@@ -334,12 +342,17 @@ namespace vniu_api.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("ProductItemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("OrderLineId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductItemId");
 
                     b.ToTable("OrderLine");
                 });
@@ -388,6 +401,7 @@ namespace vniu_api.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PaymentMethodId");
@@ -415,6 +429,186 @@ namespace vniu_api.Migrations
                     b.HasKey("PaymentTypeId");
 
                     b.ToTable("PaymentType");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Colour", b =>
+                {
+                    b.Property<int>("ColourId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ColourId"), 1L, 1);
+
+                    b.Property<string>("ColourName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ColourId");
+
+                    b.ToTable("Colour");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductCategory", b =>
+                {
+                    b.Property<int>("ProductCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"), 1L, 1);
+
+                    b.Property<int>("ParentCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductCategoryName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ProductCategoryId");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("ProductCategory");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductImage", b =>
+                {
+                    b.Property<int>("ProductImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductImageId"), 1L, 1);
+
+                    b.Property<string>("ProductImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("ProductItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductImageId");
+
+                    b.HasIndex("ProductItemId");
+
+                    b.ToTable("ProductImage");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductItem", b =>
+                {
+                    b.Property<int>("ProductItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductItemId"), 1L, 1);
+
+                    b.Property<int>("ColourId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("OriginalPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductItemCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ProductItemRating")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductItemSold")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SalePrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductItemId");
+
+                    b.HasIndex("ColourId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductItem");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.SizeOption", b =>
+                {
+                    b.Property<int>("SizeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SizeId"), 1L, 1);
+
+                    b.Property<string>("SizeName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("SizeId");
+
+                    b.ToTable("SizeOption");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Variation", b =>
+                {
+                    b.Property<int>("VariationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VariationId"), 1L, 1);
+
+                    b.Property<int>("ProductItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VariationId");
+
+                    b.HasIndex("ProductItemId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("Variation");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.Address", b =>
@@ -503,6 +697,21 @@ namespace vniu_api.Migrations
                     b.ToTable("Promotion");
                 });
 
+            modelBuilder.Entity("vniu_api.Models.EF.Promotions.PromotionCategory", b =>
+                {
+                    b.Property<int>("PromotionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PromotionId", "ProductCategoryId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("PromotionCategory");
+                });
+
             modelBuilder.Entity("vniu_api.Models.EF.Reviews.Review", b =>
                 {
                     b.Property<int>("ReviewId")
@@ -522,6 +731,7 @@ namespace vniu_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ReviewId");
@@ -576,6 +786,29 @@ namespace vniu_api.Migrations
                     b.HasKey("ShippingMethodId");
 
                     b.ToTable("ShippingMethod");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Utils.Photo", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhotoId"), 1L, 1);
+
+                    b.Property<string>("PhotoPublicId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("PhotoUrl")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("PhotoId");
+
+                    b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.User", b =>
@@ -648,8 +881,10 @@ namespace vniu_api.Migrations
             modelBuilder.Entity("vniu_api.Models.EF.Carts.Cart", b =>
                 {
                     b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
-                        .WithMany("Carts")
-                        .HasForeignKey("UserId");
+                        .WithOne("Cart")
+                        .HasForeignKey("vniu_api.Models.EF.Carts.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -662,7 +897,15 @@ namespace vniu_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("vniu_api.Models.EF.Products.ProductItem", "ProductItem")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cart");
+
+                    b.Navigation("ProductItem");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.Order", b =>
@@ -699,7 +942,9 @@ namespace vniu_api.Migrations
 
                     b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Address");
 
@@ -722,7 +967,15 @@ namespace vniu_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("vniu_api.Models.EF.Products.ProductItem", "ProductItem")
+                        .WithMany("OrderLines")
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("ProductItem");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Payments.PaymentMethod", b =>
@@ -735,11 +988,84 @@ namespace vniu_api.Migrations
 
                     b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
                         .WithMany("PaymentMethods")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("PaymentType");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Product", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.ProductCategory", "ProductCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductCategory", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.ProductCategory", "ParentCategory")
+                        .WithMany("ChildProductCategories")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductImage", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.ProductItem", "ProductItem")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductItem");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductItem", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.Colour", "Colour")
+                        .WithMany("ProductItems")
+                        .HasForeignKey("ColourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vniu_api.Models.EF.Products.Product", "Product")
+                        .WithMany("ProductItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Colour");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Variation", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.ProductItem", "ProductItem")
+                        .WithMany()
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vniu_api.Models.EF.Products.SizeOption", "SizeOption")
+                        .WithMany("Variations")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductItem");
+
+                    b.Navigation("SizeOption");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.UserAddress", b =>
@@ -761,6 +1087,25 @@ namespace vniu_api.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("vniu_api.Models.EF.Promotions.PromotionCategory", b =>
+                {
+                    b.HasOne("vniu_api.Models.EF.Products.ProductCategory", "ProductCategory")
+                        .WithMany("PromotionCategories")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("vniu_api.Models.EF.Promotions.Promotion", "Promotion")
+                        .WithMany("PromotionCategories")
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+
+                    b.Navigation("Promotion");
+                });
+
             modelBuilder.Entity("vniu_api.Models.EF.Reviews.Review", b =>
                 {
                     b.HasOne("vniu_api.Models.EF.Orders.OrderLine", "OrderLine")
@@ -771,7 +1116,9 @@ namespace vniu_api.Migrations
 
                     b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
                         .WithMany("Reviews")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("OrderLine");
 
@@ -820,6 +1167,39 @@ namespace vniu_api.Migrations
                     b.Navigation("PaymentMethods");
                 });
 
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Colour", b =>
+                {
+                    b.Navigation("ProductItems");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.Product", b =>
+                {
+                    b.Navigation("ProductItems");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductCategory", b =>
+                {
+                    b.Navigation("ChildProductCategories");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("PromotionCategories");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.ProductItem", b =>
+                {
+                    b.Navigation("CartItems");
+
+                    b.Navigation("OrderLines");
+
+                    b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("vniu_api.Models.EF.Products.SizeOption", b =>
+                {
+                    b.Navigation("Variations");
+                });
+
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.Address", b =>
                 {
                     b.Navigation("Orders");
@@ -830,6 +1210,8 @@ namespace vniu_api.Migrations
             modelBuilder.Entity("vniu_api.Models.EF.Promotions.Promotion", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("PromotionCategories");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Reviews.Review", b =>
@@ -844,7 +1226,8 @@ namespace vniu_api.Migrations
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.User", b =>
                 {
-                    b.Navigation("Carts");
+                    b.Navigation("Cart")
+                        .IsRequired();
 
                     b.Navigation("Orders");
 

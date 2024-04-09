@@ -21,10 +21,16 @@ namespace vniu_api.Models.EF.Payments
 
         public Boolean? IsDefault { get; set; } = false;
 
-        public PaymentType PaymentType { get; set; }
+        public int PaymentTypeId { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        [ForeignKey("PaymentTypeId")]
+        public virtual PaymentType PaymentType { get; set; } = new PaymentType();
 
-        public User User { get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
