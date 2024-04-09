@@ -68,6 +68,20 @@ namespace vniu_api.Services.Utils
             return newPhotoVM;
         }
 
+        public async Task<ICollection<PhotoVM>> CreatePhotosAsync(ICollection<IFormFile> files)
+        {
+            var newPhotosVM = new List<PhotoVM>();
+
+            foreach (var file in files)
+            {
+                var newPhotoVM = await CreatePhotoAsync(file);
+
+                newPhotosVM.Add(newPhotoVM);
+            }
+
+            return newPhotosVM;
+        }
+
         public async Task<PhotoVM> DeletePhotoAsync(int photoId)
         {
             var photoDelete = await _context.Photos.FindAsync(photoId);
@@ -84,7 +98,7 @@ namespace vniu_api.Services.Utils
 
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
-            if (result.Error == null)
+            if (result.Error != null)
             {
                 throw new Exception("Remove photo failed");
             }
@@ -98,6 +112,20 @@ namespace vniu_api.Services.Utils
             var photoDeleteVM = _mapper.Map<PhotoVM>(photoDelete);
 
             return photoDeleteVM;
+        }
+
+        public async Task<ICollection<PhotoVM>> DeletePhotosAsync(ICollection<int> publicIds)
+        {
+            var photosDeleteVM = new List<PhotoVM>();
+
+            foreach (int publicId in publicIds)
+            {
+                var photoDeleteVM = await DeletePhotoAsync(publicId);
+
+                photosDeleteVM.Add(photoDeleteVM);
+            }
+
+            return photosDeleteVM;
         }
     }
 }
