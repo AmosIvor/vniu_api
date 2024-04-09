@@ -12,9 +12,10 @@ namespace vniu_api.Models.EF.Products
         public int ProductId { get; set; }
         [Required]
         public int ColourId { get; set; }
+
+        public int VariationId { get; set; }
         public Product Product { get; set; } = new Product();
         public Colour Colour { get; set; } = new Colour();
-        public Variation Variation { get; set; } = new Variation();
         [Required]
         public int OriginalPrice { get; set; }
         public int SalePrice { get; set; }

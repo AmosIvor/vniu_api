@@ -14,5 +14,7 @@ namespace vniu_api.Models.EF.Products
 
         // Optional
         public ProductCategory? ParentProductCategory { get; set; } = new ProductCategory();
+
+        public ICollection<Product>? Products { get; set; }
     }
 }

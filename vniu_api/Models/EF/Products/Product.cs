@@ -15,6 +15,10 @@ namespace vniu_api.Models.EF.Products
         [MaxLength(300)]
         public string? ProductDescription { get; set; }
 
+        public int CategoryId { get; set; }
+
+        public ICollection<ProductItem> ProductItems { get; set; }
+
         public ProductCategory Category { get; set; } = new ProductCategory();
     }
 }
