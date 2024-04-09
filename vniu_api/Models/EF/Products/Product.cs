@@ -12,13 +12,14 @@ namespace vniu_api.Models.EF.Products
         [Required, MaxLength(100)]
         public string ProductName { get; set; }
 
-        [MaxLength(300)]
+        [MaxLength(500)]
         public string? ProductDescription { get; set; }
 
-        public int CategoryId { get; set; }
+        public int ProductCategoryId { get; set; }
 
-        public ICollection<ProductItem> ProductItems { get; set; }
+        [ForeignKey("ProductCategoryId")]
+        public virtual ProductCategory ProductCategory { get; set; } = new ProductCategory();
 
-        public ProductCategory Category { get; set; } = new ProductCategory();
+        public virtual ICollection<ProductItem> ProductItems { get; set; } = new List<ProductItem>();
     }
 }

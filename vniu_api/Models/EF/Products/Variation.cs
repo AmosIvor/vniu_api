@@ -9,13 +9,17 @@ namespace vniu_api.Models.EF.Products
         [Key]
         public int VariationId { get; set; }
 
-        [Required, MaxLength(100)]
-        public string ProductItemId { get; set; }
-        [Required, MaxLength(100)]
-        public string SizeId { get; set; }
         [Required]
         public int QuantityInStock { get; set; }
-        public ICollection<ProductItem> ProductItems { get; set; }
 
+        public int ProductItemId { get; set; }
+
+        [ForeignKey("ProductItemId")]
+        public virtual ProductItem ProductItem { get; set; } = new ProductItem();
+
+        public int SizeId { get; set; }
+
+        [ForeignKey("SizeId")]
+        public virtual SizeOption SizeOption { get; set; } = new SizeOption();
     }
 }

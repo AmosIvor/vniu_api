@@ -54,6 +54,7 @@ namespace vniu_api.Helpers
 
             // promotions
             CreateMap<Promotion, PromotionVM>().ReverseMap();
+            CreateMap<PromotionCategory, PromotionCategoryVM>().ReverseMap();
 
             // reviews
             CreateMap<Review, ReviewVM>().ReverseMap();

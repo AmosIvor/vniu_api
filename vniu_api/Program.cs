@@ -126,7 +126,7 @@ builder.Services.AddScoped<IPaymentMethodRepo, PaymentMethodRepo>();
 builder.Services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
 
 // repo-products
-builder.Services.AddScoped<ISizeRepo, SizeRepo>();
+builder.Services.AddScoped<ISizeOptionRepo, SizeOptionRepo>();
 builder.Services.AddScoped<IColourRepo, ColourRepo>();
 builder.Services.AddScoped<IVariationRepo, VariationRepo>();
 builder.Services.AddScoped<IProductCategoryRepo, ProductCategoryRepo>();

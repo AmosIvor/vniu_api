@@ -20,21 +20,21 @@ namespace vniu_api.Services.Products
 
         public async Task<ProductImageVM> GetProductImageByIdAsync(int ProductImageId)
         {
-            var ProductImage = await _context.ProductImages.SingleOrDefaultAsync(p => p.ImageId == ProductImageId);
+            var ProductImage = await _context.ProductImages.SingleOrDefaultAsync(p => p.ProductImageId == ProductImageId);
 
             return _mapper.Map<ProductImageVM>(ProductImage);
         }
 
         public async Task<ICollection<ProductImageVM>> GetProductImagesAsync()
         {
-            var ProductImages = await _context.ProductImages.OrderBy(p => p.ImageId).ToListAsync();
+            var ProductImages = await _context.ProductImages.OrderBy(p => p.ProductImageId).ToListAsync();
 
             return _mapper.Map<ICollection<ProductImageVM>>(ProductImages);
         }
 
         public async Task<bool> IsProductImageExistIdAsync(int ProductImageId)
         {
-            return await _context.ProductImages.AnyAsync(p => p.ImageId == ProductImageId);
+            return await _context.ProductImages.AnyAsync(p => p.ProductImageId == ProductImageId);
         }
         public async Task<ProductImageVM> CreateProductImageAsync(ProductImageVM ProductImageVM)
         {

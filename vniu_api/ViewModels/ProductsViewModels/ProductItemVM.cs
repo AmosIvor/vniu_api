@@ -1,14 +1,25 @@
-﻿namespace vniu_api.ViewModels.ProductsViewModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using vniu_api.Models.EF.Products;
+
+namespace vniu_api.ViewModels.ProductsViewModels
 {
     public class ProductItemVM
     {
-        public int Id { get; set; }
-        public ColourVM Colour { get; set; } = new ColourVM();
-        public VariationVM Variation { get; set; } = new VariationVM();
-        public int OriginalPrice { get; set; }
-        public int SalePrice { get; set; }
-        public int Sold { get; set; }
-        public double Rating { get; set; }
-        public ICollection<ProductImageVM> Images { get; set; }
+        public int ProductItemId { get; set; }
+
+        public decimal OriginalPrice { get; set; }
+
+        public decimal SalePrice { get; set; }
+
+        public int ProductItemSold { get; set; }
+
+        public decimal ProductItemRating { get; set; }
+
+        public string ProductItemCode { get; set; }
+
+        public int ProductId { get; set; }
+
+        public int ColourId { get; set; }
     }
 }

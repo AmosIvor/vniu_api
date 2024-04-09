@@ -11,9 +11,9 @@ namespace vniu_api.Controllers
     [ApiController]
     public class SizeController : ControllerBase
     {
-        private readonly ISizeRepo _SizeRepo;
+        private readonly ISizeOptionRepo _SizeRepo;
 
-        public SizeController(ISizeRepo SizeRepo)
+        public SizeController(ISizeOptionRepo SizeRepo)
         {
             _SizeRepo = SizeRepo;
         }
@@ -24,7 +24,7 @@ namespace vniu_api.Controllers
         {
             try
             {
-                var result = await _SizeRepo.GetSizesAsync();
+                var result = await _SizeRepo.GetSizeOptionsAsync();
 
                 return Ok(new SuccessResponse<ICollection<SizeOptionVM>>()
                 {

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using vniu_api.Models.EF.Products;
 
 namespace vniu_api.Models.EF.Carts
 {
@@ -15,6 +16,11 @@ namespace vniu_api.Models.EF.Carts
         public int CartId { get; set; }
 
         [ForeignKey("CartId")]
-        public Cart Cart { get; set; }
+        public virtual Cart Cart { get; set; } = new Cart();
+
+        public int ProductItemId { get; set; }
+
+        [ForeignKey("ProductItemId")]
+        public virtual ProductItem ProductItem { get; set; } = new ProductItem();
     }
 }

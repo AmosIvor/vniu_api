@@ -12,6 +12,6 @@ namespace vniu_api.Models.EF.Payments
         [Required, MaxLength(100)]
         public string PaymentTypeValue {  get; set; }
 
-        public virtual ICollection<PaymentMethod> PaymentMethods { get; set; }
+        public virtual ICollection<PaymentMethod> PaymentMethods { get; set; } = new List<PaymentMethod>();
     }
 }

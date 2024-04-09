@@ -12,8 +12,8 @@ namespace vniu_api.Models.EF.Profiles
 
         public Boolean IsDefault { get; set; } = false;
 
-        public virtual User User {  get; set; }
+        public virtual User User { get; set; } = new User();
 
-        public virtual Address Address {  get; set; }
+        public virtual Address Address { get; set; } = new Address();
     }
 }

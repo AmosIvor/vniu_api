@@ -7,10 +7,15 @@ namespace vniu_api.Models.EF.Products
     public class ProductImage
     {
         [Key]
-        public int ImageId { get; set; }
+        public int ProductImageId { get; set; }
+
         [Required]
+        [MaxLength(255)]
+        public string ProductImageUrl { get; set; }
+
         public int ProductItemId { get; set; }
-        [Required]
-        public string url { get; set; }
+
+        [ForeignKey("ProductItemId")]
+        public virtual ProductItem ProductItem { get; set; } = new ProductItem(); 
     }
 }

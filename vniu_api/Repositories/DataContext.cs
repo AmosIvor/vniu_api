@@ -36,7 +36,7 @@ namespace vniu_api.Repositories
         public DbSet<PaymentType> PaymentTypes { get; set; }
 
         // products
-        public DbSet<SizeOption> Sizes { get; set; }
+        public DbSet<SizeOption> SizeOptions { get; set; }
         public DbSet<Colour> Colours { get; set; }
         public DbSet<ProductCategory> Categories { get; set; }
         public DbSet<ProductItem> ProductItems { get; set; }
@@ -51,6 +51,8 @@ namespace vniu_api.Repositories
 
         // promotions
         public DbSet<Promotion> Promotions {  get; set; }
+
+        public DbSet<PromotionCategory> PromotionCategories { get; set; }
 
         // reviews
         public DbSet<Review> Reviews { get; set; }
@@ -97,6 +99,18 @@ namespace vniu_api.Repositories
                 .Property(ol => ol.Price)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.OriginalPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.SalePrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<ProductItem>()
+                .Property(pi => pi.ProductItemRating)
+                .HasPrecision(18, 2);
+
             // User_Cart
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Cart)
@@ -124,25 +138,25 @@ namespace vniu_api.Repositories
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            // ProductCategory
+            modelBuilder.Entity<ProductCategory>()
+                .HasOne(pc => pc.ParentCategory)
+                .WithMany(pc => pc.ChildProductCategories)
+                .HasForeignKey(pc => pc.ParentCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //ProductItems
-            modelBuilder.Entity<ProductItem>()
-                .HasOne(pi => pi.Product)
-                .WithMany(p => p.ProductItems)
-                .HasForeignKey(pi => pi.ProductId);
+            // Promotion_Category
+            modelBuilder.Entity<PromotionCategory>()
+                .HasKey(pc => new { pc.PromotionId, pc.ProductCategoryId });
 
-            modelBuilder.Entity<ProductItem>()
-                .HasOne(pi => pi.Colour)
-                .WithMany(c => c.ProductItems)
-                .HasForeignKey(pi => pi.ColourId);
-
-            // Product
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CategoryId);
-
-
+            modelBuilder.Entity<PromotionCategory>()
+                .HasOne(pc => pc.Promotion)
+                .WithMany(p => p.PromotionCategories)
+                .HasForeignKey(pc => pc.PromotionId);
+            modelBuilder.Entity<PromotionCategory>()
+                .HasOne(pc => pc.ProductCategory)
+                .WithMany(c => c.PromotionCategories)
+                .HasForeignKey(pc => pc.ProductCategoryId);
         }
 
     }

@@ -15,6 +15,6 @@ namespace vniu_api.Models.EF.Carts
 
         public virtual User User { get; set; }
 
-        public virtual ICollection<CartItem> CartItems { get; set;  }
+        public virtual ICollection<CartItem> CartItems { get; set;  } = new List<CartItem>();
     }
 }
