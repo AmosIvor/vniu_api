@@ -91,11 +91,11 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("{productId}/reviews")]
-        public async Task<IActionResult> GetReviewsByUserId(int productId)
+        public async Task<IActionResult> GetReviewsByProductItemId(int productItemId)
         {
             try
             {
-                var result = await _reviewRepo.GetReviewByProductIdAsync(productId);
+                var result = await _reviewRepo.GetReviewByProductItemIdAsync(productItemId);
 
                 return Ok(new SuccessResponse<ICollection<ReviewVM>>()
                 {
