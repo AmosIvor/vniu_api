@@ -2,7 +2,7 @@
 {
     public class AddressVM
     {
-        public int AddressID { get; set; }
+        public int AddressId { get; set; }
 
         public string? UnitName { get; set; }
 
