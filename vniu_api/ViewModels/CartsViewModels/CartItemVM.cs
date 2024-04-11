@@ -9,5 +9,7 @@
         public int CartId { get; set; }
 
         public int ProductItemId { get; set; }
+
+        public int VariationId { get; set; }
     }
 }
