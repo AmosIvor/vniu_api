@@ -42,6 +42,21 @@ namespace vniu_api.Services.Orders
             // add database
             _context.OrderLines.Add(orderLine);
 
+            // substract quantity in stock of this produt item...
+            var variation = await _context.Variations.SingleOrDefaultAsync(v => v.ProductItemId == orderLineVM.ProductItemId
+                                                                        && v.VariationId == orderLineVM.VariationId);
+
+            if (variation == null)
+            {
+                throw new Exception("Variation not found");
+            }
+
+            variation.QuantityInStock = variation.QuantityInStock - orderLineVM.Quantity;
+            
+            // update database
+            _context.Variations.Update(variation);
+
+            // save change all
             await _context.SaveChangesAsync();
 
             // return result

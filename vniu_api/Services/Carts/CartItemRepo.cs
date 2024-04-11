@@ -26,7 +26,8 @@ namespace vniu_api.Services.Carts
 
             // mindset: if product exists => will increase quantity
             var cartItemExist = await _context.CartItems.SingleOrDefaultAsync(ci => ci.CartId == cartItemVM.CartId
-                                                                           && ci.ProductItemId == cartItemVM.ProductItemId);
+                                                                           && ci.ProductItemId == cartItemVM.ProductItemId
+                                                                           && ci.VariationId == cartItemVM.VariationId);
 
             if (cartItemExist != null)
             {
