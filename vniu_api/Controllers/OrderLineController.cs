@@ -42,12 +42,12 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpGet("{reviewId}")]
-        public async Task<IActionResult> GetOrderLineById(int reviewId)
+        [HttpGet("{orderLineId}")]
+        public async Task<IActionResult> GetOrderLineById(int orderLineId)
         {
             try
             {
-                var result = await _orderLineRepo.GetOrderLineByIdAsync(reviewId);
+                var result = await _orderLineRepo.GetOrderLineByIdAsync(orderLineId);
 
                 return Ok(new SuccessResponse<OrderLineVM>()
                 {
@@ -114,17 +114,17 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpPut("{reviewId}")]
-        public async Task<IActionResult> UpdateOrderLine(int reviewId, OrderLineVM orderLineVM)
+        [HttpPut("{orderLineId}")]
+        public async Task<IActionResult> UpdateOrderLine(int orderLineId, OrderLineVM orderLineVM)
         {
             try
             {
-                var reviewUpdate = await _orderLineRepo.UpdateOrderLineAsync(reviewId, orderLineVM);
+                var orderLineUpdate = await _orderLineRepo.UpdateOrderLineAsync(orderLineId, orderLineVM);
 
                 return Ok(new SuccessResponse<OrderLineVM>()
                 {
                     Message = "Update order line successfully",
-                    Data = reviewUpdate
+                    Data = orderLineUpdate
                 });
             }
             catch (Exception e)
@@ -138,17 +138,17 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpDelete("{reviewId}")]
-        public async Task<IActionResult> DeleteOrderLine(int reviewId)
+        [HttpDelete("{orderLineId}")]
+        public async Task<IActionResult> DeleteOrderLine(int orderLineId)
         {
             try
             {
-                var reviewDelete = await _orderLineRepo.DeleteOrderLineAsync(reviewId);
+                var orderLineDelete = await _orderLineRepo.DeleteOrderLineAsync(orderLineId);
 
                 return Ok(new SuccessResponse<OrderLineVM>()
                 {
                     Message = "Delete order line successfully",
-                    Data = reviewDelete
+                    Data = orderLineDelete
                 });
             }
             catch (Exception e)
