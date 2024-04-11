@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vniu_api.Repositories;
 
@@ -11,9 +12,10 @@ using vniu_api.Repositories;
 namespace vniu_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240411063047_UpdateOrderTable")]
+    partial class UpdateOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,16 +265,11 @@ namespace vniu_api.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("VariationId")
-                        .HasColumnType("int");
-
                     b.HasKey("CartItemId");
 
                     b.HasIndex("CartId");
 
                     b.HasIndex("ProductItemId");
-
-                    b.HasIndex("VariationId");
 
                     b.ToTable("CartItem");
                 });
@@ -356,16 +353,11 @@ namespace vniu_api.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("VariationId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderLineId");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductItemId");
-
-                    b.HasIndex("VariationId");
 
                     b.ToTable("OrderLine");
                 });
@@ -645,18 +637,13 @@ namespace vniu_api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<string>("StreetNumber")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("UnitNumber")
+                    b.Property<string>("UnitName")
                         .HasMaxLength(255)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("AddressId");
 
@@ -803,9 +790,9 @@ namespace vniu_api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("ShippingMethodPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("ShippingMethodPrice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ShippingMethodId");
 
@@ -927,17 +914,9 @@ namespace vniu_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vniu_api.Models.EF.Products.Variation", "Variation")
-                        .WithMany("CartItems")
-                        .HasForeignKey("VariationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Cart");
 
                     b.Navigation("ProductItem");
-
-                    b.Navigation("Variation");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.Order", b =>
@@ -1005,17 +984,9 @@ namespace vniu_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vniu_api.Models.EF.Products.Variation", "Variation")
-                        .WithMany("OrderLines")
-                        .HasForeignKey("VariationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Order");
 
                     b.Navigation("ProductItem");
-
-                    b.Navigation("Variation");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Payments.PaymentMethod", b =>
@@ -1238,13 +1209,6 @@ namespace vniu_api.Migrations
             modelBuilder.Entity("vniu_api.Models.EF.Products.SizeOption", b =>
                 {
                     b.Navigation("Variations");
-                });
-
-            modelBuilder.Entity("vniu_api.Models.EF.Products.Variation", b =>
-                {
-                    b.Navigation("CartItems");
-
-                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.Address", b =>

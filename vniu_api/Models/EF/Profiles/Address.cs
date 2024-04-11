@@ -11,7 +11,7 @@ namespace vniu_api.Models.EF.Profiles
         public int AddressId {  get; set; }
 
         [MaxLength(255)]
-        public string? UnitName {  get; set; }
+        public int? UnitNumber {  get; set; }
 
         [MaxLength(50)]
         public string? StreetNumber { get; set; }
@@ -21,6 +21,9 @@ namespace vniu_api.Models.EF.Profiles
 
         [MaxLength(255)]
         public string? AddressLine2 { get; set; }
+
+        [Required, MaxLength(255)]
+        public string District { get; set; }
 
         [Required, MaxLength(100)]
         public string City { get; set; }

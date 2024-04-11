@@ -22,22 +22,42 @@ namespace vniu_api.Services.Carts
         {
             // call api to get cart id in CartController: FE
 
-            // mindset: if product exists => will increase quantity
-
             // You don't need to check cart exist => because you register new account <=> you create new cart
 
-            var cartItem = _mapper.Map<CartItem>(cartItemVM);
+            // mindset: if product exists => will increase quantity
+            var cartItemExist = await _context.CartItems.SingleOrDefaultAsync(ci => ci.CartId == cartItemVM.CartId
+                                                                           && ci.ProductItemId == cartItemVM.ProductItemId
+                                                                           && ci.VariationId == cartItemVM.VariationId);
 
-            _context.CartItems.Add(cartItem);
+            if (cartItemExist != null)
+            {
+                // cart item exist => increase
+                cartItemVM.Quantity = cartItemExist.Quantity + cartItemVM.Quantity;
+
+                var cartItemUpdate = _mapper.Map<CartItem>(cartItemVM);
+
+                _context.CartItems.Update(cartItemUpdate);
+
+                await _context.SaveChangesAsync();
+
+                var cartItemUpdateVM = _mapper.Map<CartItemVM>(cartItemUpdate);
+
+                return cartItemUpdateVM;
+            }
+
+            // create new
+            var newCartItem = _mapper.Map<CartItem>(cartItemVM);
+
+            _context.CartItems.Add(newCartItem);
 
             await _context.SaveChangesAsync();
 
-            var newCartItemVM = _mapper.Map<CartItemVM>(cartItem);
+            var newCartItemVM = _mapper.Map<CartItemVM>(newCartItem);
 
             return newCartItemVM;
         }
 
-        public async Task<CartItemVM> DeleteCartItemOfUserAsync(string userId, int productId)
+        public async Task<CartItemVM> DeleteCartItemOfUserAsync(string userId, int productItemId)
         {
             // check user exist
             var isUserExist = await _context.Users.AnyAsync(u => u.Id == userId);
@@ -51,8 +71,8 @@ namespace vniu_api.Services.Carts
             var cart = await _context.Carts.SingleOrDefaultAsync(c => c.UserId == userId);
 
             // filter cart item which has product id and cart id
-            var cartItemDelete = await _context.CartItems.SingleOrDefaultAsync(c => c.CartId == cart!.CartId && false);
-            // change false <=> condition of product
+            var cartItemDelete = await _context.CartItems.SingleOrDefaultAsync(c => c.CartId == cart!.CartId && 
+                                                                                    c.ProductItemId == productItemId);
 
             if (cartItemDelete == null)
             {
@@ -133,7 +153,7 @@ namespace vniu_api.Services.Carts
             return await _context.CartItems.AnyAsync(c => c.CartItemId == cartItemId);
         }
 
-        public async Task<bool> IsCartItemExistProductIdAsync(string userId, int productId)
+        public async Task<bool> IsCartItemExistProductIdAsync(string userId, int productItemId)
         {
             // check user exist
             var isUserExist = await _context.Users.AnyAsync(u => u.Id == userId);
@@ -147,22 +167,24 @@ namespace vniu_api.Services.Carts
             var cart = await _context.Carts.SingleOrDefaultAsync(c => c.UserId == userId);
 
             // check product exist in cart
-            var isProductExist = false;
+            var isProductExist = await _context.CartItems.SingleOrDefaultAsync(ci => ci.CartId == cart!.CartId &&
+                                                                                     ci.ProductItemId == productItemId);
 
-            return isProductExist;
+            return isProductExist != null;
         }
 
-        public async Task<CartItemVM> UpdateCartItemAsync(int productId, CartItemVM cartItemVM)
+        public async Task<CartItemVM> UpdateCartItemAsync(int productItemId, CartItemVM cartItemVM)
         {
-            // check product exist ...
-            var isProductExist = await _context.CartItems.AnyAsync(ci => ci.CartId == cartItemVM.CartId && false);
+            // check product exist
+            var cartItem = await _context.CartItems.SingleOrDefaultAsync(ci => ci.CartId == cartItemVM.CartId &&
+                                                                        ci.ProductItemId == cartItemVM.ProductItemId);
 
-            if (isProductExist == false)
+            if (cartItem == null)
             {
                 throw new Exception("Product not found");
             }
 
-            // In this step, product exists
+            // In this step, product exists => you need update
             var cartItemUpdate = _mapper.Map<CartItem>(cartItemVM);
 
             _context.CartItems.Update(cartItemUpdate);

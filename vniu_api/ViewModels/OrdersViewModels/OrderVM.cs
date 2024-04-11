@@ -4,7 +4,9 @@
     {
         public int OrderId { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderCreateAt { get; set; }
+
+        public DateTime OrderUpdateAt { get; set; }
 
         public decimal OrderTotal { get; set; }
 
@@ -14,7 +16,7 @@
 
         public int ShippingMethodId { get; set; }
 
-        public int PromotionId { get; set; }
+        public int? PromotionId { get; set; }
 
         public int AddressId { get; set; }
 

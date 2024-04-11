@@ -14,7 +14,9 @@ namespace vniu_api.Models.EF.Orders
         public int OrderId { get; set; }
 
         [Required]
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderCreateAt { get; set; }
+
+        public DateTime OrderUpdateAt { get; set; }
 
         [Required]
         public decimal OrderTotal { get; set; }

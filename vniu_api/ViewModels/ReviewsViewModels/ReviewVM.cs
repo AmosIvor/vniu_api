@@ -11,5 +11,9 @@
         public int OrderLineId { get; set; }
 
         public string UserId { get; set; }
+
+        public DateTime ReviewCreateAt { get; set; }
+
+        public DateTime ReviewUpdateAt { get; set; }
     }
 }

@@ -111,6 +111,10 @@ namespace vniu_api.Repositories
                 .Property(pi => pi.ProductItemRating)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<ShippingMethod>()
+                .Property(sm => sm.ShippingMethodPrice)
+                .HasPrecision(18, 2);
+
             // User_Cart
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Cart)
@@ -121,7 +125,21 @@ namespace vniu_api.Repositories
             modelBuilder.Entity<PaymentMethod>()
                 .HasOne(pm => pm.User)
                 .WithMany(u => u.PaymentMethods)
-                .HasForeignKey(p => p.UserId)
+                .HasForeignKey(pm => pm.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // CartItem
+            modelBuilder.Entity<CartItem>()
+                .HasOne(ci => ci.Variation)
+                .WithMany(v => v.CartItems)
+                .HasForeignKey(ci => ci.VariationId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // OrderLine
+            modelBuilder.Entity<OrderLine>()
+                .HasOne(ol => ol.Variation)
+                .WithMany(v => v.OrderLines)
+                .HasForeignKey(ol => ol.VariationId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             // Review

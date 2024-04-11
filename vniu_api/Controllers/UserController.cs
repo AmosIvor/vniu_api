@@ -26,7 +26,25 @@ namespace vniu_api.Controllers
         [ProducesResponseType(200, Type = typeof(ICollection<UserVM>))]
         public async Task<ActionResult> GetUsers()
         {
-            return Ok(await _userRepo.GetUsersAsync());
+            try
+            {
+                var usersVM = await _userRepo.GetUsersAsync();
+
+                return Ok(new SuccessResponse<ICollection<UserVM>>()
+                {
+                    Message = "Get list user successfully",
+                    Data = usersVM
+                });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new ErrorResponse()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = e.Message
+                });
+            }
         }
 
         [HttpPost("photo")]

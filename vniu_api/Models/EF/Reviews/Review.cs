@@ -17,6 +17,10 @@ namespace vniu_api.Models.EF.Reviews
         [MaxLength(300)]
         public string? ReviewComment { get; set; }
 
+        public DateTime ReviewCreateAt { get; set; }
+
+        public DateTime ReviewUpdateAt { get; set; }
+
         public int OrderLineId { get; set; }
 
         public virtual OrderLine OrderLine { get; set; } = new OrderLine();
