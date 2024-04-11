@@ -112,10 +112,11 @@ namespace vniu_api.Services.Profiles
                                    select new AddressResponseVM
                                    {
                                        AddressId = address.AddressId,
-                                       UnitName = address.UnitName,
+                                       UnitNumber = address.UnitNumber,
                                        StreetNumber = address.StreetNumber,
                                        AddressLine1 = address.AddressLine1,
                                        AddressLine2 = address.AddressLine2,
+                                       District = address.District,
                                        City = address.City,
                                        IsDefault = userAddress.IsDefault
                                    }).ToListAsync();

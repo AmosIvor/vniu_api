@@ -4,6 +4,7 @@ using System.Net;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories.Profiles;
 using vniu_api.ViewModels.ProfilesViewModels;
+using vniu_api.ViewModels.ResponsesViewModels;
 
 namespace vniu_api.Controllers
 {
@@ -73,7 +74,7 @@ namespace vniu_api.Controllers
             {
                 var result = await _addressRepo.GetAddressesByUserIdAsync(userId);
 
-                return Ok(new SuccessResponse<ICollection<AddressVM>>()
+                return Ok(new SuccessResponse<ICollection<AddressResponseVM>>()
                 {
                     Message = "Get list address of user successfully",
                     Data = result
