@@ -111,6 +111,10 @@ namespace vniu_api.Repositories
                 .Property(pi => pi.ProductItemRating)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<ShippingMethod>()
+                .Property(sm => sm.ShippingMethodPrice)
+                .HasPrecision(18, 2);
+
             // User_Cart
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Cart)
