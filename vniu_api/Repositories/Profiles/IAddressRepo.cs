@@ -1,5 +1,6 @@
 ﻿
 using vniu_api.ViewModels.ProfilesViewModels;
+using vniu_api.ViewModels.ResponsesViewModels;
 
 namespace vniu_api.Repositories.Profiles
 {
@@ -7,7 +8,7 @@ namespace vniu_api.Repositories.Profiles
     {
         Task<ICollection<AddressVM>> GetAddressesAsync();
         Task<AddressVM> GetAddressByIdAsync(int addressId);
-        Task<ICollection<AddressVM>> GetAddressesByUserIdAsync(string userId);
+        Task<ICollection<AddressResponseVM>> GetAddressesByUserIdAsync(string userId);
         Task<AddressVM> CreateAddressAsync(string userId, AddressVM addressVM);
         Task<AddressVM> UpdateAddressAsync(int addressId, AddressVM addressVM);
         Task<AddressVM> DeleteAddressAsync(int addressId);
