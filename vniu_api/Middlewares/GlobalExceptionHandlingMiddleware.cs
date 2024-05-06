@@ -33,7 +33,7 @@ namespace vniu_api.Middlewares
         private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             HttpStatusCode status;
-            var stackTrace = string.Empty;
+            //var stackTrace = string.Empty;
             string message = "";
 
             var exceptionType = ex.GetType();
