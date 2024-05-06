@@ -1,6 +1,6 @@
-﻿namespace vniu_api.Models.EF.Utils
+﻿namespace vniu_api.Configuration
 {
-    public class CloudinarySettings
+    public class CloudinarySetting
     {
         public string CloudName { get; set; }
 
