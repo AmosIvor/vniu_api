@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using vniu_api.Configuration;
+using vniu_api.Hubs;
 using vniu_api.Installers;
 using vniu_api.Middlewares;
 using vniu_api.Models.EF.Profiles;
@@ -112,6 +113,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 

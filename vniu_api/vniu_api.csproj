@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Hubs\" />
     <Folder Include="Models\EF\Carts\" />
     <Folder Include="Models\EF\Reviews\" />
     <Folder Include="Models\EF\Orders\" />

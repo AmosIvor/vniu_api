@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Carts;
+using vniu_api.Models.EF.Chats;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
 using vniu_api.Models.EF.Products;
@@ -25,6 +26,10 @@ namespace vniu_api.Repositories
         // carts
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+
+        // chats
+        public DbSet<ChatRoom> ChatRooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         // orders
         public DbSet<Order> Orders { get; set; }
@@ -171,10 +176,25 @@ namespace vniu_api.Repositories
                 .HasOne(pc => pc.Promotion)
                 .WithMany(p => p.PromotionCategories)
                 .HasForeignKey(pc => pc.PromotionId);
+
             modelBuilder.Entity<PromotionCategory>()
                 .HasOne(pc => pc.ProductCategory)
                 .WithMany(c => c.PromotionCategories)
                 .HasForeignKey(pc => pc.ProductCategoryId);
+
+            // ChatRoom
+            modelBuilder.Entity<ChatRoom>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.ChatRooms)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Message
+            modelBuilder.Entity<Message>()
+                .HasOne(r => r.ChatRoom)
+                .WithMany(u => u.Messages)
+                .HasForeignKey(r => r.ChatRoomId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }
