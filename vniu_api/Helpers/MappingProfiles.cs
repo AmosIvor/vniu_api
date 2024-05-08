@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.VisualBasic;
 using vniu_api.Models.EF.Carts;
+using vniu_api.Models.EF.Chats;
 using vniu_api.Models.EF.Orders;
 using vniu_api.Models.EF.Payments;
 using vniu_api.Models.EF.Products;
@@ -10,6 +11,7 @@ using vniu_api.Models.EF.Reviews;
 using vniu_api.Models.EF.Shippings;
 using vniu_api.Models.EF.Utils;
 using vniu_api.ViewModels.CartsViewModels;
+using vniu_api.ViewModels.ChatsViewModels;
 using vniu_api.ViewModels.OrdersViewModels;
 using vniu_api.ViewModels.PaymentsViewModels;
 using vniu_api.ViewModels.ProductsViewModels;
@@ -28,6 +30,10 @@ namespace vniu_api.Helpers
             // carts
             CreateMap<Cart, CartVM>().ReverseMap();
             CreateMap<CartItem, CartItemVM>().ReverseMap();
+
+            // chats
+            CreateMap<ChatRoom, ChatRoomVM>().ReverseMap();
+            CreateMap<Message, MessageVM>().ReverseMap();
 
             // orders
             CreateMap<Order, OrderVM>().ReverseMap();

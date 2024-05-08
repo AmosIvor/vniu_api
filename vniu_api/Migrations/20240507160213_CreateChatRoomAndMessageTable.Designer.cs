@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vniu_api.Repositories;
 
@@ -11,9 +12,10 @@ using vniu_api.Repositories;
 namespace vniu_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240507160213_CreateChatRoomAndMessageTable")]
+    partial class CreateChatRoomAndMessageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,6 +310,7 @@ namespace vniu_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsFromUser")
@@ -323,7 +326,7 @@ namespace vniu_api.Migrations
                     b.Property<DateTime>("MessageCreateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("MessageReadAt")
+                    b.Property<DateTime>("MessageReadAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("MessageId");
@@ -1001,7 +1004,7 @@ namespace vniu_api.Migrations
                     b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
                         .WithMany("ChatRooms")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1012,7 +1015,7 @@ namespace vniu_api.Migrations
                     b.HasOne("vniu_api.Models.EF.Chats.ChatRoom", "ChatRoom")
                         .WithMany("Messages")
                         .HasForeignKey("ChatRoomId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ChatRoom");

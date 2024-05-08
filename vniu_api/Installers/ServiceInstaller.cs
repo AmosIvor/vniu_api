@@ -1,5 +1,6 @@
 ﻿using vniu_api.Repositories.Auths;
 using vniu_api.Repositories.Carts;
+using vniu_api.Repositories.Chats;
 using vniu_api.Repositories.Orders;
 using vniu_api.Repositories.Payments;
 using vniu_api.Repositories.Products;
@@ -10,6 +11,7 @@ using vniu_api.Repositories.Shippings;
 using vniu_api.Repositories.Utils;
 using vniu_api.Services.Auths;
 using vniu_api.Services.Carts;
+using vniu_api.Services.Chats;
 using vniu_api.Services.Orders;
 using vniu_api.Services.Payments;
 using vniu_api.Services.Products;
@@ -33,6 +35,12 @@ namespace vniu_api.Installers
             // repo-carts
             services.AddScoped<ICartRepo, CartRepo>();
             services.AddScoped<ICartItemRepo, CartItemRepo>();
+
+
+            // repo-chats
+            services.AddScoped<IChatRoomRepo, ChatRoomRepo>();
+            services.AddScoped<IMessageRepo, MessageRepo>();
+
 
             // repo-orders
             services.AddScoped<IOrderRepo, OrderRepo>();
