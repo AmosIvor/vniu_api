@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using vniu_api.Models.EF.Utils;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories.Profiles;
 using vniu_api.Repositories.Utils;
@@ -16,10 +17,13 @@ namespace vniu_api.Controllers
     {
         private readonly IUserRepo _userRepo;
         private readonly IPhotoService _photoService;
-        public UserController(IUserRepo userRepo, IPhotoService photoService)
+        private readonly ISendMailService _sendMailService;
+
+        public UserController(IUserRepo userRepo, IPhotoService photoService, ISendMailService sendMailService)
         {
             _userRepo = userRepo;
             _photoService = photoService;
+            _sendMailService = sendMailService;
         }
 
         [HttpGet("get-all")]
@@ -140,5 +144,24 @@ namespace vniu_api.Controllers
                 });
             }
         }
+
+        [HttpGet("email/test-send")]
+        public async Task<IActionResult> SendMail()
+        {
+            MailData content = new MailData
+            {
+                MailTo = "trantuanvu00000@gmail.com",
+                MailSubject = "Check Email",
+                MailBody = "<p><strong>Hello vniu.net</strong></p>"
+            };
+
+            var result = await _sendMailService.SendHtmlMail(content);
+
+            return Ok(new SuccessResponse<bool>()
+            {
+                Message = "Send email successfully",
+                Data = result
+            });
+        }   
     }
 }
