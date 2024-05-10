@@ -4,6 +4,7 @@ using vniu_api.Repositories;
 using System;
 using vniu_api.ViewModels.ProfilesViewModels;
 using vniu_api.Repositories.Profiles;
+using vniu_api.Models.EF.Chats;
 
 namespace vniu_api.Services.Profiles
 {

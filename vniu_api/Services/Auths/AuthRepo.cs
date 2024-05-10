@@ -7,6 +7,7 @@ using vniu_api.Constants;
 using vniu_api.Helpers;
 using vniu_api.Models.EF.Auths;
 using vniu_api.Models.EF.Carts;
+using vniu_api.Models.EF.Chats;
 using vniu_api.Models.EF.Profiles;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories;
@@ -148,6 +149,14 @@ namespace vniu_api.Services.Auths
             };
 
             _context.Carts.Add(cart);
+
+            // Create chatroom each time user register succeeded
+            var chatroom = new ChatRoom()
+            {
+                UserId = user.Id,
+            };
+
+            _context.ChatRooms.Add(chatroom);
 
 
             // Save changes

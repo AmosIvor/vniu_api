@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using vniu_api.Attributes;
 using vniu_api.Models.Responses;
 using vniu_api.Repositories.Payments;
+using vniu_api.Repositories.Utils;
 using vniu_api.ViewModels.PaymentsViewModels;
 
 namespace vniu_api.Controllers
@@ -12,13 +13,16 @@ namespace vniu_api.Controllers
     public class PaymentTypeController : ControllerBase
     {
         private readonly IPaymentTypeRepo _paymentTypeRepo;
+        private readonly IResponseCacheService _responseCacheService;
 
-        public PaymentTypeController(IPaymentTypeRepo paymentTypeRepo)
+        public PaymentTypeController(IPaymentTypeRepo paymentTypeRepo, IResponseCacheService responseCacheService)
         {
             _paymentTypeRepo = paymentTypeRepo;
+            _responseCacheService = responseCacheService;
         }
 
         [HttpGet("get-all")]
+        [Cache(1000)]
         public async Task<IActionResult> GetPaymentTypes()
         {
             try
@@ -69,25 +73,18 @@ namespace vniu_api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePaymentType(PaymentTypeVM paymentTypeVM)
         {
-            try
-            {
-                var newPaymentType = await _paymentTypeRepo.CreatePaymentTypeAsync(paymentTypeVM);
+            // clear cache
+            string pattern = $"{HttpContext.Request.Path}/get-all";
+            await _responseCacheService.RemoveCacheResponseAsync(pattern);
 
-                return Ok(new SuccessResponse<PaymentTypeVM>()
-                {
-                    Message = "Create payment type successfully",
-                    Data = newPaymentType
-                });
-            }
-            catch (Exception e)
-            {
+            // add new
+            var newPaymentType = await _paymentTypeRepo.CreatePaymentTypeAsync(paymentTypeVM);
 
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
+            return Ok(new SuccessResponse<PaymentTypeVM>()
+            {
+                Message = "Create payment type successfully",
+                Data = newPaymentType
+            });
         }
 
         [HttpPut("{paymentTypeId}")]
@@ -117,25 +114,13 @@ namespace vniu_api.Controllers
         [HttpDelete("{paymentTypeId}")]
         public async Task<IActionResult> DeletePaymentType(int paymentTypeId)
         {
-            try
-            {
-                var paymentTypeDelete = await _paymentTypeRepo.DeletePaymentTypeAsync(paymentTypeId);
+            var paymentTypeDelete = await _paymentTypeRepo.DeletePaymentTypeAsync(paymentTypeId);
 
-                return Ok(new SuccessResponse<PaymentTypeVM>()
-                {
-                    Message = "Delete payment type successfully",
-                    Data = paymentTypeDelete
-                });
-            }
-            catch (Exception e)
+            return Ok(new SuccessResponse<PaymentTypeVM>()
             {
-
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
+                Message = "Delete payment type successfully",
+                Data = paymentTypeDelete
+            });
         }
     }
 }

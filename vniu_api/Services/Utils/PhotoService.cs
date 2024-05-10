@@ -3,6 +3,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using vniu_api.Configuration;
 using vniu_api.Models.EF.Utils;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Utils;
@@ -16,7 +17,7 @@ namespace vniu_api.Services.Utils
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public PhotoService(DataContext context, IMapper mapper, IOptions<CloudinarySettings> config)
+        public PhotoService(DataContext context, IMapper mapper, IOptions<CloudinarySetting> config)
         {
             _context = context;
             _mapper = mapper;

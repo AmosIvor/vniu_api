@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using vniu_api.Exceptions;
 using vniu_api.Models.EF.Payments;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Payments;
@@ -25,7 +27,7 @@ namespace vniu_api.Services.Payments
 
             if (isExistValue == true)
             {
-                throw new Exception("Payment Type exists");
+                throw new DuplicateValueException("Payment Type value exists");
             }
 
             var paymentType = _mapper.Map<PaymentType>(paymentTypeVM);
@@ -45,7 +47,7 @@ namespace vniu_api.Services.Payments
 
             if (paymentType == null)
             {
-                throw new Exception("Payment Type not found");
+                throw new NotFoundException("Payment Type not found");
             }
 
             _context.PaymentTypes.Remove(paymentType);

@@ -44,25 +44,13 @@ namespace vniu_api.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetCartByUserId(string userId)
         {
-            try
-            {
-                var cart = await _cartRepo.GetCartByUserIdAsync(userId);
+            var cart = await _cartRepo.GetCartByUserIdAsync(userId);
 
-                return Ok(new SuccessResponse<CartVM>()
-                {
-                    Message = "Get cart by id user successfully",
-                    Data = cart
-                });
-            }
-            catch (Exception e)
+            return Ok(new SuccessResponse<CartVM>()
             {
-
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
+                Message = "Get cart by id user successfully",
+                Data = cart
+            });
         }
     }
 }
