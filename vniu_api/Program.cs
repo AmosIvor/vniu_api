@@ -37,7 +37,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "VNIU API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "VNIU_API", Version = "v1" });
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -65,6 +65,14 @@ builder.Services.AddSwaggerGen(option =>
 
 // ADD SERVICES 
 
+//builder.Services.ConfigureSwaggerGen(setup =>
+//{
+//    setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+//    {
+//        Title = "VNIU API",
+//        Version = "v1"
+//    });
+//});
 // Cors
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
@@ -163,6 +171,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwaggerUI();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

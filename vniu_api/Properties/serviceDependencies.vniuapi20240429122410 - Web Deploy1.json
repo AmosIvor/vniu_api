@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:VNIU_DATABASE"
+    },
+    "mssql3": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:VNIU_STORE"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/vniudb/databases/VNIU_DATABASE",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:VNIU_STORE"
+    },
+    "apis1": {
+      "apiEndpoint": "https://vniuapiapi.azure-api.net/",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/vniuapiapi/apis/vniuapi",
+      "type": "apis.azure"
+    }
+  }
+}
