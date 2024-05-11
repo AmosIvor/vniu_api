@@ -37,10 +37,10 @@ namespace vniu_api.ViewModels.UtilsViewModels
 
                     emailMessage.Subject = "Hello";
 
-                    string filePath = Directory.GetCurrentDirectory() + "\\Constants\\OrderTemplate.html";
+                    string filePath = Directory.GetCurrentDirectory() + "\\Templates\\Ordered\\OrderTemplate.html";
                     string emailTemplateText = File.ReadAllText(filePath);
 
-                    emailTemplateText = string.Format(emailTemplateText, mailData.MailTo, DateTime.Today.Date.ToShortDateString());
+                    //emailTemplateText = string.Format(emailTemplateText, mailData.MailTo, DateTime.Today.Date.ToShortDateString());
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
                     emailBodyBuilder.HtmlBody = emailTemplateText;
