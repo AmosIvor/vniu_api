@@ -8,10 +8,6 @@ namespace vniu_api.Installers
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-            var mailConfiguration = new MailConfiguration();
-
-            configuration.GetSection("MailConfiguration").Bind(mailConfiguration);
-
             services.Configure<MailConfiguration>(configuration.GetSection("MailConfiguration"));
 
             services.AddTransient<ISendMailService, SendMailService>();
