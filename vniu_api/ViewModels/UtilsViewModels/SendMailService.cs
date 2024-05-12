@@ -5,9 +5,12 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using Org.BouncyCastle.Asn1.Pkcs;
 using System.Net;
+using System.Text;
 using vniu_api.Configuration;
+using vniu_api.Models.EF.Products;
 using vniu_api.Models.EF.Utils;
 using vniu_api.Repositories.Utils;
+using vniu_api.Templates.Ordered;
 
 namespace vniu_api.ViewModels.UtilsViewModels
 {
@@ -40,7 +43,13 @@ namespace vniu_api.ViewModels.UtilsViewModels
                     string filePath = Directory.GetCurrentDirectory() + "\\Templates\\Ordered\\OrderTemplate.html";
                     string emailTemplateText = File.ReadAllText(filePath);
 
-                    //emailTemplateText = string.Format(emailTemplateText, mailData.MailTo, DateTime.Today.Date.ToShortDateString());
+                    // Dynamically generate date time
+                    emailTemplateText = emailTemplateText.Replace("{DateTime}", DateTime.Now.ToString("MM/dd/yyyy HH:mm tt"));
+
+                    // Dynamically generate product list
+                    string productList = GenerateProductListHTML();
+                    // Insert product list into the template
+                    emailTemplateText = emailTemplateText.Replace("{ProductList}", productList);
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
                     emailBodyBuilder.HtmlBody = emailTemplateText;
@@ -143,6 +152,29 @@ namespace vniu_api.ViewModels.UtilsViewModels
             {
                 throw new NotImplementedException(ex.Message);
             }
+        }
+
+        private string GenerateProductListHTML()
+        {
+            List<ProductTemplate> products = new List<ProductTemplate>
+            {
+                new ProductTemplate {ProductName = "T-Shirt", ProductQuantity = 2, ProductPrice = (float)18.7 },
+                new ProductTemplate {ProductName = "Polo Shirt", ProductQuantity = 4, ProductPrice = (float)15.6 },
+                new ProductTemplate {ProductName = "Hoodie", ProductQuantity = 5, ProductPrice = (float)2.1 },
+                new ProductTemplate {ProductName = "Jeans", ProductQuantity = 1, ProductPrice = (float)3 },
+                new ProductTemplate {ProductName = "Sneakers", ProductQuantity = 8, ProductPrice = (float)99.5 }
+            };
+
+            StringBuilder productListHTML = new StringBuilder();
+            foreach (var product in products)
+            {
+                productListHTML.AppendLine($"<tr style=\"margin: 0;padding: 0;box-sizing: border-box;\">");
+                productListHTML.AppendLine($"    <td class=\"product-name\" style=\"margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 70;\">{product.ProductQuantity} x {product.ProductName}</td>");
+                productListHTML.AppendLine($"    <td class=\"product-price\" style=\"margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 30;\">{product.ProductPrice} $</td>");
+                productListHTML.AppendLine("</tr>");
+            }
+
+            return productListHTML.ToString();
         }
     }
 }
