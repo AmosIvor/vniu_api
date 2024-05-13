@@ -24,6 +24,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.27" />
     <PackageReference Include="MimeKit" Version="3.5.0" />
+	<PackageReference Include="PayPal" Version="2.0.0-rc2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

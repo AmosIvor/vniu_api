@@ -63,6 +63,11 @@ namespace vniu_api.Middlewares
                 message = ex.Message;
                 status = HttpStatusCode.Unauthorized;
                 //stackTrace = ex.StackTrace;
+            } else if (ex is PaymentException paymentEx)
+            {
+                message = paymentEx.Message;
+                status = HttpStatusCode.PaymentRequired;
+                //stackTrace = ex.StackTrace;
             } else
             {
                 message = ex.Message;

@@ -7,7 +7,6 @@ namespace vniu_api.Repositories.Payments
     {
         Task<ICollection<PaymentMethodVM>> GetPaymentMethodsAsync();
         Task<PaymentMethodVM> GetPaymentMethodByIdAsync(int paymentMethodId);
-        Task<ICollection<PaymentMethodVM>> GetPaymentMethodByUserIdAsync(string userId);
         Task<PaymentMethodVM> CreatePaymentMethodAsync(PaymentMethodVM paymentMethodVM);
         Task<PaymentMethodVM> UpdatePaymentMethodAsync(int paymentMethodId, PaymentMethodVM paymentMethodVM);
         Task<PaymentMethodVM> DeletePaymentMethodAsync(int paymentMethodId);
