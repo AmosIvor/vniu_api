@@ -121,7 +121,7 @@ namespace vniu_api.Services.Utils
                     dataResponse.PaymentDescription = value;
                 }
 
-                if (!string.IsNullOrEmpty(key) && key.ToLower().Equals("paymentId"))
+                if (!string.IsNullOrEmpty(key) && key.ToLower().Equals("paymentid"))
                 {
                     dataResponse.PaymentTransactionNo = value;
                 }
