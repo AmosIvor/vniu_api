@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="margin: 0;padding: 0;box-sizing: border-box;">
+<head style="margin: 0;padding: 0;box-sizing: border-box;">
+    <meta charset="UTF-8" style="margin: 0;padding: 0;box-sizing: border-box;">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" style="margin: 0;padding: 0;box-sizing: border-box;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" style="margin: 0;padding: 0;box-sizing: border-box;">
+    <title style="margin: 0;padding: 0;box-sizing: border-box;">Order</title>
+    <style type="text/css">
+        @media screen and (max-width: 600px) {
+            body {
+                width: 90%;
+            }
+
+            .content-image {
+                margin-bottom: 20px;
+            }
+
+            .content-text {
+                font-size: 20px;
+            }
+
+            .content-product {
+                width: 96%;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0 auto;padding: 15px 0 24px 0;box-sizing: border-box;background-color: #f5f5f5;width: 60%;font-size: 18px;font-weight: normal;">
+    <div class="header" style="margin: 0;padding: 5px;box-sizing: border-box;width: 100%;border-bottom: 1px solid grey;">
+        <table class="header-table" style="margin: 0;padding: 0;box-sizing: border-box;width: 100%;border-collapse: collapse;">
+            <tr style="margin: 0;padding: 0;box-sizing: border-box;">
+                <td class="header-logo" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 24px;font-weight: bold;text-align: left;">VNIU STORE</td>
+                <!--<td class="header-date" style="margin: 0;padding: 0;box-sizing: border-box;color: grey;text-align: right;">11:00 AM - Dec 11, 2023</td>-->
+                <td class="header-date" style="margin: 0;padding: 0;box-sizing: border-box;color: grey;text-align: right;">{DateTime}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="content" style="margin: 0;padding: 0;box-sizing: border-box;margin-top: 40px;">
+        <div class="content-notification" style="margin: 0 auto;padding: 0;box-sizing: border-box;text-align: center;">
+            <div class="content-image" style="margin: 0 auto;padding: 0;box-sizing: border-box;width: 100px;height: 100px;margin-bottom: 10px;">
+                <img src="https://static.vecteezy.com/system/resources/previews/017/350/097/original/check-mark-icon-in-round-shape-line-png.png" alt="rounded-checked" style="margin: 0;padding: 0;box-sizing: border-box;width: 100%;height: 100%;object-fit: contain;">
+            </div>
+            <div class="content-text" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 24px;margin-top: 5px;">Thank you for placing your order</div>
+            <div class="content-text" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 24px;margin-top: 5px;">with our store !</div>
+        </div>
+        <div class="content-product" style="margin: 0 auto;padding: 0;box-sizing: border-box;width: 80%;font-size: 20px;margin-top: 30px;">
+            <table class="product-table" style="margin: 0;padding: 0;box-sizing: border-box;width: 100%;border-collapse: collapse;">
+                <thead style="margin: 0;padding: 0;box-sizing: border-box;">
+                    <tr style="margin: 0;padding: 0;box-sizing: border-box;">
+                        <th class="title-product" style="margin: 0;padding: 10px;box-sizing: border-box;background-color: rgba(59, 130, 246, 0.3);text-align: center;border: 1px solid #ddd;width: 70%;">PRODUCT</th>
+                        <th class="title-price" style="margin: 0;padding: 10px;box-sizing: border-box;background-color: rgba(59, 130, 246, 0.3);text-align: center;border: 1px solid #ddd;width: 30%;">PRICE</th>
+                    </tr>
+                </thead>
+                <tbody style="margin: 0;padding: 0;box-sizing: border-box;">
+                    {ProductList}
+                    <!--<tr style="margin: 0;padding: 0;box-sizing: border-box;">
+                        <td class="product-name" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 70%;">1 x T-Shirt</td>
+                        <td class="product-price" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 30%;">34 $</td>
+                    </tr>
+                    <tr style="margin: 0;padding: 0;box-sizing: border-box;">
+                        <td class="product-name" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 70%;">2 x Polo</td>
+                        <td class="product-price" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;width: 30%;">34 $</td>
+                    </tr>-->
+                </tbody>
+                <tfoot style="margin: 0;padding: 0;box-sizing: border-box;">
+                    <tr style="margin: 0;padding: 0;box-sizing: border-box;">
+                        <td class="total-label" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;font-weight: bold;width: 70%;">TOTAL</td>
+                        <td class="total-price" style="margin: 0;padding: 10px;box-sizing: border-box;text-align: center;border: 1px solid #ddd;font-weight: bold;width: 30%;">79 $</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="footer" style="margin: 0;padding: 20px 50px;box-sizing: border-box;width: 100%;min-height: 100px;margin-top: 20px;text-align: center;">
+        <ul class="social-icon" style="margin: 10px 0;padding: 0;box-sizing: border-box;">
+            <li class="social-icon__item" style="margin: 0 10px;padding: 0;box-sizing: border-box;display: inline-block;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png" alt="facebook" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 2rem;color: rgb(59, 130, 246);transition: 0.5s;width: 24px;height: 24px;object-fit: cover;">
+            </li>
+            <li class="social-icon__item" style="margin: 0 10px;padding: 0;box-sizing: border-box;display: inline-block;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/2048px-LinkedIn_icon.svg.png" alt="Linkedin" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 2rem;color: rgb(59, 130, 246);transition: 0.5s;width: 24px;height: 24px;object-fit: cover;">
+            </li>
+            <li class="social-icon__item" style="margin: 0 10px;padding: 0;box-sizing: border-box;display: inline-block;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/1200px-Instagram_logo_2022.svg.png" alt="Instagram" style="margin: 0;padding: 0;box-sizing: border-box;font-size: 2rem;color: rgb(59, 130, 246);transition: 0.5s;width: 24px;height: 24px;object-fit: cover;">
+            </li>
+        </ul>
+        <p style="margin: 0 0 10px 0;padding: 0;box-sizing: border-box;font-size: 1rem;font-weight: 300;">&copy;2024 VNIU STORE | All Rights Reserved</p>
+    </div>
+</body>
+</html>
+
+
+
+
+

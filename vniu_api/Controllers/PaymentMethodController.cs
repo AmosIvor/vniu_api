@@ -43,30 +43,6 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetPaymentMethodByUserId(string userId)
-        {
-            try
-            {
-                var result = await _paymentMethodRepo.GetPaymentMethodByUserIdAsync(userId);
-
-                return Ok(new SuccessResponse<ICollection<PaymentMethodVM>>()
-                {
-                    Message = "Get list payment method of user successfully",
-                    Data = result
-                });
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreatePaymentMethod(PaymentMethodVM paymentMethodVM)
         {

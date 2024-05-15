@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
-using vniu_api.Configuration;
 using vniu_api.Hubs;
 using vniu_api.Installers;
 using vniu_api.Middlewares;
@@ -64,9 +62,6 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.Al
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
-
-// Cloudinary
-builder.Services.Configure<CloudinarySetting>(builder.Configuration.GetSection("CloudinarySetting"));
 
 // Identity
 builder.Services.AddIdentity<User, IdentityRole>()

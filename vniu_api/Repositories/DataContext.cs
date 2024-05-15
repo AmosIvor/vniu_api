@@ -126,13 +126,6 @@ namespace vniu_api.Repositories
                 .WithOne(c => c.User)
                 .HasForeignKey<Cart>(c => c.UserId);
 
-            // PaymentMethod
-            modelBuilder.Entity<PaymentMethod>()
-                .HasOne(pm => pm.User)
-                .WithMany(u => u.PaymentMethods)
-                .HasForeignKey(pm => pm.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             // CartItem
             modelBuilder.Entity<CartItem>()
                 .HasOne(ci => ci.Variation)

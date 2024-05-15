@@ -20,14 +20,6 @@ namespace vniu_api.Services.Payments
 
         public async Task<PaymentMethodVM> CreatePaymentMethodAsync(PaymentMethodVM paymentMethodVM)
         {
-            // check user exist
-            var isUserExist = await _context.Users.AnyAsync(u => u.Id == paymentMethodVM.UserId);
-
-            if (isUserExist == false)
-            {
-                throw new Exception("User not found. Please re-check user");
-            }
-
             // check payment type exist
             var isPaymentTypeExist = await _context.PaymentTypes.AnyAsync(pt => pt.PaymentTypeId == paymentMethodVM.PaymentTypeId);
 
@@ -85,24 +77,6 @@ namespace vniu_api.Services.Payments
             return paymentMethodVM;
         }
 
-        public async Task<ICollection<PaymentMethodVM>> GetPaymentMethodByUserIdAsync(string userId)
-        {
-            // check exist user id
-            var isUserExist = await _context.Users.AnyAsync(u => u.Id == userId);
-
-            if (isUserExist == false)
-            {
-                // user not found
-                throw new Exception("User not found");
-            }
-
-            var paymentMethods = await _context.PaymentMethods.Where(p => p.UserId == userId).ToListAsync();
-
-            var paymentMethodsVM = _mapper.Map<ICollection<PaymentMethodVM>>(paymentMethods);
-
-            return paymentMethodsVM;
-        }
-
         public async Task<ICollection<PaymentMethodVM>> GetPaymentMethodsAsync()
         {
             var paymentMethods = await _context.PaymentMethods.OrderBy(p => p.PaymentMethodId).ToListAsync();
@@ -131,14 +105,6 @@ namespace vniu_api.Services.Payments
             if (isIdExist == false)
             {
                 throw new Exception("Payment Method not found");
-            }
-
-            // check user
-            var isUserExist = await _context.Users.AnyAsync(u => u.Id == paymentMethodVM.UserId);
-
-            if (isUserExist == false)
-            {
-                throw new Exception("User not found");
             }
 
             // check payment type
