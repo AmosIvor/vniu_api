@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
+using vniu_api.Configuration;
 using vniu_api.Hubs;
 using vniu_api.Installers;
 using vniu_api.Middlewares;
@@ -21,16 +23,16 @@ builder.Services.InstallerServicesInAssembly(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "VNIU_API", Version = "v1" });
-    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "Bearer"
-    });
+    option.SwaggerDoc("v2", new OpenApiInfo { Title = "VNIU API", Version = "v2" });
+    //option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    In = ParameterLocation.Header,
+    //    Description = "Please enter a valid token",
+    //    Name = "Authorization",
+    //    Type = SecuritySchemeType.Http,
+    //    BearerFormat = "JWT",
+    //    Scheme = "Bearer"
+    //});
     option.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -49,19 +51,14 @@ builder.Services.AddSwaggerGen(option =>
 
 // ADD SERVICES 
 
-//builder.Services.ConfigureSwaggerGen(setup =>
-//{
-//    setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-//    {
-//        Title = "VNIU API",
-//        Version = "v1"
-//    });
-//});
 // Cors
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Cloudinary
+builder.Services.Configure<CloudinarySetting>(builder.Configuration.GetSection("CloudinarySetting"));
 
 // Identity
 builder.Services.AddIdentity<User, IdentityRole>()

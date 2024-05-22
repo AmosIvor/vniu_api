@@ -6,8 +6,8 @@ namespace vniu_api.ViewModels.ProductsViewModels
     {
         public int ProductCategoryId { get; set; }
 
-        public string ProductCategoryName { get; set; }
+        public string? ProductCategoryName { get; set; }
 
-        public int ParentCategoryId { get; set; }
+        public int? ParentCategoryId { get; set; }
     }
 }

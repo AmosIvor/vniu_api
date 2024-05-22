@@ -8,6 +8,6 @@ namespace vniu_api.ViewModels.ProductsViewModels
 
         public string SizeName { get; set; }
 
-        public int SortOrder { get; set; }
+        public bool SortOrder { get; set; }
     }
 }

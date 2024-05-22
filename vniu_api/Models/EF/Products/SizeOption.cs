@@ -12,7 +12,7 @@ namespace vniu_api.Models.EF.Products
         [Required, MaxLength(100)]
         public string SizeName { get; set; }
 
-        public int SortOrder { get; set; }
+        public bool SortOrder { get; set; }
 
         public virtual ICollection<Variation> Variations { get; set; } = new List<Variation>();
     }
