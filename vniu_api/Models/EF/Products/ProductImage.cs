@@ -16,6 +16,6 @@ namespace vniu_api.Models.EF.Products
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; } = new ProductItem(); 
+        public virtual ProductItem ProductItem { get; set; } 
     }
 }

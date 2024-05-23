@@ -18,10 +18,9 @@ namespace vniu_api.Models.EF.Products
         [ForeignKey("ParentCategoryId")]
         public virtual ProductCategory ParentCategory { get; set; }
 
-        public virtual ICollection<ProductCategory> ChildProductCategories { get; set; } = new List<ProductCategory>();
+        public virtual ICollection<ProductCategory> ChildProductCategories { get; set; } 
 
-        public virtual ICollection<PromotionCategory> PromotionCategories { get; set; } = new List<PromotionCategory>();
-
+        public virtual ICollection<PromotionCategory> PromotionCategories { get; set; } 
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

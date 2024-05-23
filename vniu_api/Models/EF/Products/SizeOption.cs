@@ -14,6 +14,6 @@ namespace vniu_api.Models.EF.Products
 
         public bool SortOrder { get; set; }
 
-        public virtual ICollection<Variation> Variations { get; set; } = new List<Variation>();
+        public virtual ICollection<Variation> Variations { get; set; } 
     }
 }
