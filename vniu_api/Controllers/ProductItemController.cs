@@ -19,7 +19,7 @@ namespace vniu_api.Controllers
             _ProductItemRepo = ProductItemRepo;
         }
 
-        [HttpGet("get-all"+ "{ProductId}")]
+        [HttpGet("get-all/"+ "{ProductId}")]
         [Authorize]
         public async Task<IActionResult> GetProductItems(int ProductId)
         {

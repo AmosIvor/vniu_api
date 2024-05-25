@@ -105,16 +105,16 @@ namespace vniu_api.Repositories
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<ProductItem>()
-                .Property(pi => pi.OriginalPrice)
-                .HasPrecision(18, 2);
+                .Property(pi => pi.OriginalPrice);
+                //.HasPrecision(18, 2);
 
             modelBuilder.Entity<ProductItem>()
-                .Property(pi => pi.SalePrice)
-                .HasPrecision(18, 2);
+                .Property(pi => pi.SalePrice);
+            //.HasPrecision(18, 2);
 
             modelBuilder.Entity<ProductItem>()
-                .Property(pi => pi.ProductItemRating)
-                .HasPrecision(18, 2);
+                .Property(pi => pi.ProductItemRating);
+                //.HasPrecision(18, 2);
 
             modelBuilder.Entity<ShippingMethod>()
                 .Property(sm => sm.ShippingMethodPrice)

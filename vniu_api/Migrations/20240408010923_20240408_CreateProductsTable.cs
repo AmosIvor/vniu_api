@@ -28,14 +28,14 @@ namespace vniu_api.Migrations
                     ProductCategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductCategoryName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ParentProductCategoryProductCategoryId = table.Column<int>(type: "int", nullable: true)
+                    ParentCategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductCategory", x => x.ProductCategoryId);
                     table.ForeignKey(
                         name: "FK_ProductCategory_ProductCategory_ParentProductCategoryProductCategoryId",
-                        column: x => x.ParentProductCategoryProductCategoryId,
+                        column: x => x.ParentCategoryId,
                         principalTable: "ProductCategory",
                         principalColumn: "ProductCategoryId");
                 });
@@ -155,7 +155,7 @@ namespace vniu_api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProductCategory_ParentProductCategoryProductCategoryId",
                 table: "ProductCategory",
-                column: "ParentProductCategoryProductCategoryId");
+                column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductItem_ColourId",

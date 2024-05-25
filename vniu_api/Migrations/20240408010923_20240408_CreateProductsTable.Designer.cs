@@ -476,7 +476,7 @@ namespace vniu_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"), 1L, 1);
 
-                    b.Property<int?>("ParentProductCategoryProductCategoryId")
+                    b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductCategoryName")
@@ -486,7 +486,7 @@ namespace vniu_api.Migrations
 
                     b.HasKey("ProductCategoryId");
 
-                    b.HasIndex("ParentProductCategoryProductCategoryId");
+                    b.HasIndex("ParentCategoryId");
 
                     b.ToTable("ProductCategory");
                 });
@@ -950,7 +950,7 @@ namespace vniu_api.Migrations
                 {
                     b.HasOne("vniu_api.Models.EF.Products.ProductCategory", "ParentProductCategory")
                         .WithMany()
-                        .HasForeignKey("ParentProductCategoryProductCategoryId");
+                        .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentProductCategory");
                 });

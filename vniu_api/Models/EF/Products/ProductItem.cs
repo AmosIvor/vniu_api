@@ -12,27 +12,23 @@ namespace vniu_api.Models.EF.Products
         public int ProductItemId { get; set; }
 
         [Required]
-        public decimal OriginalPrice { get; set; }
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        [Required]
+        public int ColourId { get; set; }
 
-        public decimal SalePrice { get; set; }
+        public int OriginalPrice { get; set; }
+
+        public int SalePrice { get; set; }
 
         public int ProductItemSold { get; set; }
 
-        public decimal ProductItemRating { get; set; }
+        public double ProductItemRating { get; set; }
 
-        [Required]
-        public string ProductItemCode { get; set; }
+        public int ProductItemCode { get; set; }
 
-        public int ProductId { get; set; }
-
-        [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; }
-
-        public int ColourId { get; set; }
-
-        [ForeignKey("ColourId")]
-        public virtual Colour Colour { get; set; } = new Colour();
-
+        
+        //public virtual Product Product { get; set; }
         public virtual ICollection<OrderLine> OrderLines { get; set; }
 
         public virtual ICollection<CartItem> CartItems { get; set; }
