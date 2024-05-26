@@ -67,7 +67,7 @@ namespace vniu_api.Services.Chats
                 throw new NotFoundException("Chat room not found");
             }
 
-            var messages = await _context.Messages.Where(m => m.ChatRoomId == chatRoom.ChatRoomId).OrderBy(m => m.MessageCreateAt).ToListAsync();
+            var messages = await _context.Messages.Where(m => m.ChatRoomId == chatRoom.ChatRoomId).OrderByDescending(m => m.MessageCreateAt).ToListAsync();
 
             var messagesVM = _mapper.Map<ICollection<MessageVM>>(messages);
 

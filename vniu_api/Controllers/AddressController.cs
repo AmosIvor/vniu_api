@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Elastic.Clients.Elasticsearch.Nodes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Nest;
 using System.Net;
+using System.Xml;
 using vniu_api.Models.Responses;
+using vniu_api.Repositories;
 using vniu_api.Repositories.Profiles;
 using vniu_api.ViewModels.ProfilesViewModels;
 using vniu_api.ViewModels.ResponsesViewModels;
@@ -13,10 +18,14 @@ namespace vniu_api.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IAddressRepo _addressRepo;
+        private readonly DataContext _context;
+        private readonly IElasticClient _elasticClient;
 
-        public AddressController(IAddressRepo addressRepo)
+        public AddressController(IAddressRepo addressRepo, DataContext context, IElasticClient elasticClient)
         {
             _addressRepo = addressRepo;
+            _context = context;
+            _elasticClient = elasticClient;
         }
 
         [HttpGet("get-all")]
@@ -161,6 +170,19 @@ namespace vniu_api.Controllers
                     Title = e.Message
                 });
             }
+        }
+
+        [HttpGet("elastic_search/retrieve_data")]
+        public async Task<IActionResult> IndexData()
+        {
+            var dataConvert = await _context.Addresses.ToListAsync();
+
+            var bulkAllObservable = _elasticClient.BulkAll(dataConvert, b => b.Index("address")
+                                                                    .BackOffTime("30s")
+                                                                    .RefreshOnCompleted());
+
+            bulkAllObservable.Wait(TimeSpan.FromMinutes(15), response => { });
+            return Ok("success");
         }
     }
 }
