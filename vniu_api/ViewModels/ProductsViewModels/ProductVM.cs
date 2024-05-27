@@ -9,5 +9,7 @@
         public string? ProductDescription { get; set; }
 
         public int ProductCategoryId { get; set; }
+
+        public virtual ICollection<ProductItemVM> ProductItems { get;set; }
     }
 }

@@ -42,7 +42,33 @@ namespace vniu_api.Controllers
                 });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetData(int page = 1, int pageSize = 4)
+        {
+            try
+            {
+                var result = await _ProductRepo.GetProductsAsync();
+                var pagedData = result.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                var totalCount = result.Count;
 
+                return Ok(new
+                {
+                    Data = pagedData,
+                    TotalCount = totalCount,
+                    Page = page,
+                    PageSize = pageSize
+                });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new ErrorResponse()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = e.Message
+                });
+            }
+        }
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> GetProductById(int ProductId)
         {
