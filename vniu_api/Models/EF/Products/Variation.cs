@@ -17,12 +17,12 @@ namespace vniu_api.Models.EF.Products
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; } = new ProductItem();
+        public virtual ProductItem ProductItem { get; set; }
 
         public int SizeId { get; set; }
 
         [ForeignKey("SizeId")]
-        public virtual SizeOption SizeOption { get; set; } = new SizeOption();
+        public virtual SizeOption SizeOption { get; set; }
 
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 

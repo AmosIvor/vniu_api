@@ -1,7 +1,9 @@
-﻿namespace vniu_api.Hubs
+﻿using vniu_api.ViewModels.ChatsViewModels;
+
+namespace vniu_api.Hubs
 {
     public interface IChatClient
     {
-        Task ReceiveMessage(string message);
+        Task ReceiveMessage(MessageVM messageVM);
     }
 }

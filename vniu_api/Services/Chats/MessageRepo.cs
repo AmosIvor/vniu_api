@@ -46,14 +46,14 @@ namespace vniu_api.Services.Chats
 
             message.ChatRoomId = chatroom.ChatRoomId;
 
-            // send message
-            await _hub.Clients.All.ReceiveMessage(message.MessageContent);
-
             _context.Messages.Add(message);
 
             await _context.SaveChangesAsync();
 
             var messageVMResult = _mapper.Map<MessageVM>(message);
+
+            // send message
+            await _hub.Clients.All.ReceiveMessage(messageVMResult);
 
             return messageVMResult;
         }

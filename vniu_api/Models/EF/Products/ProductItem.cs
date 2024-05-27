@@ -26,12 +26,12 @@ namespace vniu_api.Models.EF.Products
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; } = new Product();
+        public virtual Product Product { get; set; }
 
         public int ColourId { get; set; }
 
         [ForeignKey("ColourId")]
-        public virtual Colour Colour { get; set; } = new Colour();
+        public virtual Colour Colour { get; set; }
 
         public virtual ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 

@@ -18,7 +18,7 @@ namespace vniu_api.Models.EF.Products
         public int ProductCategoryId { get; set; }
 
         [ForeignKey("ProductCategoryId")]
-        public virtual ProductCategory ProductCategory { get; set; } = new ProductCategory();
+        public virtual ProductCategory ProductCategory { get; set; }
 
         public virtual ICollection<ProductItem> ProductItems { get; set; } = new List<ProductItem>();
     }
