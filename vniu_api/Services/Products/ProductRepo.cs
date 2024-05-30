@@ -37,9 +37,42 @@ namespace vniu_api.Services.Products
 
         public async Task<ProductVM> GetProductByIdAsync(int ProductId)
         {
-            var Product = await _context.Products.SingleOrDefaultAsync(p => p.ProductId == ProductId);
+            var product = await _context.Products
+        .Include(p => p.ProductItems)
+            .ThenInclude(pi => pi.ProductImages)
+        .SingleOrDefaultAsync(p => p.ProductId == ProductId);
 
-            return _mapper.Map<ProductVM>(Product);
+            if (product == null)
+            {
+                return null;
+            }
+
+            var productVM = new ProductVM
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                ProductDescription = product.ProductDescription,
+                ProductCategoryId = product.ProductCategoryId,
+                ProductItems = product.ProductItems.Select(item => new ProductItemVM
+                {
+                    ProductItemId = item.ProductItemId,
+                    ProductId = item.ProductId,
+                    ColourId = item.ColourId,
+                    OriginalPrice = item.OriginalPrice,
+                    SalePrice = item.SalePrice,
+                    ProductItemSold = item.ProductItemSold,
+                    ProductItemRating = item.ProductItemRating,
+                    ProductItemCode = item.ProductItemCode,
+                    ProductImages = item.ProductImages.Select(image => new ProductImageVM
+                    {
+                        ProductImageId = image.ProductImageId,
+                        ProductImageUrl = image.ProductImageUrl,
+                        ProductItemId = image.ProductItemId
+                    }).ToList()
+                }).ToList()
+            };
+
+            return productVM;
         }
 
         public async Task<ICollection<ProductVM>> GetProductsAsync()

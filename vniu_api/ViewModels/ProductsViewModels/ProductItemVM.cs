@@ -17,7 +17,7 @@ namespace vniu_api.ViewModels.ProductsViewModels
         public virtual Product Product { get; set; }
         public ProductImageVM ProductImage { get; set; }
 
-        public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual ICollection<ProductImageVM> ProductImages { get; set; }
 
     }
 }
