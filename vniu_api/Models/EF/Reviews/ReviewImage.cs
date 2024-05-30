@@ -15,6 +15,6 @@ namespace vniu_api.Models.EF.Reviews
         public int ReviewId { get; set; }
 
         [ForeignKey("ReviewId")]
-        public virtual Review Review { get; set; } = new Review();
+        public virtual Review Review { get; set; }
     }
 }

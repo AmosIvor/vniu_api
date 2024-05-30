@@ -18,7 +18,7 @@ namespace vniu_api.Models.EF.Products
         [Required]
         public int ColourId { get; set; }
         [ForeignKey("ColourId")]
-        public virtual Colour Colour { get; set; } = new Colour();
+        public virtual Colour Colour { get; set; }
 
         public int OriginalPrice { get; set; }
 

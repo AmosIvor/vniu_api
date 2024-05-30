@@ -7,5 +7,6 @@ namespace vniu_api.Repositories.Chats
         Task<ICollection<MessageVM>> GetMessagesByUserIdAsync(string userId);
         Task<MessageVM> CreateMessageAsync(string userId, MessageVM messageVM);
         Task<MessageVM> ReadMesasgeAsync(int messageId);
+        Task<ChatbotVM> ChatbotResponseMessageAsync(string userMessage);
     }
 }
