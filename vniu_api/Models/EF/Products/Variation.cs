@@ -21,7 +21,7 @@ namespace vniu_api.Models.EF.Products
         public int SizeId { get; set; }
 
         [ForeignKey("SizeId")]
-        public virtual SizeOption SizeOption { get; set; }
+        public virtual SizeOption Size { get; set; }
 
         public virtual ICollection<CartItem> CartItems { get; set; }
 

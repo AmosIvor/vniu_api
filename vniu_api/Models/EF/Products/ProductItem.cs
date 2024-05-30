@@ -17,6 +17,8 @@ namespace vniu_api.Models.EF.Products
         public virtual Product Product { get; set; } = new Product();
         [Required]
         public int ColourId { get; set; }
+        [ForeignKey("ColourId")]
+        public virtual Colour Colour { get; set; } = new Colour();
 
         public int OriginalPrice { get; set; }
 
@@ -34,5 +36,6 @@ namespace vniu_api.Models.EF.Products
         public virtual ICollection<CartItem> CartItems { get; set; }
 
         public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual ICollection<Variation> Variations { get; set; }
     }
 }

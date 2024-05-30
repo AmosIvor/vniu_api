@@ -18,6 +18,8 @@ namespace vniu_api.ViewModels.ProductsViewModels
         public ProductImageVM ProductImage { get; set; }
 
         public virtual ICollection<ProductImageVM> ProductImages { get; set; }
+        public virtual ICollection<VariationVM> Variations { get; set; }        
+        public virtual ICollection<ColourVM> ColourVMs { get; set; }
 
     }
 }

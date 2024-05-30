@@ -20,7 +20,7 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("get-all/"+ "{ProductId}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetProductItems(int ProductId)
         {
             try

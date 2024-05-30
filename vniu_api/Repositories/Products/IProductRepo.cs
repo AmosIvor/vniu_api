@@ -5,6 +5,7 @@ namespace vniu_api.Repositories.Products
     public interface IProductRepo
     {
         public Task<ICollection<ProductVM>> GetProductsAsync();
+        public Task<ICollection<ProductVM>> GetProductsByIds(List<int> productItemIds);
         public Task<ProductVM> GetProductByIdAsync(int productId);
         public Task<bool> IsProductExistIdAsync(int productId);
         public Task<bool> IsProductExistNameAsync(string productName);

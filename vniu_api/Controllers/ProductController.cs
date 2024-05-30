@@ -19,12 +19,35 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("get-all")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetProducts()
         {
             try
             {
                 var result = await _ProductRepo.GetProductsAsync();
+
+                return Ok(new SuccessResponse<ICollection<ProductVM>>()
+                {
+                    Message = "Get list Products successfully",
+                    Data = result
+                });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(new ErrorResponse()
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = e.Message
+                });
+            }
+        }
+        [HttpPost("get-products-by-ids")]
+        public async Task<IActionResult> GetProductsByIds([FromBody] List<int> productItemIds)
+        {
+            try
+            {
+                var result = await _ProductRepo.GetProductsByIds(productItemIds);
 
                 return Ok(new SuccessResponse<ICollection<ProductVM>>()
                 {
