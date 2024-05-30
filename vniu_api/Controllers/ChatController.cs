@@ -80,6 +80,18 @@ namespace vniu_api.Controllers
             });
         }
 
+        [HttpPost("chatbot")]
+        public async Task<IActionResult> ChatbotResponseMessage([FromBody] string userMessage)
+        {
+            var result = await _messageRepo.ChatbotResponseMessageAsync(userMessage);
+
+            return Ok(new SuccessResponse<ChatbotVM>()
+            {
+                Message = "Chatbot response successfully",
+                Data = result
+            });
+        }
+
         [HttpPost("messages/{messageId}")]
         public async Task<IActionResult> ReadMessage(int messageId)
         {

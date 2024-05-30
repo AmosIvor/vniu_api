@@ -45,6 +45,7 @@ namespace vniu_api.Controllers
         }
 
         [HttpGet("{promotionId}")]
+        [Authorize]
         public async Task<IActionResult> GetPromotionById(int promotionId)
         {
             try

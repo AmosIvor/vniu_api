@@ -17,7 +17,7 @@ namespace vniu_api.Helpers
             var token = new JwtSecurityToken(
                     issuer: configuration["JWT:ValidIssuer"],
                     audience: configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddMinutes(20),
+                    expires: DateTime.Now.AddYears(2),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha512Signature)
                 );
