@@ -49,7 +49,7 @@ The backend will be developed using C# .NET and will expose a RESTful API. It wi
 
 **Additional information**:
 
-- The backend of this application is built using C# and .NET to create a RESTful API that supports various functionalities such as chatbot interactions and image-based search for clothing items.
+- If you have trouble with the process of installing and running the application, please contact [21521252@gm.uit.edu.vn](mailto:21521252@gm.uit.edu.vn) or [21522807@gm.uit.edu.vn](mailto:21522807@gm.uit.edu.vn) for assistance.
 
 **Code of Conduct**:
 
