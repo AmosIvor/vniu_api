@@ -452,32 +452,35 @@ namespace vniu_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentMethodId"), 1L, 1);
 
-                    b.Property<string>("AccountNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<DateTime?>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool?>("IsDefault")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PaymentCartType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentProvider")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentTransactionNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Provider")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("PaymentMethodId");
 
                     b.HasIndex("PaymentTypeId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("PaymentMethod");
                 });
@@ -602,27 +605,23 @@ namespace vniu_api.Migrations
                     b.Property<int>("ColourId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("OriginalPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("OriginalPrice")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductItemCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProductItemCode")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("ProductItemRating")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("ProductItemRating")
+                        .HasColumnType("float");
 
                     b.Property<int>("ProductItemSold")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SalePrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("SalePrice")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductItemId");
 
@@ -646,8 +645,8 @@ namespace vniu_api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
+                    b.Property<bool>("SortOrder")
+                        .HasColumnType("bit");
 
                     b.HasKey("SizeId");
 
@@ -1104,15 +1103,7 @@ namespace vniu_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vniu_api.Models.EF.Profiles.User", "User")
-                        .WithMany("PaymentMethods")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("PaymentType");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Products.Product", b =>
@@ -1150,21 +1141,17 @@ namespace vniu_api.Migrations
 
             modelBuilder.Entity("vniu_api.Models.EF.Products.ProductItem", b =>
                 {
-                    b.HasOne("vniu_api.Models.EF.Products.Colour", "Colour")
+                    b.HasOne("vniu_api.Models.EF.Products.Colour", null)
                         .WithMany("ProductItems")
                         .HasForeignKey("ColourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vniu_api.Models.EF.Products.Product", "Product")
+                    b.HasOne("vniu_api.Models.EF.Products.Product", null)
                         .WithMany("ProductItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Colour");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("vniu_api.Models.EF.Products.Variation", b =>
@@ -1362,8 +1349,6 @@ namespace vniu_api.Migrations
                     b.Navigation("ChatRooms");
 
                     b.Navigation("Orders");
-
-                    b.Navigation("PaymentMethods");
 
                     b.Navigation("Reviews");
 

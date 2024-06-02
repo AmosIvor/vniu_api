@@ -12,6 +12,6 @@ namespace vniu_api.Models.EF.Products
         [Required, MaxLength(100)]
         public string ColourName { get; set; }
 
-        public virtual ICollection<ProductItem> ProductItems { get; set; } = new List<ProductItem>();
+        public virtual ICollection<ProductItem> ProductItems { get; set; }
     }
 }

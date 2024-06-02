@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:VNIU_STORE"
+    },
+    "apis1": {
+      "type": "apis"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:VNIU_DATABASE",
+      "dynamicId": null
+    }
+  }
+}

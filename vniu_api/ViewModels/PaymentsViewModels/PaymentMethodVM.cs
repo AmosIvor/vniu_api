@@ -4,16 +4,20 @@
     {
         public int PaymentMethodId { get; set; }
 
-        public string? Provider { get; set; }
+        public string PaymentTransactionNo { get; set; }
+        public string? PaymentProvider { get; set; }
 
-        public string? AccountNumber { get; set; }
+        public string? PaymentCartType { get; set; }
 
-        public DateTime? ExpiryDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
+
+        // 0: unpaid, 1: paid, 2: failed
+        public int? PaymentStatus { get; set; }
 
         public Boolean? IsDefault { get; set; } = false;
 
-        public int PaymentTypeId { get; set; }
+        public string? PaymentDescription { get; set; }
 
-        public string UserId { get; set; }
+        public int PaymentTypeId { get; set; }
     }
 }

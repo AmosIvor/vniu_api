@@ -7,19 +7,19 @@ namespace vniu_api.ViewModels.ProductsViewModels
     public class ProductItemVM
     {
         public int ProductItemId { get; set; }
-
-        public decimal OriginalPrice { get; set; }
-
-        public decimal SalePrice { get; set; }
-
-        public int ProductItemSold { get; set; }
-
-        public decimal ProductItemRating { get; set; }
-
-        public string ProductItemCode { get; set; }
-
-        public int ProductId { get; set; }
-
+                public int ProductId { get; set; }
         public int ColourId { get; set; }
+                public int OriginalPrice { get; set; }
+                public int SalePrice { get; set; }
+                public int ProductItemSold { get; set; }
+                public double ProductItemRating { get; set; }
+        public int ProductItemCode { get; set; }
+        public virtual Product Product { get; set; }
+        public ProductImageVM ProductImage { get; set; }
+
+        public virtual ICollection<ProductImageVM> ProductImages { get; set; }
+        public virtual ICollection<VariationVM> Variations { get; set; }        
+        public virtual ICollection<ColourVM> ColourVMs { get; set; }
+
     }
 }

@@ -20,18 +20,18 @@ namespace vniu_api.Models.EF.Orders
         public int OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        public virtual Order Order { get; set; } = new Order();
+        public virtual Order Order { get; set; }
 
-        public virtual Review Review { get; set; } = new Review();
+        public virtual Review Review { get; set; }
 
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; } = new ProductItem();
+        public virtual ProductItem ProductItem { get; set; }
 
         public int VariationId { get; set; }
 
         [ForeignKey("VariationId")]
-        public virtual Variation Variation { get; set; } = new Variation();
+        public virtual Variation Variation { get; set; }
     }
 }

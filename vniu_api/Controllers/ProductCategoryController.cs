@@ -25,6 +25,7 @@ namespace vniu_api.Controllers
             try
             {
                 var result = await _CategoryRepo.GetCategorysAsync();
+                Console.WriteLine(result);
 
                 return Ok(new SuccessResponse<ICollection<ProductCategoryVM>>()
                 {

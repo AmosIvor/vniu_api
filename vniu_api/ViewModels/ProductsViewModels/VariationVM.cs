@@ -9,5 +9,7 @@
         public int ProductItemId { get; set; }
 
         public int SizeId { get; set; }
+
+        public SizeOptionVM Size { get; set; }
     }
 }

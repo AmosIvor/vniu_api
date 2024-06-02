@@ -12,6 +12,6 @@ namespace vniu_api.Models.EF.Promotions
 
         public virtual ProductCategory ProductCategory { get; set; } = new ProductCategory();
 
-        public virtual Promotion Promotion { get; set; } = new Promotion();
+        public virtual Promotion Promotion { get; set; }
     }
 }
