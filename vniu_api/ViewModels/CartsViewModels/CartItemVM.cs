@@ -1,4 +1,7 @@
-﻿namespace vniu_api.ViewModels.CartsViewModels
+﻿using vniu_api.Models.EF.Products;
+using vniu_api.ViewModels.ProductsViewModels;
+
+namespace vniu_api.ViewModels.CartsViewModels
 {
     public class CartItemVM
     {
@@ -10,6 +13,10 @@
 
         public int ProductItemId { get; set; }
 
+        public virtual ProductItemVM ProductItemVM { get; set; }
+
         public int VariationId { get; set; }
+        public virtual VariationVM VariationVM { get; set; }
+
     }
 }

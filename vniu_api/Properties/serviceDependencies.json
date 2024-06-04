@@ -14,6 +14,10 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:VNIU_DATABASE",
       "dynamicId": null
+    },
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "Azure:SignalR:ConnectionString"
     }
   }
 }

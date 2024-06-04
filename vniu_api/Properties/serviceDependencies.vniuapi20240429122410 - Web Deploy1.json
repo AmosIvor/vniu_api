@@ -20,6 +20,12 @@
       "apiEndpoint": "https://vniuapiapi.azure-api.net/",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/vniuapiapi/apis/vniuapi",
       "type": "apis.azure"
+    },
+    "signalr1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.SignalRService/SignalR/vniuapi",
+      "type": "signalr.azure",
+      "connectionId": "Azure:SignalR:ConnectionString"
     }
   }
 }
