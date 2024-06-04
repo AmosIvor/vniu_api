@@ -6,6 +6,6 @@
 
         public string ShippingMethodName { get; set; }
 
-        public string ShippingMethodPrice { get; set; }
+        public double ShippingMethodPrice { get; set; }
     }
 }

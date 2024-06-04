@@ -63,6 +63,7 @@ namespace vniu_api.Installers
             // repo-profiles
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IAddressRepo, AddressRepo>();
+            services.AddScoped<IUserAddressRepo, UserAddressRepo>();
 
             // repo-Variations
             services.AddScoped<IPromotionRepo, PromotionRepo>();

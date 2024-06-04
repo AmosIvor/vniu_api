@@ -10,7 +10,7 @@ namespace vniu_api.Models.EF.Profiles
 
         public int AddressId { get; set; }
 
-        public Boolean IsDefault { get; set; } = false;
+        public bool IsDefault { get; set; } = false;
 
         public virtual User User { get; set; }
 
