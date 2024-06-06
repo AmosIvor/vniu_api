@@ -11,7 +11,7 @@ namespace vniu_api.Models.EF.Profiles
         public int AddressId {  get; set; }
 
         [MaxLength(255)]
-        public int? UnitNumber {  get; set; }
+        public string? UnitNumber {  get; set; }
 
         [MaxLength(50)]
         public string? StreetNumber { get; set; }
@@ -29,7 +29,5 @@ namespace vniu_api.Models.EF.Profiles
         public string City { get; set; }
 
         public virtual ICollection<UserAddress> UserAddresses { get; set; } = new List<UserAddress>();
-
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

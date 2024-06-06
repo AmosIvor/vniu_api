@@ -5,7 +5,7 @@ namespace vniu_api.ViewModels.ResponsesViewModels
     public class AddressResponseVM : AddressVM
     {
         public int AddressId { get; set; }
-        public int? UnitNumber { get; set; }
+        public string? UnitNumber { get; set; }
         public string? StreetNumber { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }

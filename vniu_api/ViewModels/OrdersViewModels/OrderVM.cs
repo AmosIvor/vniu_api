@@ -18,7 +18,10 @@
 
         public int? PromotionId { get; set; }
 
-        public int AddressId { get; set; }
+        public string Address { get; set; }
+
+        public string Username { get; set; }
+        public string NumberPhone { get; set; }
 
         public int PaymentMethodId { get; set; }
 

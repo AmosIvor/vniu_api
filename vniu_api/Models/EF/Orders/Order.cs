@@ -39,10 +39,10 @@ namespace vniu_api.Models.EF.Orders
         [ForeignKey("PromotionId")]
         public virtual Promotion Promotion { get; set; }
 
-        public int AddressId { get; set; }
-
-        [ForeignKey("AddressId")]
-        public virtual Address Address { get; set; }
+        public string Address{ get; set; }
+        
+        public string Username { get; set; }    
+        public string NumberPhone { get; set; }
 
         public int PaymentMethodId { get; set; }
 

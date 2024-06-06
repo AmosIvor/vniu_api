@@ -21,11 +21,11 @@ namespace vniu_api.Models.EF.Carts
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; }
+        public virtual ProductItem? ProductItem { get; set; }
 
         public int VariationId { get; set; }
 
         [ForeignKey("VariationId")]
-        public virtual Variation Variation { get; set; }
+        public virtual Variation? Variation { get; set; }
     }
 }
