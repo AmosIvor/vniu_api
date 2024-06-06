@@ -37,7 +37,7 @@ namespace vniu_api.Helpers
             CreateMap<Message, MessageVM>().ReverseMap();
 
             // orders
-            CreateMap<Order, OrderVM>().ReverseMap();
+            CreateMap<Order, OrderVM>().ReverseMap().ForMember(dest => dest.OrderLines, opt => opt.MapFrom(src => src.OrderLines));
             CreateMap<OrderLine, OrderLineVM>().ReverseMap();
             CreateMap<OrderStatus, OrderStatusVM>().ReverseMap();
 

@@ -23,8 +23,10 @@
         public string Username { get; set; }
         public string NumberPhone { get; set; }
 
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
 
         public string UserId { get; set; }
+
+        public virtual ICollection<OrderLineVM>? OrderLines{ get;set; }
     }
 }

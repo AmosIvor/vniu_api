@@ -27,7 +27,7 @@ namespace vniu_api.Models.EF.Orders
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; }
+        public virtual ProductItem? ProductItem { get; set; }
 
         public int VariationId { get; set; }
 

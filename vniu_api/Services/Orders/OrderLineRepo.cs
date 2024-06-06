@@ -111,7 +111,7 @@ namespace vniu_api.Services.Orders
             }
 
             // get list order line by order id
-            var orderLines = await _context.OrderLines.Where(ol => ol.OrderId == orderId).ToListAsync();
+            var orderLines = await _context.OrderLines.Where(ol => ol.OrderId == orderId).Include(ol => ol.ProductItem).ToListAsync();
 
             var orderLinesVM = _mapper.Map<ICollection<OrderLineVM>>(orderLines);
 
@@ -120,7 +120,7 @@ namespace vniu_api.Services.Orders
 
         public async Task<ICollection<OrderLineVM>> GetOrderLinesAsync()
         {
-            var orderLines = await _context.OrderLines.OrderByDescending(p => p.OrderLineId).ToListAsync();
+            var orderLines = await _context.OrderLines.OrderByDescending(p => p.OrderLineId).Include(ol => ol.ProductItem).ToListAsync();
 
             var orderLinesVM = _mapper.Map<ICollection<OrderLineVM>>(orderLines);
 

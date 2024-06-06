@@ -34,20 +34,20 @@ namespace vniu_api.Models.EF.Orders
         [ForeignKey("ShippingMethodId")]
         public virtual ShippingMethod ShippingMethod { get; set; }
 
-        public int PromotionId { get; set; }
+        public int? PromotionId { get; set; }
 
         [ForeignKey("PromotionId")]
-        public virtual Promotion Promotion { get; set; }
+        public virtual Promotion? Promotion { get; set; }
 
         public string Address{ get; set; }
         
         public string Username { get; set; }    
         public string NumberPhone { get; set; }
 
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
 
         [ForeignKey("PaymentMethodId")]
-        public virtual PaymentMethod PaymentMethod { get; set; }
+        public virtual PaymentMethod? PaymentMethod { get; set; }
 
         public string UserId { get; set; }
 

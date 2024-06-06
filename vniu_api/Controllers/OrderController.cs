@@ -67,7 +67,7 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpGet("{userId}/orders")]
+        [HttpGet("orders/{userId}")]
         public async Task<IActionResult> GetOrdersByUserId(string userId)
         {
             try
@@ -115,29 +115,29 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpGet("{userId}/orders/{orderStatusId}")]
-        public async Task<IActionResult> GetOrdersByUserIdAndOrderStatusId(string userId, int orderStatusId)
-        {
-            try
-            {
-                var result = await _orderRepo.GetOrdersByUserIdAndOrderStatusIdAsync(userId, orderStatusId);
+        //[HttpGet("{userId}/orders/{orderStatusId}")]
+        //public async Task<IActionResult> GetOrdersByUserIdAndOrderStatusId(string userId, int orderStatusId)
+        //{
+        //    try
+        //    {
+        //        var result = await _orderRepo.GetOrdersByUserIdAndOrderStatusIdAsync(userId, orderStatusId);
 
-                return Ok(new SuccessResponse<ICollection<OrderVM>>()
-                {
-                    Message = "Get list order of user successfully",
-                    Data = result
-                });
-            }
-            catch (Exception e)
-            {
+        //        return Ok(new SuccessResponse<ICollection<OrderVM>>()
+        //        {
+        //            Message = "Get list order of user successfully",
+        //            Data = result
+        //        });
+        //    }
+        //    catch (Exception e)
+        //    {
 
-                return BadRequest(new ErrorResponse()
-                {
-                    Status = (int)HttpStatusCode.BadRequest,
-                    Title = e.Message
-                });
-            }
-        }
+        //        return BadRequest(new ErrorResponse()
+        //        {
+        //            Status = (int)HttpStatusCode.BadRequest,
+        //            Title = e.Message
+        //        });
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> CreateOrder(OrderVM orderLineVM)
