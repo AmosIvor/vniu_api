@@ -46,7 +46,7 @@ namespace vniu_api.Services.Utils
             vnPayLibrary.AddRequestData("vnp_Version", _vnPayConfiguration.Version);
             vnPayLibrary.AddRequestData("vnp_Command", _vnPayConfiguration.Command);
             vnPayLibrary.AddRequestData("vnp_TmnCode", _vnPayConfiguration.TmnCode);
-            vnPayLibrary.AddRequestData("vnp_Amount", ((int)paymentRequest.OrderTotal * 100).ToString());
+            vnPayLibrary.AddRequestData("vnp_Amount", ((int)paymentRequest.OrderTotal * 100 * 22000).ToString());
             vnPayLibrary.AddRequestData("vnp_CreateDate", timeNow.ToString("yyyyMMddHHmmss"));
             vnPayLibrary.AddRequestData("vnp_CurrCode", _vnPayConfiguration.CurrCode);
             vnPayLibrary.AddRequestData("vnp_IpAddr", vnPayLibrary.GetIpAddress(httpContext));
