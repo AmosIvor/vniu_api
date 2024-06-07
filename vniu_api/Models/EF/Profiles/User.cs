@@ -14,14 +14,14 @@ namespace vniu_api.Models.EF.Profiles
 
         public string? Avatar { get; set; }
 
-        public virtual ICollection<UserAddress> UserAddresses { get; set; } = new List<UserAddress>();
+        public virtual ICollection<UserAddress> UserAddresses { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; }
 
         public virtual Cart Cart { get; set; }
 
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public virtual ICollection<Review> Reviews { get; set; }
 
-        public virtual ICollection<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
+        public virtual ICollection<ChatRoom> ChatRooms { get; set; }
     }
 }

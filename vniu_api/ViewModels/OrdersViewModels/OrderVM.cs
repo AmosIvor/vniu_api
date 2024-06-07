@@ -1,4 +1,6 @@
-﻿namespace vniu_api.ViewModels.OrdersViewModels
+﻿using vniu_api.Models.EF.Payments;
+
+namespace vniu_api.ViewModels.OrdersViewModels
 {
     public class OrderVM
     {
@@ -24,6 +26,8 @@
         public string NumberPhone { get; set; }
 
         public int? PaymentMethodId { get; set; }
+
+        public virtual PaymentMethod? PaymentMethod { get; set; }
 
         public string UserId { get; set; }
 

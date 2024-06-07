@@ -54,6 +54,6 @@ namespace vniu_api.Models.EF.Orders
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        public virtual ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+        public virtual ICollection<OrderLine> OrderLines { get; set; }
     }
 }

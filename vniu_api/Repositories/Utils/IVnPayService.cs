@@ -6,6 +6,6 @@ namespace vniu_api.Repositories.Utils
     public interface IVnPayService
     {
         Task<string> CreatePaymentUrl(PaymentRequest model, HttpContext context);
-        Task<PaymentMethodVM> PaymentExecuteAsync(IQueryCollection collections);
+        Task<PaymentMethodVM> PaymentExecuteAsync(int orderId, IQueryCollection collections);
     }
 }

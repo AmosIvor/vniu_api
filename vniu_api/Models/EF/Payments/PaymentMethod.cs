@@ -11,7 +11,7 @@ namespace vniu_api.Models.EF.Payments
         [Key]
         public int PaymentMethodId { get; set; }
 
-        public string PaymentTransactionNo { get; set; }
+        public string? PaymentTransactionNo { get; set; }
 
         [MaxLength(255)]
         public string? PaymentProvider { get; set; }
@@ -32,6 +32,6 @@ namespace vniu_api.Models.EF.Payments
         [ForeignKey("PaymentTypeId")]
         public virtual PaymentType PaymentType { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

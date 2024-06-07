@@ -140,11 +140,11 @@ namespace vniu_api.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(OrderVM orderLineVM)
+        public async Task<IActionResult> CreateOrder(OrderVM orderLineVM, int paymentType)
         {
             try
             {
-                var newOrder = await _orderRepo.CreateOrderAsync(orderLineVM);
+                var newOrder = await _orderRepo.CreateOrderAsync(orderLineVM, paymentType);
 
                 return Ok(new SuccessResponse<OrderVM>()
                 {
