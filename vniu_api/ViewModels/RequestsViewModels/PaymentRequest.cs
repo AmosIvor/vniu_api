@@ -9,5 +9,6 @@ namespace vniu_api.ViewModels.RequestsViewModels
         public string? OrderDescription { get; set; }
         public string UserId { get; set; }
         public bool IsVnPay { get; set; } = true;
+        public int? orderId { get; set; }
     }
 }

@@ -20,9 +20,9 @@ namespace vniu_api.Models.EF.Orders
         public int OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        public virtual Order Order { get; set; }
+        public virtual Order? Order { get; set; }
 
-        public virtual Review Review { get; set; }
+        public virtual Review? Review { get; set; }
 
         public int ProductItemId { get; set; }
 
@@ -32,6 +32,6 @@ namespace vniu_api.Models.EF.Orders
         public int VariationId { get; set; }
 
         [ForeignKey("VariationId")]
-        public virtual Variation Variation { get; set; }
+        public virtual Variation? Variation { get; set; }
     }
 }
