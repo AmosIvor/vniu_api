@@ -27,8 +27,8 @@ namespace vniu_api.Models.EF.Promotions
 
         public Boolean PromotionIsUsed { get; set; } = false;
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orders { get; set; }
 
-        public virtual ICollection<PromotionCategory> PromotionCategories { get; set; } = new List<PromotionCategory>();
+        public virtual ICollection<PromotionCategory> PromotionCategories { get; set; }
     }
 }

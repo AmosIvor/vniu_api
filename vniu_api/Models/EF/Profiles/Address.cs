@@ -28,6 +28,6 @@ namespace vniu_api.Models.EF.Profiles
         [Required, MaxLength(100)]
         public string City { get; set; }
 
-        public virtual ICollection<UserAddress> UserAddresses { get; set; } = new List<UserAddress>();
+        public virtual ICollection<UserAddress> UserAddresses { get; set; }
     }
 }

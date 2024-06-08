@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Orders;
+using vniu_api.Models.EF.Payments;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Orders;
 using vniu_api.ViewModels.OrdersViewModels;
+using vniu_api.ViewModels.PaymentsViewModels;
 using vniu_api.ViewModels.ProductsViewModels;
 
 namespace vniu_api.Services.Orders
@@ -21,8 +23,22 @@ namespace vniu_api.Services.Orders
             _orderLineRepo = orderLineRepo;
         }
 
-        public async Task<OrderVM> CreateOrderAsync(OrderVM orderVM)
+        public async Task<OrderVM> CreateOrderAsync(OrderVM orderVM, int paymentType)
         {
+            // create default payment method 
+            var paymentMethod = new PaymentMethod()
+            {
+                PaymentTypeId = paymentType,
+                PaymentStatus = 0 // default is 0 - unpaid => 1 - paid => 2 - error
+            };
+
+            _context.PaymentMethods.Add(paymentMethod);
+
+            // map default payment to get paymentMethodId
+            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+
+            orderVM.PaymentMethodId = paymentMethodVM.PaymentMethodId;
+
             // map
             var order = _mapper.Map<Order>(orderVM);
 

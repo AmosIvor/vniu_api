@@ -30,6 +30,6 @@ namespace vniu_api.Models.EF.Reviews
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        public virtual ICollection<ReviewImage> ReviewImages { get; set; } = new List<ReviewImage>();
+        public virtual ICollection<ReviewImage> ReviewImages { get; set; }
     }
 }

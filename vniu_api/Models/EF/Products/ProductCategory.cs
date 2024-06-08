@@ -21,6 +21,6 @@ namespace vniu_api.Models.EF.Products
         public virtual ICollection<ProductCategory> ChildProductCategories { get; set; } 
 
         public virtual ICollection<PromotionCategory> PromotionCategories { get; set; } 
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -192,8 +192,8 @@ namespace vniu_api.Controllers
             });
         }
 
-        [HttpGet("online-payment/response")]
-        public async Task<IActionResult> GetPaymentResponse()
+        [HttpGet("{orderId}/online-payment/response")]
+        public async Task<IActionResult> GetPaymentResponse(int orderId)
         {
             PaymentMethodVM paymentMethodVM;
             string paymentType = string.Empty;
@@ -202,12 +202,12 @@ namespace vniu_api.Controllers
             if (queryCollection.ContainsKey("payment_method"))
             {
                 paymentType = "PAYPAL";
-                paymentMethodVM = await _payPalService.PaymentExecuteAsync(queryCollection);
+                paymentMethodVM = await _payPalService.PaymentExecuteAsync(orderId, queryCollection);
                 
             } else
             {
                 paymentType = "VNPAY";
-                paymentMethodVM = await _vnPayService.PaymentExecuteAsync(queryCollection);
+                paymentMethodVM = await _vnPayService.PaymentExecuteAsync(orderId, queryCollection);
             }
                 
 

@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 using vniu_api.Constants;
 using vniu_api.Exceptions;
+using vniu_api.Models.EF.Payments;
+using vniu_api.Repositories;
 using vniu_api.ViewModels.PaymentsViewModels;
 
 namespace vniu_api.Helpers
@@ -14,7 +16,7 @@ namespace vniu_api.Helpers
         private readonly SortedList<string, string> _requestData = new SortedList<string, string>(new VnPayCompare());
         private readonly SortedList<string, string> _responseData = new SortedList<string, string>(new VnPayCompare());
 
-        public PaymentMethodVM GetFullResponseData(IQueryCollection collection, string hashSecret)
+        public PaymentMethodVM GetFullResponseData(PaymentMethodVM paymentMethodVM, IQueryCollection collection, string hashSecret)
         {
             var vnPayLibrary = new VnPayLibrary();
 
@@ -67,17 +69,22 @@ namespace vniu_api.Helpers
 
             // It runs until this line => success => Update Payment Status == "1" (success transaction)
 
-
-            var paymentMethodVM = new PaymentMethodVM()
-            {
-                PaymentTransactionNo = vnPayTranId.ToString(),
-                PaymentProvider = vnPayBankCode,
-                PaymentCartType = vnPayCartType,
-                PaymentDate = createdDate,
-                PaymentStatus = paymentStatus,
-                PaymentTypeId = AppPaymentType.BANK_TRANSFER,
-                PaymentDescription = vnpOrderInfo,
-            };
+            paymentMethodVM.PaymentTransactionNo = vnPayTranId.ToString();
+            paymentMethodVM.PaymentProvider = vnPayBankCode;
+            paymentMethodVM.PaymentCartType = vnPayCartType;
+            paymentMethodVM.PaymentDate = createdDate;
+            paymentMethodVM.PaymentStatus = paymentStatus;
+            paymentMethodVM.PaymentDescription = vnpOrderInfo;
+            //var paymentMethodVM = new PaymentMethodVM()
+            //{
+            //    PaymentTransactionNo = vnPayTranId.ToString(),
+            //    PaymentProvider = vnPayBankCode,
+            //    PaymentCartType = vnPayCartType,
+            //    PaymentDate = createdDate,
+            //    PaymentStatus = paymentStatus,
+            //    PaymentTypeId = AppPaymentType.BANK_TRANSFER,
+            //    PaymentDescription = vnpOrderInfo,
+            //};
 
             return paymentMethodVM;
         }

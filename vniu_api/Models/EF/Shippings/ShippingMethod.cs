@@ -16,6 +16,6 @@ namespace vniu_api.Models.EF.Shippings
         [Required]
         public decimal ShippingMethodPrice {  get; set; }
 
-        public virtual ICollection<Order> Orderes { get; set; } = new List<Order>();
+        public virtual ICollection<Order> Orderes { get; set; }
     }
 }
