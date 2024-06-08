@@ -139,7 +139,7 @@ namespace vniu_api.Controllers
         //    }
         //}
 
-        [HttpPost]
+        [HttpPost("{paymentType}")]
         public async Task<IActionResult> CreateOrder(OrderVM orderLineVM, int paymentType)
         {
             try

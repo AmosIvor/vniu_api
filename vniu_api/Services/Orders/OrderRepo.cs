@@ -25,33 +25,84 @@ namespace vniu_api.Services.Orders
 
         public async Task<OrderVM> CreateOrderAsync(OrderVM orderVM, int paymentType)
         {
-            // create default payment method 
-            var paymentMethod = new PaymentMethod()
+            try
             {
-                PaymentTypeId = paymentType,
-                PaymentStatus = 0 // default is 0 - unpaid => 1 - paid => 2 - error
-            };
+                // Pre-checks for foreign key constraints
+                var userExists = await _context.Users.AnyAsync(u => u.Id == orderVM.UserId);
+                if (!userExists)
+                {
+                    throw new Exception($"User with ID {orderVM.UserId} does not exist.");
+                }
 
-            _context.PaymentMethods.Add(paymentMethod);
+                var orderStatusExists = await _context.OrderStatuses.AnyAsync(os => os.OrderStatusId == orderVM.OrderStatusId);
+                if (!orderStatusExists)
+                {
+                    throw new Exception($"OrderStatus with ID {orderVM.OrderStatusId} does not exist.");
+                }
 
-            // map default payment to get paymentMethodId
-            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+                var shippingMethodExists = await _context.ShippingMethods.AnyAsync(sm => sm.ShippingMethodId == orderVM.ShippingMethodId);
+                if (!shippingMethodExists)
+                {
+                    throw new Exception($"ShippingMethod with ID {orderVM.ShippingMethodId} does not exist.");
+                }
 
-            orderVM.PaymentMethodId = paymentMethodVM.PaymentMethodId;
+                // Ensure required fields are not null or have valid defaults
+                if (orderVM.OrderTotal <= 0)
+                {
+                    throw new Exception("OrderTotal must be greater than 0.");
+                }
 
-            // map
-            var order = _mapper.Map<Order>(orderVM);
+                if (string.IsNullOrWhiteSpace(orderVM.UserId))
+                {
+                    throw new Exception("UserId is required.");
+                }
 
-            // add database
-            _context.Orders.Add(order);
+                // Ensure OrderCreateAt and OrderUpdateAt are set
+                orderVM.OrderCreateAt = DateTime.UtcNow;
+                orderVM.OrderUpdateAt = DateTime.UtcNow;
 
-            await _context.SaveChangesAsync();
+                // Ensure the PaymentMethod object is properly created
+                var paymentMethod = new PaymentMethod()
+                {
+                    PaymentTypeId = paymentType,
+                    PaymentStatus = 0 // default is 0 - unpaid => 1 - paid => 2 - error
+                };
 
-            // return result
-            var newOrderVM = _mapper.Map<OrderVM>(order);
+                _context.PaymentMethods.Add(paymentMethod);
+                await _context.SaveChangesAsync(); // Save to get the PaymentMethodId
 
-            return newOrderVM;
+                // Map the PaymentMethod to PaymentMethodVM
+                var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+                orderVM.PaymentMethodId = paymentMethodVM.PaymentMethodId;
+
+                // Map OrderVM to Order entity
+                var order = _mapper.Map<Order>(orderVM);
+
+                // Add Order to the context
+                _context.Orders.Add(order);
+                await _context.SaveChangesAsync(); // Save changes to persist the Order
+
+                // Map back to OrderVM to return
+                var newOrderVM = _mapper.Map<OrderVM>(order);
+
+                return newOrderVM;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the inner exception details for debugging
+                var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
+                Console.WriteLine($"DbUpdateException: {innerExceptionMessage}");
+                throw new Exception($"Database update exception: {innerExceptionMessage}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Log any other errors
+                Console.WriteLine($"Exception: {ex.Message}");
+                throw;
+            }
         }
+
+
 
         public async Task<OrderVM> DeleteOrderAsync(int orderId)
         {

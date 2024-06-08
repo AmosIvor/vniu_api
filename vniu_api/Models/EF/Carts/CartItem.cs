@@ -16,7 +16,7 @@ namespace vniu_api.Models.EF.Carts
         public int CartId { get; set; }
 
         [ForeignKey("CartId")]
-        public virtual Cart Cart { get; set; }
+        public virtual Cart? Cart { get; set; }
 
         public int ProductItemId { get; set; }
 

@@ -30,8 +30,8 @@ namespace vniu_api.Models.EF.Payments
         public int PaymentTypeId { get; set; }
 
         [ForeignKey("PaymentTypeId")]
-        public virtual PaymentType PaymentType { get; set; }
+        public virtual PaymentType? PaymentType { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        //public virtual ICollection<Order>? Orders { get; set; }
     }
 }
