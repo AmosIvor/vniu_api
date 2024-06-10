@@ -18,7 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.InstallerServicesInAssembly(builder.Configuration);
 
 // ADD SERVICES 
-
 // Cors
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
@@ -38,6 +37,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("VNIU_STORE"));
 });
+var t =
+//builder.Services.AddSignalR().AddAzureSignalR();
 
 // Authentication
 builder.Services
@@ -83,6 +84,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.MapHub<ChatHub>("/chathub");
 

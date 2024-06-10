@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Nest;
 using System.Net;
 using vniu_api.Models.Responses;
+using vniu_api.Repositories;
 using vniu_api.Repositories.Products;
+using vniu_api.Repositories.Profiles;
 using vniu_api.ViewModels.ProductsViewModels;
 
 namespace vniu_api.Controllers
@@ -12,11 +16,16 @@ namespace vniu_api.Controllers
     public class ProductController :ControllerBase
     {
         private readonly IProductRepo _ProductRepo;
+        private readonly IElasticClient _elasticClient;
+        private readonly DataContext _context;
 
-        public ProductController(IProductRepo ProductRepo)
+        public ProductController(IProductRepo ProductRepo, DataContext context, IElasticClient elasticClient)
         {
             _ProductRepo = ProductRepo;
+            _context = context;
+            _elasticClient = elasticClient;
         }
+
 
         [HttpGet("get-all")]
         //[Authorize]
@@ -138,6 +147,18 @@ namespace vniu_api.Controllers
                     Title = e.Message
                 });
             }
+        }
+        [HttpGet("elastic_search/retrieve_data")]
+        public async Task<IActionResult> IndexData()
+        {
+            var dataConvert = await _ProductRepo.GetProductsAsync();
+
+            var bulkAllObservable = _elasticClient.BulkAll(dataConvert, b => b.Index("product")
+                                                                    .BackOffTime("30s")
+                                                                    .RefreshOnCompleted());
+
+            bulkAllObservable.Wait(TimeSpan.FromMinutes(15), response => { });
+            return Ok("success");
         }
     }
 }
