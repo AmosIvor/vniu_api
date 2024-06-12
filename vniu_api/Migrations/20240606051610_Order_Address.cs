@@ -8,18 +8,6 @@ namespace vniu_api.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Order_Address_AddressId",
-                table: "Order");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "AddressId",
-                table: "Order",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
-
             migrationBuilder.AddColumn<string>(
                 name: "Address",
                 table: "Order",
@@ -51,13 +39,6 @@ namespace vniu_api.Migrations
                 oldType: "int",
                 oldMaxLength: 255,
                 oldNullable: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Order_Address_AddressId",
-                table: "Order",
-                column: "AddressId",
-                principalTable: "Address",
-                principalColumn: "AddressId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

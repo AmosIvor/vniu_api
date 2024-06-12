@@ -39,6 +39,9 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VNIU_STORE"));
 });
 
+
+//builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration["Azure:SignalR:ConnectionString"]);
+
 // Authentication
 builder.Services
     .AddAuthentication(options =>

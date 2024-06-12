@@ -1,4 +1,5 @@
 ﻿using vniu_api.Models.EF.Payments;
+using vniu_api.ViewModels.PaymentsViewModels;
 
 namespace vniu_api.ViewModels.OrdersViewModels
 {
@@ -27,10 +28,10 @@ namespace vniu_api.ViewModels.OrdersViewModels
 
         public int? PaymentMethodId { get; set; }
 
-        public virtual PaymentMethod? PaymentMethod { get; set; }
+        public PaymentMethodVM? PaymentMethodVM { get; set; }
 
         public string UserId { get; set; }
 
-        public virtual ICollection<OrderLineVM>? OrderLines{ get;set; }
+        public ICollection<OrderLineVM>? OrderLineVMs{ get;set; }
     }
 }

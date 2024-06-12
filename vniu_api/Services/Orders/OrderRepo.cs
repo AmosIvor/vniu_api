@@ -34,12 +34,14 @@ namespace vniu_api.Services.Orders
 
             _context.PaymentMethods.Add(paymentMethod);
 
+            await _context.SaveChangesAsync();
+
             // map default payment to get paymentMethodId
             var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
 
             orderVM.PaymentMethodId = paymentMethodVM.PaymentMethodId;
 
-            // map
+            // map order
             var order = _mapper.Map<Order>(orderVM);
 
             // add database
@@ -232,7 +234,7 @@ namespace vniu_api.Services.Orders
                     NumberPhone = order.NumberPhone,
                     PaymentMethodId = order.PaymentMethodId,
                     UserId = order.UserId,
-                    OrderLines = orderLinesVM
+                    OrderLineVMs = orderLinesVM
                 };
 
                 return orderVM;
