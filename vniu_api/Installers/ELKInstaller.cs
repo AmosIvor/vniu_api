@@ -34,10 +34,7 @@ namespace vniu_api.Installers
 
         private static void AddDefaultMappings(ConnectionSettings connectionSettings)
         {
-            connectionSettings.DefaultMappingFor<ProductVM>(a =>
-                a.Ignore(x => x.ProductDescription)
-                
-            );
+            connectionSettings.DefaultMappingFor<ProductVM>(m => m);
         }
 
         private static void CreateIndex(IElasticClient elasticClient, string indexName)

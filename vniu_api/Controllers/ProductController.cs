@@ -79,9 +79,25 @@ namespace vniu_api.Controllers
         {
             try
             {
-                var result = await _ProductRepo.GetProductsAsync();
-                var pagedData = result.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-                var totalCount = result.Count;
+                // Calculate the offset for pagination
+                int from = (page - 1) * pageSize;
+
+                // Query Elasticsearch for paginated data
+                var searchResponse = await _elasticClient.SearchAsync<ProductVM>(s => s
+                    .Index("product")
+                    .From(from)
+                    .Size(pageSize)
+                    .Sort(ss => ss.Ascending(p => p.ProductId))
+                    .Query(q => q.MatchAll())
+                );
+
+                if (!searchResponse.IsValid)
+                {
+                    throw new Exception("Failed to retrieve data from Elasticsearch");
+                }
+
+                var pagedData = searchResponse.Documents.ToList();
+                var totalCount = (int)searchResponse.Total;
 
                 return Ok(new
                 {
@@ -93,7 +109,6 @@ namespace vniu_api.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest(new ErrorResponse()
                 {
                     Status = (int)HttpStatusCode.BadRequest,
@@ -101,6 +116,7 @@ namespace vniu_api.Controllers
                 });
             }
         }
+
         [HttpGet("{ProductId}")]
         public async Task<IActionResult> GetProductById(int ProductId)
         {
