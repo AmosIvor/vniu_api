@@ -16,6 +16,6 @@ namespace vniu_api.Models.EF.Chats
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
-        public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

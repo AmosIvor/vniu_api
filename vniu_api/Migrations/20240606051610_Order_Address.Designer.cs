@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vniu_api.Repositories;
 
@@ -11,9 +12,10 @@ using vniu_api.Repositories;
 namespace vniu_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240606051610_Order_Address")]
+    partial class Order_Address
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,9 +347,8 @@ namespace vniu_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumberPhone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("OrderCreateAt")
                         .HasColumnType("datetime2");
@@ -366,10 +367,10 @@ namespace vniu_api.Migrations
                     b.Property<DateTime>("OrderUpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PaymentMethodId")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PromotionId")
+                    b.Property<int>("PromotionId")
                         .HasColumnType("int");
 
                     b.Property<int>("ShippingMethodId")
@@ -379,11 +380,17 @@ namespace vniu_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("numberPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -479,6 +486,7 @@ namespace vniu_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PaymentTransactionNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentTypeId")
@@ -1025,6 +1033,10 @@ namespace vniu_api.Migrations
 
             modelBuilder.Entity("vniu_api.Models.EF.Orders.Order", b =>
                 {
+                    b.HasOne("vniu_api.Models.EF.Profiles.Address", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("vniu_api.Models.EF.Orders.OrderStatus", "OrderStatus")
                         .WithMany("Orderes")
                         .HasForeignKey("OrderStatusId")
@@ -1033,11 +1045,15 @@ namespace vniu_api.Migrations
 
                     b.HasOne("vniu_api.Models.EF.Payments.PaymentMethod", "PaymentMethod")
                         .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId");
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("vniu_api.Models.EF.Promotions.Promotion", "Promotion")
                         .WithMany("Orders")
-                        .HasForeignKey("PromotionId");
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("vniu_api.Models.EF.Shippings.ShippingMethod", "ShippingMethod")
                         .WithMany("Orderes")
@@ -1319,6 +1335,8 @@ namespace vniu_api.Migrations
 
             modelBuilder.Entity("vniu_api.Models.EF.Profiles.Address", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("UserAddresses");
                 });
 

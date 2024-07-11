@@ -61,7 +61,7 @@ namespace vniu_api.Services.Utils
 
             var searchResponse = await _elasticClient.SearchAsync<T>(s => s
                .MatchAll()
-               .Sort(so => so.Ascending("addressId"))
+               .Sort(so => so.Ascending("productId"))
                .From(from)
                .Size(pageSize)
             );

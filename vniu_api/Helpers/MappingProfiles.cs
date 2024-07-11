@@ -17,6 +17,7 @@ using vniu_api.ViewModels.PaymentsViewModels;
 using vniu_api.ViewModels.ProductsViewModels;
 using vniu_api.ViewModels.ProfilesViewModels;
 using vniu_api.ViewModels.PromotionsViewModels;
+using vniu_api.ViewModels.ResponsesViewModels;
 using vniu_api.ViewModels.ReviewsViewModels;
 using vniu_api.ViewModels.ShippingViewModels;
 using vniu_api.ViewModels.UtilsViewModels;
@@ -36,7 +37,7 @@ namespace vniu_api.Helpers
             CreateMap<Message, MessageVM>().ReverseMap();
 
             // orders
-            CreateMap<Order, OrderVM>().ReverseMap();
+            CreateMap<Order, OrderVM>().ReverseMap().ForMember(dest => dest.OrderLines, opt => opt.MapFrom(src => src.OrderLines));
             CreateMap<OrderLine, OrderLineVM>().ReverseMap();
             CreateMap<OrderStatus, OrderStatusVM>().ReverseMap();
 
@@ -56,6 +57,8 @@ namespace vniu_api.Helpers
             // profiles
             CreateMap<User, UserVM>().ReverseMap();
             CreateMap<Address, AddressVM>().ReverseMap();
+            CreateMap<Address, AddressResponseVM>().ReverseMap();
+
             CreateMap<UserAddress, UserAddressVM>().ReverseMap();
 
             // promotions

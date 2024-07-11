@@ -16,16 +16,16 @@ namespace vniu_api.Models.EF.Carts
         public int CartId { get; set; }
 
         [ForeignKey("CartId")]
-        public virtual Cart Cart { get; set; }
+        public virtual Cart? Cart { get; set; }
 
         public int ProductItemId { get; set; }
 
         [ForeignKey("ProductItemId")]
-        public virtual ProductItem ProductItem { get; set; }
+        public virtual ProductItem? ProductItem { get; set; }
 
         public int VariationId { get; set; }
 
         [ForeignKey("VariationId")]
-        public virtual Variation Variation { get; set; }
+        public virtual Variation? Variation { get; set; }
     }
 }

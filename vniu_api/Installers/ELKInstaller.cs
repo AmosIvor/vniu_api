@@ -5,6 +5,7 @@ using vniu_api.Repositories.Utils;
 using vniu_api.Services.Utils;
 using Elastic.Clients.Elasticsearch;
 using Nest;
+using vniu_api.ViewModels.ProductsViewModels;
 
 namespace vniu_api.Installers
 {
@@ -26,22 +27,22 @@ namespace vniu_api.Installers
 
             services.AddSingleton<IElasticClient>(elasticClient);
 
-            services.AddScoped<IElasticSearchService<AddressVM>, ElasticSearchService<AddressVM>>();
+            services.AddScoped<IElasticSearchService<ProductVM>, ElasticSearchService<ProductVM>>();
 
             CreateIndex(elasticClient, elkConfiguration.DefaultIndex);
         }
 
         private static void AddDefaultMappings(ConnectionSettings connectionSettings)
         {
-            connectionSettings.DefaultMappingFor<AddressVM>(a =>
-                a.Ignore(x => x.UnitNumber)
-                .Ignore(x => x.AddressLine2)
+            connectionSettings.DefaultMappingFor<ProductVM>(a =>
+                a.Ignore(x => x.ProductDescription)
+                
             );
         }
 
         private static void CreateIndex(IElasticClient elasticClient, string indexName)
         {
-            elasticClient.Indices.Create(indexName, i => i.Map<AddressVM>(a => a.AutoMap()));
+            elasticClient.Indices.Create(indexName, i => i.Map<ProductVM>(a => a.AutoMap()));
         }
 
     }

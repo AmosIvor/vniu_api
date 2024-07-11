@@ -10,7 +10,7 @@ namespace vniu_api.Models.EF.Promotions
 
         public int ProductCategoryId { get; set; }
 
-        public virtual ProductCategory ProductCategory { get; set; } = new ProductCategory();
+        public virtual ProductCategory ProductCategory { get; set; }
 
         public virtual Promotion Promotion { get; set; }
     }

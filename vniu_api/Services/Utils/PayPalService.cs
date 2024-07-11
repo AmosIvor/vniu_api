@@ -110,41 +110,43 @@ namespace vniu_api.Services.Utils
             return paymentUrl;
         }
 
-        public async Task<PaymentMethodVM> PaymentExecuteAsync(IQueryCollection collections)
+        public async Task<PaymentMethodVM> PaymentExecuteAsync(int orderId, IQueryCollection collections)
         {
-            var dataResponse = new PaymentMethodVM();
+            // get payment method entity
+            var order = await _context.Orders.FindAsync(orderId);
+            var paymentMethod = await _context.PaymentMethods.FindAsync(order.PaymentMethodId);
+            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
 
             foreach (var (key, value) in collections)
             {
                 if (!string.IsNullOrEmpty(key) && key.ToLower().Equals("order_description"))
                 {
-                    dataResponse.PaymentDescription = value;
+                    paymentMethodVM.PaymentDescription = value;
                 }
 
                 if (!string.IsNullOrEmpty(key) && key.ToLower().Equals("paymentid"))
                 {
-                    dataResponse.PaymentTransactionNo = value;
+                    paymentMethodVM.PaymentTransactionNo = value;
                 }
 
                 if (!string.IsNullOrEmpty(key) && key.ToLower().Equals("success"))
                 {
-                    dataResponse.PaymentStatus = int.Parse(value);
+                    paymentMethodVM.PaymentStatus = int.Parse(value);
                 }
             }
 
-            dataResponse.PaymentProvider = "PayPal";
-            dataResponse.PaymentTypeId = AppPaymentType.PAYPAL;
-            dataResponse.PaymentDate = DateTime.Now;
+            paymentMethodVM.PaymentProvider = "PayPal";
+            paymentMethodVM.PaymentDate = DateTime.Now;
 
-            var paymentMethod = _mapper.Map<PaymentMethod>(dataResponse);
+            var paymentMethodResult = _mapper.Map<PaymentMethod>(paymentMethodVM);
 
-            _context.PaymentMethods.Add(paymentMethod);
+            _context.PaymentMethods.Update(paymentMethodResult);
 
             await _context.SaveChangesAsync();
 
-            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+            var paymentMethodVMResult = _mapper.Map<PaymentMethodVM>(paymentMethod);
 
-            return paymentMethodVM;
+            return paymentMethodVMResult;
         }
     }
 }

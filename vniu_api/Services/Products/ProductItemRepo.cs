@@ -33,12 +33,48 @@ namespace vniu_api.Services.Products
             return newProductItemVM;
         }
 
-        public async Task<ProductItemVM> GetProductItemByIdAsync(int ProductItemId)
+        public async Task<ProductItemVM> GetProductItemByIdAsync(int productItemId)
         {
-            var ProductItem = await _context.ProductItems.SingleOrDefaultAsync(p => p.ProductItemId == ProductItemId);
+            var productItem = await _context.ProductItems
+                                            .Include(pi => pi.Product) // Include the parent Product entity
+                                            .Include(pi => pi.ProductImages)
+                                            .Include(pi => pi.Variations)
+                                            .Include(pi => pi.Colour)
+                                            .FirstOrDefaultAsync(pi => pi.ProductItemId == productItemId);
 
-            return _mapper.Map<ProductItemVM>(ProductItem);
+            if (productItem == null)
+            {
+                return null;
+            }
+
+            var productItemVM = new ProductItemVM
+            {
+                ProductItemId = productItem.ProductItemId,
+                ProductId = productItem.Product.ProductId, // Set ProductId from the parent Product
+                ProductName = productItem.Product.ProductName, // Set ProductName from the parent Product
+                ColourId = productItem.ColourId,
+                OriginalPrice = productItem.OriginalPrice,
+                SalePrice = productItem.SalePrice,
+                ProductItemSold = productItem.ProductItemSold,
+                ProductItemRating = productItem.ProductItemRating,
+                ProductItemCode = productItem.ProductItemCode,
+                ProductImage = productItem.ProductImages.FirstOrDefault() != null ? new ProductImageVM
+                {
+                    ProductImageId = productItem.ProductImages.First().ProductImageId,
+                    ProductImageUrl = productItem.ProductImages.First().ProductImageUrl,
+                    ProductItemId = productItem.ProductImages.First().ProductItemId
+                } : null,
+                ProductImages = productItem.ProductImages.Select(image => new ProductImageVM
+                {
+                    ProductImageId = image.ProductImageId,
+                    ProductImageUrl = image.ProductImageUrl,
+                    ProductItemId = image.ProductItemId
+                }).ToList(),
+            };
+
+            return productItemVM;
         }
+
 
         public async Task<ICollection<ProductItemVM>> GetProductItemAsync(int productId)
         {

@@ -27,33 +27,33 @@ namespace vniu_api.Models.EF.Orders
         public int OrderStatusId { get; set; }
 
         [ForeignKey("OrderStatusId")]
-        public virtual OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus? OrderStatus { get; set; }
 
         public int ShippingMethodId { get; set; }
 
         [ForeignKey("ShippingMethodId")]
-        public virtual ShippingMethod ShippingMethod { get; set; }
+        public virtual ShippingMethod? ShippingMethod { get; set; }
 
-        public int PromotionId { get; set; }
+        public int? PromotionId { get; set; }
 
         [ForeignKey("PromotionId")]
-        public virtual Promotion Promotion { get; set; }
+        public virtual Promotion? Promotion { get; set; }
 
-        public int AddressId { get; set; }
+        public string Address{ get; set; }
+        
+        public string Username { get; set; }    
+        public string NumberPhone { get; set; }
 
-        [ForeignKey("AddressId")]
-        public virtual Address Address { get; set; }
-
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
 
         [ForeignKey("PaymentMethodId")]
-        public virtual PaymentMethod PaymentMethod { get; set; }
+        public virtual PaymentMethod? PaymentMethod { get; set; }
 
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
-        public virtual ICollection<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+        public virtual ICollection<OrderLine>? OrderLines { get; set; } = new List<OrderLine>();
     }
 }

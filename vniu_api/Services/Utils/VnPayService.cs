@@ -46,7 +46,7 @@ namespace vniu_api.Services.Utils
             vnPayLibrary.AddRequestData("vnp_Version", _vnPayConfiguration.Version);
             vnPayLibrary.AddRequestData("vnp_Command", _vnPayConfiguration.Command);
             vnPayLibrary.AddRequestData("vnp_TmnCode", _vnPayConfiguration.TmnCode);
-            vnPayLibrary.AddRequestData("vnp_Amount", ((int)paymentRequest.OrderTotal * 100).ToString());
+            vnPayLibrary.AddRequestData("vnp_Amount", ((int)paymentRequest.OrderTotal * 100 * 22000).ToString());
             vnPayLibrary.AddRequestData("vnp_CreateDate", timeNow.ToString("yyyyMMddHHmmss"));
             vnPayLibrary.AddRequestData("vnp_CurrCode", _vnPayConfiguration.CurrCode);
             vnPayLibrary.AddRequestData("vnp_IpAddr", vnPayLibrary.GetIpAddress(httpContext));
@@ -62,21 +62,27 @@ namespace vniu_api.Services.Utils
             return paymentUrl;
         }
         
-        public async Task<PaymentMethodVM> PaymentExecuteAsync(IQueryCollection collections)
+        public async Task<PaymentMethodVM> PaymentExecuteAsync(int orderId, IQueryCollection collections)
         {
+            // get payment method entity
+            var order = await _context.Orders.FindAsync(orderId);
+            var paymentMethod = await _context.PaymentMethods.FindAsync(order.PaymentMethodId);
+            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+
+
             var vnPayLibrary = new VnPayLibrary();
 
-            var dataResponse = vnPayLibrary.GetFullResponseData(collections, _vnPayConfiguration.HashSecret);
+            var dataResponse = vnPayLibrary.GetFullResponseData(paymentMethodVM, collections, _vnPayConfiguration.HashSecret);
 
-            var paymentMethod = _mapper.Map<PaymentMethod>(dataResponse);
+            var paymentMethodResult = _mapper.Map<PaymentMethod>(dataResponse);
 
-            _context.PaymentMethods.Add(paymentMethod);
+            _context.PaymentMethods.Update(paymentMethodResult);
 
             await _context.SaveChangesAsync();
 
-            var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+            var paymentMethodVMResult = _mapper.Map<PaymentMethodVM>(paymentMethod);
 
-            return paymentMethodVM;
+            return paymentMethodVMResult;
         }
     }
 }

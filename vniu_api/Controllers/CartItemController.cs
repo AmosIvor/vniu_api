@@ -89,12 +89,12 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpPut("{productId}")]
-        public async Task<IActionResult> UpdateCartItem(int productId, CartItemVM cartItemVM)
+        [HttpPut("{productItemId}")]
+        public async Task<IActionResult> UpdateCartItem(int productItemId, CartItemVM cartItemVM)
         {
             try
             {
-                var cartItemUpdate = await _cartItemRepo.UpdateCartItemAsync(productId, cartItemVM);
+                var cartItemUpdate = await _cartItemRepo.UpdateCartItemAsync(productItemId, cartItemVM);
 
                 return Ok(new SuccessResponse<CartItemVM>()
                 {
@@ -113,12 +113,12 @@ namespace vniu_api.Controllers
             }
         }
 
-        [HttpDelete("{userId}/{productId}")]
-        public async Task<IActionResult> DeleteCartItemOfUser(string userId, int productId)
+        [HttpDelete("{userId}/{productItemId}")]
+        public async Task<IActionResult> DeleteCartItemOfUser(string userId, int productItemId)
         {
             try
             {
-                var cartItemDelete = await _cartItemRepo.DeleteCartItemOfUserAsync(userId, productId);
+                var cartItemDelete = await _cartItemRepo.DeleteCartItemOfUserAsync(userId, productItemId);
 
                 return Ok(new SuccessResponse<CartItemVM>()
                 {

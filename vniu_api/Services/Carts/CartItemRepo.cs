@@ -4,6 +4,7 @@ using vniu_api.Models.EF.Carts;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Carts;
 using vniu_api.ViewModels.CartsViewModels;
+using vniu_api.ViewModels.ProductsViewModels;
 
 namespace vniu_api.Services.Carts
 {
@@ -130,23 +131,103 @@ namespace vniu_api.Services.Carts
 
         public async Task<ICollection<CartItemVM>> GetCartItemsByUserIdAsync(string userId)
         {
-            // from userId => get cartId => get list cart items of this user
+            // Check if user exists
             var isUserExist = await _context.Users.AnyAsync(u => u.Id == userId);
 
-            if (isUserExist == false)
+            if (!isUserExist)
             {
                 throw new Exception("User not found");
             }
 
+            // Get the cart for the user
             var cart = await _context.Carts.SingleOrDefaultAsync(c => c.UserId == userId);
 
-            // get list cart item from cart id
-            var cartItems = await _context.CartItems.Where(c => c.Cart.CartId == cart!.CartId).ToListAsync();
+            if (cart == null)
+            {
+                throw new Exception("Cart not found");
+            }
 
-            var cartItemsVM = _mapper.Map<ICollection<CartItemVM>>(cartItems);
+            // Get the list of cart items and include product item and variation details
+            var cartItems = await _context.CartItems
+                .Where(c => c.CartId == cart.CartId)
+                .Include(c => c.ProductItem)
+                .ThenInclude(pi => pi.Product) // Include the parent Product entity
+                .Include(c => c.ProductItem.ProductImages) // Include ProductImages
+                .Include(c => c.ProductItem.Variations) // Include Variations
+                .Include(c => c.ProductItem.Colour) // Include Colour
+                .Include(c => c.Variation)
+                .ThenInclude(v => v.Size) // Include Size details
+                .ToListAsync();
+
+            // Map cart items to CartItemVM including ProductItemVM and VariationVM
+            var cartItemsVM = cartItems.Select(cartItem =>
+            {
+                var productItem = cartItem.ProductItem;
+                var productItemVM = new ProductItemVM
+                {
+                    ProductItemId = productItem.ProductItemId,
+                    ProductId = productItem.Product.ProductId, // Set ProductId from the parent Product
+                    ProductName = productItem.Product.ProductName, // Set ProductName from the parent Product
+                    ColourId = productItem.ColourId,
+                    OriginalPrice = productItem.OriginalPrice,
+                    SalePrice = productItem.SalePrice,
+                    ProductItemSold = productItem.ProductItemSold,
+                    ProductItemRating = productItem.ProductItemRating,
+                    ProductItemCode = productItem.ProductItemCode,
+                    ProductImage = productItem.ProductImages.FirstOrDefault() != null ? new ProductImageVM
+                    {
+                        ProductImageId = productItem.ProductImages.First().ProductImageId,
+                        ProductImageUrl = productItem.ProductImages.First().ProductImageUrl,
+                        ProductItemId = productItem.ProductImages.First().ProductItemId
+                    } : null,
+                    ProductImages = productItem.ProductImages.Select(image => new ProductImageVM
+                    {
+                        ProductImageId = image.ProductImageId,
+                        ProductImageUrl = image.ProductImageUrl,
+                        ProductItemId = image.ProductItemId
+                    }).ToList(),
+                    Variations = productItem.Variations.Select(v => new VariationVM
+                    {
+                        VariationId = v.VariationId,
+                        QuantityInStock = v.QuantityInStock,
+                        ProductItemId = v.ProductItemId,
+                        SizeId = v.SizeId,
+                        Size = new SizeOptionVM
+                        {
+                            SizeId = v.Size.SizeId,
+                            SizeName = v.Size.SizeName,
+                            SortOrder = v.Size.SortOrder
+                        }
+                    }).ToList(),
+                    ColourVMs = productItem.Colour != null ? new List<ColourVM>
+            {
+                new ColourVM
+                {
+                    ColourId = productItem.Colour.ColourId,
+                    ColourName = productItem.Colour.ColourName,
+                    // Include other necessary properties
+                }
+            } : new List<ColourVM>()
+                };
+
+                var cartItemVM = new CartItemVM
+                {
+                    CartItemId = cartItem.CartItemId,
+                    CartId = cartItem.CartId,
+                    ProductItemId = cartItem.ProductItemId,
+                    Quantity = cartItem.Quantity,
+                    ProductItemVM = productItemVM, // Assign the created ProductItemVM
+                    VariationVM = _mapper.Map<VariationVM>(cartItem.Variation) // Map VariationVM using AutoMapper
+                };
+
+                return cartItemVM;
+            }).ToList();
 
             return cartItemsVM;
         }
+
+
+
 
         public async Task<bool> IsCartItemExistIdAsync(int cartItemId)
         {

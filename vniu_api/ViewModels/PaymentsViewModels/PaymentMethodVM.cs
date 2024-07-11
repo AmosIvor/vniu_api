@@ -4,7 +4,7 @@
     {
         public int PaymentMethodId { get; set; }
 
-        public string PaymentTransactionNo { get; set; }
+        public string? PaymentTransactionNo { get; set; }
         public string? PaymentProvider { get; set; }
 
         public string? PaymentCartType { get; set; }

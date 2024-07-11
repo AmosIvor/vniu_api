@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using vniu_api.Models.EF.Orders;
+using vniu_api.Models.EF.Payments;
 using vniu_api.Repositories;
 using vniu_api.Repositories.Orders;
 using vniu_api.ViewModels.OrdersViewModels;
+using vniu_api.ViewModels.PaymentsViewModels;
+using vniu_api.ViewModels.ProductsViewModels;
 
 namespace vniu_api.Services.Orders
 {
@@ -20,21 +23,86 @@ namespace vniu_api.Services.Orders
             _orderLineRepo = orderLineRepo;
         }
 
-        public async Task<OrderVM> CreateOrderAsync(OrderVM orderVM)
+        public async Task<OrderVM> CreateOrderAsync(OrderVM orderVM, int paymentType)
         {
-            // map
-            var order = _mapper.Map<Order>(orderVM);
+            try
+            {
+                // Pre-checks for foreign key constraints
+                var userExists = await _context.Users.AnyAsync(u => u.Id == orderVM.UserId);
+                if (!userExists)
+                {
+                    throw new Exception($"User with ID {orderVM.UserId} does not exist.");
+                }
 
-            // add database
-            _context.Orders.Add(order);
+                var orderStatusExists = await _context.OrderStatuses.AnyAsync(os => os.OrderStatusId == orderVM.OrderStatusId);
+                if (!orderStatusExists)
+                {
+                    throw new Exception($"OrderStatus with ID {orderVM.OrderStatusId} does not exist.");
+                }
 
-            await _context.SaveChangesAsync();
+                var shippingMethodExists = await _context.ShippingMethods.AnyAsync(sm => sm.ShippingMethodId == orderVM.ShippingMethodId);
+                if (!shippingMethodExists)
+                {
+                    throw new Exception($"ShippingMethod with ID {orderVM.ShippingMethodId} does not exist.");
+                }
 
-            // return result
-            var newOrderVM = _mapper.Map<OrderVM>(order);
+                // Ensure required fields are not null or have valid defaults
+                if (orderVM.OrderTotal <= 0)
+                {
+                    throw new Exception("OrderTotal must be greater than 0.");
+                }
 
-            return newOrderVM;
+                if (string.IsNullOrWhiteSpace(orderVM.UserId))
+                {
+                    throw new Exception("UserId is required.");
+                }
+
+                // Ensure OrderCreateAt and OrderUpdateAt are set
+                orderVM.OrderCreateAt = DateTime.UtcNow;
+                orderVM.OrderUpdateAt = DateTime.UtcNow;
+
+                // Ensure the PaymentMethod object is properly created
+                var paymentMethod = new PaymentMethod()
+                {
+                    PaymentTypeId = paymentType,
+                    PaymentStatus = 0 // default is 0 - unpaid => 1 - paid => 2 - error
+                };
+
+                _context.PaymentMethods.Add(paymentMethod);
+                await _context.SaveChangesAsync(); // Save to get the PaymentMethodId
+
+                // Map the PaymentMethod to PaymentMethodVM
+                var paymentMethodVM = _mapper.Map<PaymentMethodVM>(paymentMethod);
+                orderVM.PaymentMethodId = paymentMethodVM.PaymentMethodId;
+
+                // Map OrderVM to Order entity
+                var order = _mapper.Map<Order>(orderVM);
+
+                // Add Order to the context
+                _context.Orders.Add(order);
+                await _context.SaveChangesAsync(); // Save changes to persist the Order
+
+                // Map back to OrderVM to return
+                var newOrderVM = _mapper.Map<OrderVM>(order);
+
+                return newOrderVM;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the inner exception details for debugging
+                var innerExceptionMessage = ex.InnerException?.Message ?? ex.Message;
+                Console.WriteLine($"DbUpdateException: {innerExceptionMessage}");
+                throw new Exception($"Database update exception: {innerExceptionMessage}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Log any other errors
+                Console.WriteLine($"Exception: {ex.Message}");
+                throw;
+            }
         }
+
+
 
         public async Task<OrderVM> DeleteOrderAsync(int orderId)
         {
@@ -117,13 +185,113 @@ namespace vniu_api.Services.Orders
 
         public async Task<ICollection<OrderVM>> GetOrdersByUserIdAsync(string userId)
         {
-            // you don't need to check user id
-            var orders = await _context.Orders.Where(o => o.UserId == userId).ToListAsync();
+            var orders = await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderLines)
+                    .ThenInclude(ol => ol.ProductItem)
+                        .ThenInclude(pi => pi.Product) // Include the parent Product entity
+                .Include(o => o.OrderLines)
+                    .ThenInclude(ol => ol.ProductItem.ProductImages) // Include ProductImages
+                .Include(o => o.OrderLines)
+                    .ThenInclude(ol => ol.ProductItem.Variations) // Include Variations
+                .Include(o => o.OrderLines)
+                    .ThenInclude(ol => ol.ProductItem.Colour) // Include Colour
+                .Include(o => o.OrderLines)
+                    .ThenInclude(ol => ol.Variation)
+                        .ThenInclude(v => v.Size) // Include Size details
+                .ToListAsync();
 
-            var ordersVM = _mapper.Map<ICollection<OrderVM>>(orders);
+            var ordersVM = orders.Select(order =>
+            {
+                var orderLinesVM = order.OrderLines.Select(orderLine =>
+                {
+                    var productItem = orderLine.ProductItem;
+                    var productItemVM = new ProductItemVM
+                    {
+                        ProductItemId = productItem.ProductItemId,
+                        ProductId = productItem.Product.ProductId, // Set ProductId from the parent Product
+                        ProductName = productItem.Product.ProductName, // Set ProductName from the parent Product
+                        ColourId = productItem.ColourId,
+                        OriginalPrice = productItem.OriginalPrice,
+                        SalePrice = productItem.SalePrice,
+                        ProductItemSold = productItem.ProductItemSold,
+                        ProductItemRating = productItem.ProductItemRating,
+                        ProductItemCode = productItem.ProductItemCode,
+                        ProductImage = productItem.ProductImages.FirstOrDefault() != null ? new ProductImageVM
+                        {
+                            ProductImageId = productItem.ProductImages.First().ProductImageId,
+                            ProductImageUrl = productItem.ProductImages.First().ProductImageUrl,
+                            ProductItemId = productItem.ProductImages.First().ProductItemId
+                        } : null,
+                        ProductImages = productItem.ProductImages.Select(image => new ProductImageVM
+                        {
+                            ProductImageId = image.ProductImageId,
+                            ProductImageUrl = image.ProductImageUrl,
+                            ProductItemId = image.ProductItemId
+                        }).ToList(),
+                        Variations = productItem.Variations.Select(v => new VariationVM
+                        {
+                            VariationId = v.VariationId,
+                            QuantityInStock = v.QuantityInStock,
+                            ProductItemId = v.ProductItemId,
+                            SizeId = v.SizeId,
+                            Size = new SizeOptionVM
+                            {
+                                SizeId = v.Size.SizeId,
+                                SizeName = v.Size.SizeName,
+                                SortOrder = v.Size.SortOrder
+                            }
+                        }).ToList(),
+                        ColourVMs = productItem.Colour != null ? new List<ColourVM>
+                {
+                    new ColourVM
+                    {
+                        ColourId = productItem.Colour.ColourId,
+                        ColourName = productItem.Colour.ColourName,
+                        // Include other necessary properties
+                    }
+                } : new List<ColourVM>()
+                    };
+
+                    var orderLineVM = new OrderLineVM
+                    {
+                        OrderLineId = orderLine.OrderLineId,
+                        Quantity = orderLine.Quantity,
+                        Price = orderLine.Price,
+                        OrderId = orderLine.OrderId,
+                        ProductItemId = orderLine.ProductItemId,
+                        VariationId = orderLine.VariationId,
+                        ProductItem = productItemVM, // Assign the created ProductItemVM
+                        Variation = _mapper.Map<VariationVM>(orderLine.Variation) // Map VariationVM using AutoMapper
+                    };
+
+                    return orderLineVM;
+                }).ToList();
+
+                var orderVM = new OrderVM
+                {
+                    OrderId = order.OrderId,
+                    OrderCreateAt = order.OrderCreateAt,
+                    OrderUpdateAt = order.OrderUpdateAt,
+                    OrderTotal = order.OrderTotal,
+                    OrderNote = order.OrderNote,
+                    OrderStatusId = order.OrderStatusId,
+                    ShippingMethodId = order.ShippingMethodId,
+                    PromotionId = order.PromotionId,
+                    Address = order.Address,
+                    Username = order.Username,
+                    NumberPhone = order.NumberPhone,
+                    PaymentMethodId = order.PaymentMethodId,
+                    UserId = order.UserId,
+                    OrderLines = orderLinesVM
+                };
+
+                return orderVM;
+            }).ToList();
 
             return ordersVM;
         }
+
 
         public async Task<bool> IsOrderExistIdAsync(int orderId)
         {

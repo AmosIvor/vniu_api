@@ -4,7 +4,7 @@
     {
         public int AddressId { get; set; }
 
-        public int? UnitNumber { get; set; }
+        public string? UnitNumber { get; set; }
 
         public string? StreetNumber { get; set; }
 

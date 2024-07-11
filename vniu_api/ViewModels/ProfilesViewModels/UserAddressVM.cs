@@ -2,10 +2,14 @@
 {
     public class UserAddressVM
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public int AddressId { get; set; }
 
-        public Boolean IsDefault { get; set; } = false;
+        public bool IsDefault { get; set; }
+
+        public virtual UserVM User { get; set; }
+        public virtual AddressVM Address { get; set;}
+
     }
 }

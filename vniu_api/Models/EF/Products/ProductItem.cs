@@ -14,7 +14,7 @@ namespace vniu_api.Models.EF.Products
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; } = new Product();
+        public virtual Product Product { get; set; }
         [Required]
         public int ColourId { get; set; }
         [ForeignKey("ColourId")]
